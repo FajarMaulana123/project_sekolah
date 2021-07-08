@@ -15,6 +15,6 @@
 
   	@yield('content')
 
-	@include('partials.js')
   </div>
 </html>
+@include('partials.js')

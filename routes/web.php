@@ -13,6 +13,18 @@
 
 Route::get('','Home@index');
 
-/*Route::get('/', function () {
-    return view('admin/index');
-});*/
+//kecamatan
+Route::get('kecamatan','KecamatanController@index');
+Route::get('kecamatan/create','KecamatanController@create');
+Route::post('addkec','KecamatanController@add');
+Route::get('kecamatan/{kecamatan}/edit','KecamatanController@edit');
+Route::patch('kecamatan/{kecamatan}','KecamatanController@update');
+Route::get('kecamatan/{kecamatan}','KecamatanController@delete');
+
+//sekolah
+Route::get('sekolah','SekolahController@index');
+Route::get('sekolah/create','SekolahController@create');
+Route::post('addsekolah','SekolahController@add');
+Route::get('status_sekolah/{sekolah}','SekolahController@acc');
+Route::get('detail_sekolah/{sekolah}','SekolahController@detail');
+
