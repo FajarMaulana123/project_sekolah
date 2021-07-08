@@ -12,6 +12,9 @@
 */
 
 Route::get('','Home@index');
+Route::get('home','admin\HomeController@index');
+
+Route::get('login','Auth\LoginController@index');
 
 //kecamatan
 Route::get('kecamatan','KecamatanController@index');

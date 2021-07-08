@@ -1,0 +1,19 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="{{asset('general/css/log.css')}}" rel="stylesheet">
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <div class="fadeIn first">
+      <img src="{{asset('imageUpload/logo/tut.png')}}" id="icon" alt="User Icon" style="width: 100px; margin: 20px;" />
+    </div>
+    <form action="{{url('home')}}" method="get">
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password">
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+    <div id="formFooter">
+      <a class="underlineHover" href="{{url('home')}}">Forgot Password?</a>
+    </div>
+  </div>
+</div>
