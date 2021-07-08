@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Jul 2021 pada 16.27
+-- Waktu pembuatan: 08 Jul 2021 pada 20.02
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -76,8 +76,8 @@ CREATE TABLE `sekolah` (
 --
 
 INSERT INTO `sekolah` (`id_sekolah`, `id_user`, `nama_sekolah`, `nama_kps`, `tingkat`, `email`, `nohp`, `alamat`, `deskripsi`, `bukti`, `logo`, `foto`, `daya_tampung`, `jml_diterima`, `longitude`, `latitude`, `created_at`, `updated_at`) VALUES
-(1, 1, 'SMP N 3 Terisi', 'Wahyu Hermawan, A.Md.Kom', 'SMP', 'admin@gmail.com', '089688177247', 'Cikedung', 'SMP yang unggul', 'bukti.pdf', 'logo.png', 'foto.jpg', 100, 95, '-09087787989898', '0909889898980909', '2021-07-05 15:36:58', '2021-07-05 15:36:58'),
-(2, 3, 'SMK N 1 LELEA', 'Hyuwan', 'SD', 'hyuwan@gmail.com', '089688', 'Mundakjaya', 'belum ada', 'bukti.pdf', 'Windows_Settings_app_icon.png', 'undraw_empty_xct9.png', 100, 50, NULL, NULL, '2021-07-06 09:11:59', '2021-07-06 09:11:59');
+(1, 1, 'SMP N 3 Terisi', 'Wahyu Hermawan, A.Md.Kom', 'SMP', 'admin@gmail.com', '089688177247', 'Cikedung', 'SMP Negeri 3 Terisi dulu bernama Sekolah Lanjutan Tingkat Pertama (SLTP) Negeri 3 Cikedung yang dibuka pada tahun 1995 sebagai Kelah Jauh SLTP Negeri 1 Cikedung memiliki 2 (dua) rombongan belajar dengan jumlah siswa 96 orang. Sekolah ini bertempat di gedung eks SLTP Trisila di desa Cikedung Lor, dengan Kepala Sekolah Yth. Bp. GANDHI DANAWIDJAJA, S.Ag.', 'bukti.pdf', 'logo.png', 'foto.jpg', 100, 95, '-09087787989898', '0909889898980909', '2021-07-05 15:36:58', '2021-07-05 15:36:58'),
+(2, 3, 'SMK N 1 LELEA', 'Hyuwan', 'SD', 'hyuwan@gmail.com', '089688', 'Mundakjaya', 'Sekolah Menengah Kejuaran Negeri 1 Lelea adalah sekolah yang di dirikan pada 18 November 2003 di resmikan oleh. SMK NEGERI 1 LELEA ini adalah sekolah satu-satunya di kecamatan lelea dan mempunyai program jurusan yang berbeda dengan SMK lainya. Program jurusan yang pertama hanya ada dua yaitu:', 'bukti.pdf', 'Windows_Settings_app_icon.png', 'lelea.jpg', 100, 50, NULL, NULL, '2021-07-06 09:11:59', '2021-07-06 09:11:59');
 
 -- --------------------------------------------------------
 
