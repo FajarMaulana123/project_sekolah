@@ -2,6 +2,14 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="{{asset('general/css/log.css')}}" rel="stylesheet">
+<style type="text/css">
+  a {
+  color: #92badd;
+  display:inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+</style>
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <div class="fadeIn first">

@@ -15,6 +15,7 @@ Route::get('','Home@index');
 Route::get('home','admin\HomeController@index');
 
 Route::get('login','Auth\LoginController@index');
+Route::get('daftar','Home@daftar');
 
 //kecamatan
 Route::get('kecamatan','KecamatanController@index');

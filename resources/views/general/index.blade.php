@@ -10,7 +10,7 @@
         <h1 data-aos="fade-up">Penerimaan Peserta Didik Baru (PPDB) Online</h1>
         <h2 data-aos="fade-up" data-aos-delay="400">Tingkat SD & SMP Se-Indramayu</h2>
         <div data-aos="fade-up" data-aos-delay="800">
-          <a href="#about" class="btn-get-started scrollto">Daftar Sekarang</a>
+          <a href="{{url('daftar')}}" class="btn-get-started scrollto">Daftar Sekarang</a>
         </div>
       </div>
       <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="200">

@@ -11,4 +11,8 @@ class Home extends Controller
 		$list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();;
 		return view('general.index', compact('list_sekolah'));
 	}
+
+	public function daftar(){
+		return view('auth.regist_select');
+	}
 }
