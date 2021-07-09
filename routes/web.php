@@ -11,10 +11,13 @@
 |
 */
 
-Route::get('','Home@index');
+Route::get('/','Home@index');
 Route::get('home','admin\HomeController@index');
 
-Route::get('login','Auth\LoginController@index');
+// Route::get('login','Auth\LoginController@index');
+Route::get('login','LoginController@index');
+Route::post('postlogin', 'LoginController@postlogin');
+Route::get('logout', 'LoginController@logout');
 
 //kecamatan
 Route::get('kecamatan','KecamatanController@index');
@@ -28,6 +31,9 @@ Route::get('kecamatan/{kecamatan}','KecamatanController@delete');
 Route::get('sekolah','SekolahController@index');
 Route::get('sekolah/create','SekolahController@create');
 Route::post('addsekolah','SekolahController@add');
+Route::get('editsekolah/{sekolah}', 'SekolahController@edit');
+Route::post('editsekolah', 'SekolahController@update');
+Route::get('sekolah/{sekolah}', 'SekolahController@hapus');
 Route::get('status_sekolah/{sekolah}','SekolahController@acc');
 Route::get('detail_sekolah/{sekolah}','SekolahController@detail');
 

@@ -6,16 +6,27 @@ use Illuminate\Http\Request;
 use App\Sekolah;
 use App\Users;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
+
 class SekolahController extends Controller
 {
 	public function index(){
-		$list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();
-		
-		return view('admin.sekolah.index',compact('list_sekolah'));
+        if (!session::get('loginsuper')) {
+            return redirect('login');
+        }else{
+            $list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();
+            
+            return view('admin.sekolah.index',compact('list_sekolah'));
+        }
 	}
 
 	public function create(){
+        if (!session::get('loginsuper')) {
+            return redirect('login');
+        }else{
 		return view ('admin.sekolah.create');
+        }
 	}
 
     public function detail($id){
@@ -98,6 +109,77 @@ class SekolahController extends Controller
             return redirect('sekolah')->with(['success' => 'Berhasil ACC Sekolah!']);
         }
 		
+	}
+
+    public function edit($sekolah){
+        if (!session::get('loginsuper')) {
+            return redirect('login');
+        }else{
+        $data = Sekolah::where('id_sekolah', $sekolah)->first();
+        return view('admin.sekolah.edit', compact('data'));
+        }
+
+    }
+
+    public function update(Request $request){
+        $id_sekolah = $request->id_sekolah;
+        $data = Sekolah::find($id_sekolah);
+        // $data->id_user =$id_user;
+		$data->nama_sekolah =$request->nama_sekolah;
+		$data->nama_kps =$request->nama_kps;
+		$data->tingkat =$request->tingkat;
+		$data->email =$request->email;
+		$data->nohp =$request->nohp;
+		$data->alamat =$request->alamat;
+		$data->deskripsi =$request->deskripsi;
+		$data->daya_tampung =$request->daya_tampung;
+		$data->jml_diterima =$request->jml_diterima;
+        if($request->hasFile('bukti')){
+            // File::delete('bukti'. $data->bukti);
+            $image = $request->file('bukti');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'bukti';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['bukti'] = $image_name;
+            }
+        }
+        if($request->hasFile('logo')){
+            // File::delete('imageUpload/logo'. $data->logo);
+            $image = $request->file('logo');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/logo';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['logo'] = $image_name;
+            }
+        }
+        if($request->hasFile('foto')){
+            // File::delete('imageUpload/sekolah'. $data->foto);
+            $image = $request->file('foto');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/sekolah';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['foto'] = $image_name;
+            }
+        }
+
+        $data->update();
+        return redirect('sekolah')->with(['success' => 'Berhasil diedit']);
+    }
+
+    public function hapus($sekolah)
+	{
+		$data = Sekolah::findOrFail($sekolah);
+		$data->delete();
+		return redirect('sekolah')->with(['success' => 'Berhasil Hapus Data!']);
 	}
 
 }

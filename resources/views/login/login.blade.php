@@ -7,9 +7,10 @@
     <div class="fadeIn first">
       <img src="{{asset('imageUpload/logo/tut.png')}}" id="icon" alt="User Icon" style="width: 100px; margin: 20px;" />
     </div>
-    <form action="{{url('home')}}" method="get">
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password">
+    <form action="{{url('postlogin')}}" method="post">
+      @csrf
+      <input type="text" id="login" class="fadeIn second" name="email" placeholder="Email">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
     <div id="formFooter">
