@@ -33,7 +33,12 @@
           </ul>
         </li> -->
         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-        <li><a class="getstarted scrollto" href="{{url('login')}}">Login</a></li>
+        @if (!Session::get('loginsiswa')) {
+          <li><a class="getstarted scrollto" href="{{url('login')}}">Login</a></li>
+        @else
+          <li><a class="getstarted scrollto" href="">{{Session::get('email')}}</a></li>
+          <li><a class="getstarted scrollto" href="{{url('logout')}}">logout</a></li>
+        @endif
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav><!-- .navbar -->
