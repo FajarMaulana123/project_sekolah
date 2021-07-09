@@ -14,15 +14,15 @@
 Route::get('/','Home@index');
 Route::get('home','admin\HomeController@index');
 
-<<<<<<< HEAD
+
 Route::get('login','Auth\LoginController@index');
 Route::get('daftar','Home@daftar');
-=======
+
 // Route::get('login','Auth\LoginController@index');
 Route::get('login','LoginController@index');
 Route::post('postlogin', 'LoginController@postlogin');
 Route::get('logout', 'LoginController@logout');
->>>>>>> 690079d5564daa30573c2516368de85e17518eac
+
 
 //kecamatan
 Route::get('kecamatan','KecamatanController@index');
