@@ -7,7 +7,6 @@
   @include('partials.css')
   </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-</body>
   <div class="wrapper">
   	@include('partials.navbar')
 
@@ -16,5 +15,7 @@
   	@yield('content')
 
   </div>
+   @include('partials.js')
+   @yield('js')
+</body>
 </html>
-@include('partials.js')

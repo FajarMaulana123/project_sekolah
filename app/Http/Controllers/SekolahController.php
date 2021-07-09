@@ -9,7 +9,7 @@ use App\Users;
 class SekolahController extends Controller
 {
 	public function index(){
-		$list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();;
+		$list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();
 		
 		return view('admin.sekolah.index',compact('list_sekolah'));
 	}
