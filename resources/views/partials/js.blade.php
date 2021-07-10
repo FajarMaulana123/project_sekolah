@@ -91,6 +91,18 @@ $(function () {
   })
 </script>
 <script>
+  $(function () {
+    // Summernote
+    $('#summernotes').summernote()
+
+    // CodeMirror
+    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+      mode: "htmlmixed",
+      theme: "monokai"
+    });
+  })
+</script>
+<script>
   $(function() {
     var Toast = Swal.mixin({
       toast: true,

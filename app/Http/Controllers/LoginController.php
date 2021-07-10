@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 class LoginController extends Controller
 {
     public function index(){
-        return view('login.login');
+        return view('auth.login');
     }
 
     public function postlogin(Request $request){

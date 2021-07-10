@@ -44,18 +44,28 @@
                   <input type="text" class="form-control" id="email" placeholder="Masukan Email" name="email" required>
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="nohp">No hp</label>
                       <input type="text" class="form-control" id="nohp" placeholder="Masukan No hp" name="nohp" required>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label>Tingkat</label>
                       <select class="form-control" name="tingkat">
                         <option value="SD">SD</option>
                         <option value="SMP">SMP</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Kecamatan</label>
+                      <select class="form-control" name="id_kec">
+                        <?php foreach ($list_kec as $kec) { ?>
+                          <option value="{{$kec->id_kec}}">{{$kec->nama_kec}}</option>
+                        <?php } ?>
                       </select>
                     </div>
                   </div>
@@ -65,9 +75,16 @@
                   <textarea name="alamat" class="form-control" rows="3" placeholder="Masukan Alamat"></textarea>
                 </div>
                 <div class="form-group">
+                  <label for="email">Visi & Misi</label>
+                  <div class="card-body">
+                    <textarea id="summernote" placeholder="Visi & Misi..." name="visimisi">
+                    </textarea>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label for="email">Deskripsi Sekolah</label>
                   <div class="card-body">
-                    <textarea id="summernote" placeholder="Deskripsi..." name="deskripsi">
+                    <textarea id="summernotes" placeholder="Deskripsi..." name="deskripsi">
                     </textarea>
                   </div>
                 </div>

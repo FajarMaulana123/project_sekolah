@@ -33,7 +33,7 @@
           </ul>
         </li> -->
         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-        @if (!Session::get('loginsiswa')) {
+        @if (!Session::get('loginsiswa')) 
           <li><a class="getstarted scrollto" href="{{url('login')}}">Login</a></li>
         @else
           <li><a class="getstarted scrollto" href="">{{Session::get('email')}}</a></li>

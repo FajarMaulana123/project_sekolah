@@ -122,16 +122,16 @@
               <div class="col-md-6 d-md-flex align-items-md-stretch">
                 <div class="count-box">
                   <i class="bi bi-award"></i>
-                  <span data-purecounter-start="0" data-purecounter-end="18" data-purecounter-duration="1" class="purecounter"></span>
-                  <p><strong>Sekolah SD</strong> | Jumlah sekolah SD yang telah terdaftar dan membuka pendaftaran</p>
+                  <span data-purecounter-start="0" data-purecounter-end="{{$sd->count()}}" data-purecounter-duration="1" class="purecounter"></span>
+                  <p><strong>Sekolah SD</strong> | Jumlah sekolah SD yang telah</p>
                 </div>
               </div>
 
               <div class="col-md-6 d-md-flex align-items-md-stretch">
                 <div class="count-box">
                   <i class="bi bi-award"></i>
-                  <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-                  <p><strong>Sekolah SMP</strong> | Jumlah sekolah SMP yang telah terdaftar dan membuka pendaftaran</p>
+                  <span data-purecounter-start="0" data-purecounter-end="{{$smp->count()}}" data-purecounter-duration="1" class="purecounter"></span>
+                  <p><strong>Sekolah SMP</strong> | Jumlah sekolah SMP yang telah</p>
                 </div>
               </div>
             </div>
@@ -187,120 +187,55 @@
       </div>
 
     </div>
-  </section><!-- End Services Section -->
+  </section>
 
-  <!-- ======= More Services Section ======= -->
   <section id="more-services" class="more-services">
     <div class="container">
-
       <div class="row">
         @foreach ($list_sekolah as $sekolah)
-        <div class="col-md-6 d-flex align-items-stretch">
+        <div class="col-md-6 d-flex align-items-stretch mt-4">
           <div class="card" style="background-image: url('{{asset('imageUpload/sekolah/'.$sekolah->foto)}}');" data-aos="fade-up" data-aos-delay="100">
             <div class="card-body">
               <h5 class="card-title"><a href="">{{ $sekolah->nama_sekolah }}</a></h5>
-              <?php
-                $kalimat_kecil = strtolower($sekolah->deskripsi);
-                $kalimat_new = ucwords($kalimat_kecil);
-                $arr = explode(" ", $kalimat_new);
-              ?>
-              <p class="card-text">{!! implode(" ",array_splice($arr,0,20))."..." !!}</p>
+              <!-- <p class="card-text">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor ut labore et dolore magna aliqua.</p> -->
               <div class="read-more"><a href="#"><i class="bi bi-arrow-right"></i> Lihat Sekolah</a></div>
             </div>
           </div>
         </div>
+        
         @endforeach
       </div>
-
     </div>
-  </section><!-- End More Services Section -->
+  </section>
+
+
+
+
+  
 
   <!-- ======= Features Section ======= -->
-  <!-- <section id="features" class="features">
+  <section id="features" class="features">
     <div class="container">
-
+      
       <div class="section-title" data-aos="fade-up">
-        <h2>Features</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p>
+        <h2>Kecamatan</h2>
+        <p>Lihat sekolah berdasarkan kecamatan yang ada di Indramayu</p>
       </div>
 
       <div class="row" data-aos="fade-up" data-aos-delay="300">
-        <div class="col-lg-3 col-md-4">
-          <div class="icon-box">
-            <i class="ri-store-line" style="color: #ffbb2c;"></i>
-            <h3><a href="">Lorem Ipsum</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
+        @foreach ($list_kecamatan as $kecamatan)
+        <div class="col-lg-3 col-md-3 mt-3 mt-md-2">
           <div class="icon-box">
             <i class="ri-bar-chart-box-line" style="color: #5578ff;"></i>
-            <h3><a href="">Dolor Sitema</a></h3>
+            <h3><a href="{{url('kategori_kecamatan')}}">{{$kecamatan->nama_kec}}</a></h3>
           </div>
         </div>
-        <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
-          <div class="icon-box">
-            <i class="ri-calendar-todo-line" style="color: #e80368;"></i>
-            <h3><a href="">Sed perspiciatis</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4 mt-lg-0">
-          <div class="icon-box">
-            <i class="ri-paint-brush-line" style="color: #e361ff;"></i>
-            <h3><a href="">Magni Dolores</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4">
-          <div class="icon-box">
-            <i class="ri-database-2-line" style="color: #47aeff;"></i>
-            <h3><a href="">Nemo Enim</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4">
-          <div class="icon-box">
-            <i class="ri-gradienter-line" style="color: #ffa76e;"></i>
-            <h3><a href="">Eiusmod Tempor</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4">
-          <div class="icon-box">
-            <i class="ri-file-list-3-line" style="color: #11dbcf;"></i>
-            <h3><a href="">Midela Teren</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4">
-          <div class="icon-box">
-            <i class="ri-price-tag-2-line" style="color: #4233ff;"></i>
-            <h3><a href="">Pira Neve</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4">
-          <div class="icon-box">
-            <i class="ri-anchor-line" style="color: #b2904f;"></i>
-            <h3><a href="">Dirada Pack</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4">
-          <div class="icon-box">
-            <i class="ri-disc-line" style="color: #b20969;"></i>
-            <h3><a href="">Moton Ideal</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4">
-          <div class="icon-box">
-            <i class="ri-base-station-line" style="color: #ff5828;"></i>
-            <h3><a href="">Verdo Park</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4">
-          <div class="icon-box">
-            <i class="ri-fingerprint-line" style="color: #29cc61;"></i>
-            <h3><a href="">Flavor Nivelanda</a></h3>
-          </div>
-        </div>
+        @endforeach
+        
       </div>
 
     </div>
-  </section> --><!-- End Features Section -->
+  </section><!-- End Features Section -->
 
   <!-- ======= Testimonials Section ======= -->
   <!-- <section id="testimonials" class="testimonials section-bg">

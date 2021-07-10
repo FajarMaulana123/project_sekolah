@@ -12,6 +12,7 @@
 */
 
 Route::get('/','Home@index');
+Route::get('kategori_kecamatan','Home@kategori');
 Route::get('home','admin\HomeController@index');
 
 

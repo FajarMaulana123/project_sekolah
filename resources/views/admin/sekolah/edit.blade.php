@@ -45,18 +45,28 @@
                   <input type="text" class="form-control" id="email" placeholder="Masukan Email" name="email" value="{{$data->email}}">
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="nohp">No hp</label>
                       <input type="text" class="form-control" id="nohp" placeholder="Masukan No hp" name="nohp" value="{{$data->nohp}}">
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label>Tingkat</label>
                       <select class="form-control" name="tingkat">
                         <option value="SD" <?php if($data->tingkat == 'SD') echo 'selected="selected"'; ?>>SD</option>
                         <option value="SMP" <?php if($data->tingkat == 'SMP') echo 'selected="selected"'; ?>>SMP</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Kecamatan</label>
+                      <select class="form-control" name="id_kec">
+                        <?php foreach ($list_kec as $kec) { ?>
+                          <option value="{{$kec->id_kec}}" <?php if ($kec->id_kec == $data->id_kec) echo ' selected="selected"'; ?>>{{$kec->nama_kec}}</option>
+                        <?php } ?>
                       </select>
                     </div>
                   </div>
@@ -69,6 +79,13 @@
                   <label for="email">Deskripsi Sekolah</label>
                   <div class="card-body">
                     <textarea id="summernote" placeholder="Deskripsi..." name="deskripsi">{{$data->deskripsi}}
+                    </textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="visi">Visi & Misi</label>
+                  <div class="card-body">
+                    <textarea id="summernotes" placeholder="Visi & Misi..." name="visimisi">{{$data->visimisi}}
                     </textarea>
                   </div>
                 </div>

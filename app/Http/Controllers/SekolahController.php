@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sekolah;
+use App\Kecamatan;
 use App\Users;
 
 use Illuminate\Support\Facades\File;
@@ -25,7 +26,8 @@ class SekolahController extends Controller
         if (!session::get('loginsuper')) {
             return redirect('login');
         }else{
-		return view ('admin.sekolah.create');
+            $list_kec = Kecamatan::orderBy('nama_kec', 'ASC')->get();
+		    return view ('admin.sekolah.create', compact('list_kec'));
         }
 	}
 
@@ -45,12 +47,14 @@ class SekolahController extends Controller
 		$id_user = $users->id_user;
 		$sekolah = new Sekolah;
 		$sekolah->id_user =$id_user;
+        $sekolah->id_kec =$request->id_kec;
 		$sekolah->nama_sekolah =$request->nama_sekolah;
 		$sekolah->nama_kps =$request->nama_kps;
 		$sekolah->tingkat =$request->tingkat;
 		$sekolah->email =$request->email;
 		$sekolah->nohp =$request->nohp;
 		$sekolah->alamat =$request->alamat;
+        $sekolah->visimisi =$request->visimisi;
 		$sekolah->deskripsi =$request->deskripsi;
 		$sekolah->daya_tampung =$request->daya_tampung;
 		$sekolah->jml_diterima =$request->jml_diterima;
@@ -116,7 +120,8 @@ class SekolahController extends Controller
             return redirect('login');
         }else{
         $data = Sekolah::where('id_sekolah', $sekolah)->first();
-        return view('admin.sekolah.edit', compact('data'));
+        $list_kec = Kecamatan::orderBy('nama_kec', 'ASC')->get();
+        return view('admin.sekolah.edit', compact('data','list_kec'));
         }
 
     }
@@ -125,12 +130,14 @@ class SekolahController extends Controller
         $id_sekolah = $request->id_sekolah;
         $data = Sekolah::find($id_sekolah);
         // $data->id_user =$id_user;
+        $data->id_kec =$request->id_kec;
 		$data->nama_sekolah =$request->nama_sekolah;
 		$data->nama_kps =$request->nama_kps;
 		$data->tingkat =$request->tingkat;
 		$data->email =$request->email;
 		$data->nohp =$request->nohp;
 		$data->alamat =$request->alamat;
+        $data->visimisi =$request->visimisi;
 		$data->deskripsi =$request->deskripsi;
 		$data->daya_tampung =$request->daya_tampung;
 		$data->jml_diterima =$request->jml_diterima;
