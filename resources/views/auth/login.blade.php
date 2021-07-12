@@ -4,25 +4,34 @@
 <link href="{{asset('general/css/log.css')}}" rel="stylesheet">
 <style type="text/css">
   a {
-  color: #92badd;
-  display:inline-block;
-  text-decoration: none;
-  font-weight: 400;
-}
+    color: #92badd;
+    display:inline-block;
+    text-decoration: none;
+    font-weight: 400;
+  }
 </style>
 <div class="wrapper fadeInDown">
   <div id="formContent">
-    <div class="fadeIn first">
-      <img src="{{asset('imageUpload/logo/tut.png')}}" id="icon" alt="User Icon" style="width: 100px; margin: 20px;" />
+    <div style="margin-bottom: 30px; margin-top: 20px;" class="fadeIn fourth">
+      <a href="{{url('/')}}" style="float: left; margin-left: 35px; margin-right: -80px; margin-top: 5px;"><img src="{{asset('general/img/back.png')}}" width="30" height="25" ></a>
+      <h3 style="font-family: 'Open Sans', sans-serif; text-align: center;  margin-top: 20px; "><b>Login </b></h3>
     </div>
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block" style="margin-right: 40px; margin-left: 40px; margin-top: 20px;">
+      <button type="button" class="close" data-dismiss="alert">×</button> 
+      <strong>{{ $message }}</strong>
+    </div>
+    @endif
     <form action="{{url('postlogin')}}" method="post">
       @csrf
       <input type="text" id="login" class="fadeIn second" name="email" placeholder="Email">
       <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
+    <a style="margin-top: -50px; margin-bottom: 20px;" class="underlineHover" href="{{url('home')}}">Lupa Password?</a>
     <div id="formFooter">
-      <a class="underlineHover" href="{{url('home')}}">Forgot Password?</a>
+      Belum punya akun? <a class="underlineHover" href="{{url('daftar/siswa')}}">Daftar Sekarang</a>
     </div>
   </div>
 </div>
+@include('partials.js')

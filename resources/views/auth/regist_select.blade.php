@@ -25,7 +25,7 @@
         </table>
       </div>
     </a>
-    <a class="btn btn-primary fadeIn fourth hyuwan-hyu" style="color: black; margin-top: -10px; margin-bottom: 80px;">
+    <a class="btn btn-primary fadeIn fourth hyuwan-hyu" style="color: black; margin-top: -10px; margin-bottom: 80px;" href="{{url('daftar/siswa')}}">
       <div>
         <table>
           <tr>

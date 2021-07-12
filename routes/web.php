@@ -18,6 +18,8 @@ Route::get('home','admin\HomeController@index');
 
 Route::get('login','Auth\LoginController@index');
 Route::get('daftar','Home@daftar');
+Route::get('daftar/siswa','Home@daftar_siswa');
+Route::post('akunsiswa', 'Home@post_akunsiswa');
 
 // Route::get('login','Auth\LoginController@index');
 Route::get('login','LoginController@index');

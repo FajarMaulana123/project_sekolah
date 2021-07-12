@@ -10,7 +10,7 @@
     <nav id="navbar" class="navbar">
       <ul>
         <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-        <li><a class="nav-link scrollto" href="#about">About</a></li>
+        <!-- <li><a class="nav-link scrollto" href="#about">About</a></li> -->
         <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li>
         <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
         <li><a class="nav-link scrollto" href="#team">Team</a></li>
@@ -32,12 +32,23 @@
             <li><a href="#">Drop Down 4</a></li>
           </ul>
         </li> -->
-        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+        <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
         @if (!Session::get('loginsiswa')) 
           <li><a class="getstarted scrollto" href="{{url('login')}}">Login</a></li>
         @else
-          <li><a class="getstarted scrollto" href="">{{Session::get('email')}}</a></li>
-          <li><a class="getstarted scrollto" href="{{url('logout')}}">logout</a></li>
+          <?php $id = Session::get('id_user');
+          $username = \App\Siswa::where(['id_user' => $id])->first() ?>
+
+          <li><a class="nav-link scrollto" href="">Hasil Seleksi</a></li>
+          <li style="margin-right: -20px;"><a><img src="{{asset('general/img/siswa.png')}}" width="40" style="display: inline;"></a></li>
+          <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a href="#">Lihat Profil</a></li>
+            <li><a href="{{url('logout')}}">Logout</a></li>
+          </ul>
+        </li>
+          <!-- <li><a class="getstarted scrollto" href="">{{Session::get('email')}}</a></li> -->
+          <!-- <li><a class="getstarted scrollto" href="{{url('logout')}}">logout</a></li> -->
         @endif
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>

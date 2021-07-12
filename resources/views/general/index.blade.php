@@ -10,7 +10,11 @@
         <h1 data-aos="fade-up">Penerimaan Peserta Didik Baru (PPDB) Online</h1>
         <h2 data-aos="fade-up" data-aos-delay="400">Tingkat SD & SMP Se-Indramayu</h2>
         <div data-aos="fade-up" data-aos-delay="800">
-          <a href="{{url('daftar')}}" class="btn-get-started scrollto">Daftar Sekarang</a>
+          @if (!Session::get('loginsiswa')) 
+            <a href="{{url('daftar')}}" class="btn-get-started scrollto">Daftar Sekarang</a>
+          @else
+            <a href="#sekolah" class="btn-get-started scrollto">Cari Sekolah</a>
+          @endif
         </div>
       </div>
       <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="200">
@@ -143,7 +147,7 @@
   </section><!-- End Counts Section -->
 
   <!-- ======= Services Section ======= -->
-  <section id="services" class="services">
+  <section id="sekolah" class="services">
     <div class="container">
 
       <div class="section-title" data-aos="fade-up">
@@ -198,7 +202,11 @@
             <div class="card-body">
               <h5 class="card-title"><a href="">{{ $sekolah->nama_sekolah }}</a></h5>
               <!-- <p class="card-text">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor ut labore et dolore magna aliqua.</p> -->
-              <div class="read-more"><a href="#"><i class="bi bi-arrow-right"></i> Lihat Sekolah</a></div>
+              @if(!Session::get('loginsiswa'))
+              <div class="read-more"><a href="{{url('login')}}"><i class="bi bi-arrow-right"></i> Lihat Sekolah</a></div>
+              @else
+              <div class="read-more"><a href=""><i class="bi bi-arrow-right"></i> Lihat Sekolah</a></div>
+              @endif
             </div>
           </div>
         </div>
@@ -214,6 +222,7 @@
   
 
   <!-- ======= Features Section ======= -->
+  @if (Session::get('loginsiswa'))
   <section id="features" class="features">
     <div class="container">
       
@@ -235,7 +244,9 @@
       </div>
 
     </div>
-  </section><!-- End Features Section -->
+  </section>
+  @endif
+  <!-- End Features Section -->
 
   <!-- ======= Testimonials Section ======= -->
   <!-- <section id="testimonials" class="testimonials section-bg">
