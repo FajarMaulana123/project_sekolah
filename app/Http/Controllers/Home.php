@@ -6,6 +6,7 @@ use App\Sekolah;
 use App\Kecamatan;
 use App\Users;
 use App\Siswa;
+use Illuminate\Support\Facades\Input;
 
 class Home extends Controller
 {
@@ -22,27 +23,41 @@ class Home extends Controller
 	}
 
 	public function daftar_siswa(){
+		$cpassword = null;
+		$password = null;
+		$nama = null;
+		$email = null;
 		return view('auth.regist_siswa');
 	}
 
 	public function post_akunsiswa(Request $request){
-		$users = new Users;
-		$users->email =$request->email;
-		$users->password = password_hash($request->password, PASSWORD_DEFAULT);
-		$users->role = 'siswa';
-		$users->status = 'aktif';
-		$users->save();
+		$cpassword = $request->cpassword;
+		$password = $request->password;
+		$nama = $request->nama;
+		$email = $request->email;
 
-		$id_user = $users->id_user;
-		$siswa = new Siswa;
-		$siswa->id_user =$id_user;
-		$siswa->nama =$request->nama;
-		$siswa->email =$request->email;
-        
-		
-        $siswa->save();
+		if ($cpassword != $password) {
+			return redirect('/daftar/siswa')->withInput()->with(['warning' => 'Konfirmasi password tidak sama!']);
+		}else{
 
-		return redirect('login')->with(['success' => 'Pendaftaran Berhasil!']);
+			$users = new Users;
+			$users->email =$request->email;
+			$users->password = password_hash($request->password, PASSWORD_DEFAULT);
+			$users->role = 'siswa';
+			$users->status = 'aktif';
+			$users->save();
+
+			$id_user = $users->id_user;
+			$siswa = new Siswa;
+			$siswa->id_user =$id_user;
+			$siswa->nama =$request->nama;
+			$siswa->email =$request->email;
+	        
+			
+	        $siswa->save();
+
+			return redirect('login')->with(['success' => 'Pendaftaran Berhasil!']);
+		}
 	}
 
 	public function kategori(){

@@ -22,10 +22,16 @@
       <strong>{{ $message }}</strong>
     </div>
     @endif
+    @if ($message = Session::get('danger'))
+    <div class="alert alert-danger alert-block" style="margin-right: 40px; margin-left: 40px; margin-top: 20px;">
+      <button type="button" class="close" data-dismiss="alert">×</button> 
+      <strong>{{ $message }}</strong>
+    </div>
+    @endif
     <form action="{{url('postlogin')}}" method="post">
       @csrf
-      <input type="text" id="login" class="fadeIn second" name="email" placeholder="Email">
-      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+      <input type="email" id="login" class="fadeIn second" name="email" placeholder="Email" value="{{ Input::old('email') }}" required>
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password" value="{{ Input::old('password') }}" required>
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
     <a style="margin-top: -50px; margin-bottom: 20px;" class="underlineHover" href="{{url('home')}}">Lupa Password?</a>
