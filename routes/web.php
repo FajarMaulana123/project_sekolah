@@ -45,3 +45,11 @@ Route::get('sekolah/{sekolah}', 'SekolahController@hapus');
 Route::get('status_sekolah/{sekolah}','SekolahController@acc');
 Route::get('detail_sekolah/{sekolah}','SekolahController@detail');
 
+//prestasi
+Route::get('prestasi','SekolahController@prestasi');
+Route::get('prestasi/create', 'SekolahController@create_prestasi');
+Route::post('prestasi/create', 'SekolahController@post_prestasi');
+Route::get('prestasi/{id}/edit', 'SekolahController@edit_prestasi');
+Route::post('prestasi/{id}', 'SekolahController@update_prestasi');
+Route::get('prestasi/{id}', 'SekolahController@hapus_prestasi');
+

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Sekolah;
 use App\Kecamatan;
 use App\Users;
+use App\Prestasi;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
@@ -188,5 +189,61 @@ class SekolahController extends Controller
 		$data->delete();
 		return redirect('sekolah')->with(['success' => 'Berhasil Hapus Data!']);
 	}
+
+    public function prestasi(){
+        if (!session::get('loginadmin')) {
+            return redirect('login');
+        }else{
+            $id = Session::get('id_user');
+            $i = Sekolah::where('id_user', $id)->first();
+            $list_pres = Prestasi::where('id_sekolah', $i->id_sekolah)->get();
+            return view('admin.prestasi.index', compact('list_pres'));
+        }
+    }
+
+    public function create_prestasi(){
+        if (!session::get('loginadmin')) {
+            return redirect('login');
+        }else{
+            // dd('ss');
+            return view('admin.prestasi.create');
+        }
+    }
+
+    public function post_prestasi(Request $request){
+        $id = Session::get('id_user');
+        $i = Sekolah::where('id_user', $id)->first();
+        // $list_pres = Prestasi::where('id_sekolah', $i->id_sekolah)->get();
+
+        $data = new Prestasi;
+        $data->id_sekolah = $i->id_sekolah;
+        $data->judul = $request->judul;
+        $data->deskripsi = $request->deskripsi;
+        $data->save();
+        return redirect('/prestasi');
+    }
+
+    public function edit_prestasi($id){
+        if (!session::get('loginadmin')) {
+            return redirect('login');
+        }else{
+            $data = Prestasi::where('id_prestasi',$id)->first();
+            return view('admin.prestasi.edit', compact('data'));
+        }
+    }
+
+    public function update_prestasi(Request $request, $id){
+        Prestasi::where('id_prestasi',$id)->update([
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+        ]);
+        return redirect('/prestasi');
+    }
+
+    public function hapus_prestasi($id){
+        $data = Prestasi::findOrFail($id);
+        $data->delete();
+        return redirect('/prestasi');
+    }
 
 }

@@ -73,7 +73,7 @@
         @endif
         @if(Session::get('loginadmin'))
         <li class="nav-item">
-          <a href="" class="nav-link">
+          <a href="{{url('prestasi')}}" class="nav-link">
             <i class="nav-icon fa fa-trophy"></i>
             <p>
               Prestasi
