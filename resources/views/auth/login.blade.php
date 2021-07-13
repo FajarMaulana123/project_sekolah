@@ -36,7 +36,7 @@
     </form>
     <a style="margin-top: -50px; margin-bottom: 20px;" class="underlineHover" href="{{url('home')}}">Lupa Password?</a>
     <div id="formFooter">
-      Belum punya akun? <a class="underlineHover" href="{{url('daftar/siswa')}}">Daftar Sekarang</a>
+      Belum punya akun? <a class="underlineHover" href="{{url('daftar')}}">Daftar Sekarang</a>
     </div>
   </div>
 </div>

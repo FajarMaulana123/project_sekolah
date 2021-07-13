@@ -11,9 +11,9 @@
         <h2 data-aos="fade-up" data-aos-delay="400">Tingkat SD & SMP Se-Indramayu</h2>
         <div data-aos="fade-up" data-aos-delay="800">
           @if (!Session::get('loginsiswa')) 
-            <a href="{{url('daftar')}}" class="btn-get-started scrollto">Daftar Sekarang</a>
+          <a href="{{url('daftar')}}" class="btn-get-started scrollto">Daftar Sekarang</a>
           @else
-            <a href="#sekolah" class="btn-get-started scrollto">Cari Sekolah</a>
+          <a href="#sekolah" class="btn-get-started scrollto">Cari Sekolah</a>
           @endif
         </div>
       </div>
@@ -197,6 +197,16 @@
     <div class="container">
       <div class="row">
         @foreach ($list_sekolah as $sekolah)
+        <?php
+          $jud = $sekolah->nama_sekolah;
+          $string = str_replace(array('[\', \']'), '', $jud);
+          $string = preg_replace('/\[.*\]/U', '', $jud);
+          $string = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $jud);
+          $string = htmlentities($jud, ENT_COMPAT, 'utf-8');
+          $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $jud );
+          $string = preg_replace(array('/[^a-z0-9]/i', '/[-]+/') , '-', $jud);
+          $nama = strtolower(trim($string, '-'));
+        ?>
         <div class="col-md-6 d-flex align-items-stretch mt-4">
           <div class="card" style="background-image: url('{{asset('imageUpload/sekolah/'.$sekolah->foto)}}');" data-aos="fade-up" data-aos-delay="100">
             <div class="card-body">
@@ -205,7 +215,7 @@
               @if(!Session::get('loginsiswa'))
               <div class="read-more"><a href="{{url('login')}}"><i class="bi bi-arrow-right"></i> Lihat Sekolah</a></div>
               @else
-              <div class="read-more"><a href=""><i class="bi bi-arrow-right"></i> Lihat Sekolah</a></div>
+              <div class="read-more"><a href="{{url('detail-sekolah/'.$nama.'/'.Crypt::encrypt($sekolah->id_sekolah))}}"><i class="bi bi-arrow-right"></i> Lihat Sekolah</a></div>
               @endif
             </div>
           </div>
@@ -225,7 +235,7 @@
   @if (Session::get('loginsiswa'))
   <section id="features" class="features">
     <div class="container">
-      
+
       <div class="section-title" data-aos="fade-up">
         <h2>Kecamatan</h2>
         <p>Lihat sekolah berdasarkan kecamatan yang ada di Indramayu</p>
