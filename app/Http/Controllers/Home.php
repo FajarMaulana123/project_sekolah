@@ -7,6 +7,7 @@ use App\Kecamatan;
 use App\Users;
 use App\Siswa;
 use Illuminate\Support\Facades\Input;
+use Crypt;
 
 class Home extends Controller
 {
@@ -28,6 +29,16 @@ class Home extends Controller
 		$nama = null;
 		$email = null;
 		return view('auth.regist_siswa');
+	}
+
+	public function detail_sekolah($nama, $id){
+		$id_sekolah = Crypt::decrypt($id);
+		$sekolah = Sekolah::where('id_sekolah', $id_sekolah)->first();
+		return view('general.detail_sekolah', compact('sekolah'));
+	}
+
+	public function jalur_pendaftaran(){
+		return view('auth.jenis_pendaftaran');
 	}
 
 	public function post_akunsiswa(Request $request){

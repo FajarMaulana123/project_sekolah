@@ -60,6 +60,38 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 1;
 }
 
+.back-to-daftar {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  margin: 0 auto;
+  display: block;
+  bottom: 15px;
+  z-index: 996;
+  color: white;
+  background: #3498db;
+  width: 80%;
+  height: 40px;
+  border-radius: 4px;
+  transition: all 0.4s;
+}
+
+.back-to-daftar i {
+  font-size: 28px;
+  color: #fff;
+  line-height: 0;
+}
+
+.back-to-daftar:hover {
+  background: #57aae1;
+  color: #fff;
+}
+
+.back-to-daftar.active {
+  visibility: visible;
+  opacity: 1;
+}
+
 /*--------------------------------------------------------------
 # Disable AOS delay on mobile
 --------------------------------------------------------------*/

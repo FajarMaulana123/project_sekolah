@@ -130,6 +130,29 @@ h2.active {
   transform: scale(0.95);
 }
 
+.hyuwan-hyu-re{
+  background-color: #fff; border-color: #fff;
+  width: 80%;
+  height: 110px;
+  max-height: 90px;
+  margin: 20px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.hyuwan-hyu-re:hover  {
+  background-color: #fff;
+  border-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.hyuwan-hyu-re:active  {
+  -moz-transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
 
 
 

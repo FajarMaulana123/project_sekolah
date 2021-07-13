@@ -110,6 +110,19 @@
     onscroll(document, toggleBacktotop)
   }
 
+  let backtodaftar = select('.back-to-daftar')
+  if (backtodaftar) {
+    const toggleBacktodaftar = () => {
+      if (window.scrollY > 100) {
+        backtodaftar.classList.add('active')
+      } else {
+        backtodaftar.classList.remove('active')
+      }
+    }
+    window.addEventListener('load', toggleBacktodaftar)
+    onscroll(document, toggleBacktodaftar)
+  }
+
   /**
    * Mobile nav toggle
    */
