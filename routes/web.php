@@ -53,3 +53,14 @@ Route::get('prestasi/{id}/edit', 'SekolahController@edit_prestasi');
 Route::post('prestasi/{id}', 'SekolahController@update_prestasi');
 Route::get('prestasi/{id}', 'SekolahController@hapus_prestasi');
 
+//tahun ajaran
+Route::get('tahunajaran', 'SekolahController@tahunajaran');
+Route::get('tahunajaran/create', 'SekolahController@create_thajaran');
+Route::post('tahunajaran/create', 'SekolahController@post_thajaran');
+Route::get('tahunajaran/{id}/edit', 'SekolahController@edit_thajaran');
+Route::post('tahunajaran/update','SekolahController@update_thajaran');
+Route::get('tahunajaran/{id}', 'SekolahController@hapus_thajaran');
+
+//ppdb_sekolah
+Route::get('ppdb_sekolah', 'PostCategoryController@ppdb_sekolah');
+

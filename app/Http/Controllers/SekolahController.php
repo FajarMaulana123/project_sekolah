@@ -7,6 +7,7 @@ use App\Sekolah;
 use App\Kecamatan;
 use App\Users;
 use App\Prestasi;
+use App\TahunAjaran;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
@@ -244,6 +245,61 @@ class SekolahController extends Controller
         $data = Prestasi::findOrFail($id);
         $data->delete();
         return redirect('/prestasi');
+    }
+
+    public function tahunajaran(){
+        if (!session::get('loginsuper')) {
+            return redirect('login');
+        }else{
+            $data = TahunAjaran::all();
+            return view('admin.tahun_ajaran.index', compact('data'));
+        }
+    }
+
+    public function create_thajaran(){
+        if (!session::get('loginsuper')) {
+            return redirect('login');
+        }else{
+            return view('admin.tahun_ajaran.create');
+        }
+    }
+
+    public function post_thajaran(Request $request){
+        $data = new TahunAjaran;
+        $data->tahun_ajaran = $request->tahun_ajaran;
+        $data->save();
+        return redirect('/tahunajaran');
+    }
+
+    public function edit_thajaran($id){
+        if (!session::get('loginsuper')) {
+            return redirect('login');
+        }else{
+            $data = TahunAjaran::where('id_tahunajaran', $id)->first();
+            return view('admin.tahun_ajaran.edit', compact('data'));
+        }
+    }
+
+    public function update_thajaran(Request $request){
+        TahunAjaran::where('id_tahunajaran', $request->id)->update([
+            'tahun_ajaran' => $request->tahun_ajaran,
+        ]);
+        return redirect('/tahunajaran');
+    }
+
+    public function hapus_thajaran($id){
+        $data = TahunAjaran::findOrFail($id);
+        $data->delete();
+        return redirect('/tahunajaran');
+    }
+
+    public function ppdb_sekolah(){
+        if (!session::get('loginadmin')) {
+            return redirect('login');
+        }else{
+            return view('admin.ppdb.index');
+        
+        }
     }
 
 }

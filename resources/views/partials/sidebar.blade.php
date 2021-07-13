@@ -70,6 +70,14 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{url('tahunajaran')}}" class="nav-link">
+            <i class="nav-icon fa fa-trophy"></i>
+            <p>
+              Tahun Ajaran
+            </p>
+          </a>
+        </li>
         @endif
         @if(Session::get('loginadmin'))
         <li class="nav-item">
@@ -77,6 +85,14 @@
             <i class="nav-icon fa fa-trophy"></i>
             <p>
               Prestasi
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{url('ppdb_sekolah')}}" class="nav-link">
+            <i class="nav-icon fa fa-trophy"></i>
+            <p>
+              PPDB
             </p>
           </a>
         </li>
