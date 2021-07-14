@@ -6,7 +6,10 @@ use App\Sekolah;
 use App\Kecamatan;
 use App\Users;
 use App\Siswa;
+use App\Prestasi;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Crypt;
 
 class Home extends Controller
@@ -33,12 +36,114 @@ class Home extends Controller
 
 	public function detail_sekolah($nama, $id){
 		$id_sekolah = Crypt::decrypt($id);
+		$id_user = session::get('id_user');
 		$sekolah = Sekolah::where('id_sekolah', $id_sekolah)->first();
-		return view('general.detail_sekolah', compact('sekolah'));
+		$prestasi = Prestasi::where('id_sekolah', $id_sekolah)->get();
+		$siswa = Siswa::where('id_user', $id_user)->first();
+		return view('general.detail_sekolah', compact('sekolah','prestasi','siswa'));
 	}
 
 	public function jalur_pendaftaran(){
 		return view('auth.jenis_pendaftaran');
+	}
+
+	public function profile($nama){
+		$id_user = session::get('id_user');
+		$siswa = Siswa::where('id_user', $id_user)->first();
+		return view('general.profile', compact('siswa'));
+	}
+
+	public function editsiswa(Request $request){
+		$data = $request->all();
+        $data = request()->except(['_token']);
+		if($request->hasFile('akte')){
+            // File::delete('bukti'. $data->bukti);
+            $image = $request->file('akte');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/dokumen';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['akte'] = $image_name;
+            }
+        }
+        if($request->hasFile('ijazah')){
+            // File::delete('imageUpload/logo'. $data->logo);
+            $image = $request->file('ijazah');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/dokumen';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['ijazah'] = $image_name;
+            }
+        }
+        if($request->hasFile('skhun')){
+            // File::delete('imageUpload/sekolah'. $data->foto);
+            $image = $request->file('skhun');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/dokumen';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['skhun'] = $image_name;
+            }
+        }
+        if($request->hasFile('kk')){
+            // File::delete('imageUpload/sekolah'. $data->foto);
+            $image = $request->file('kk');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/dokumen';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['kk'] = $image_name;
+            }
+        }
+        if($request->hasFile('sertifikat1')){
+            // File::delete('imageUpload/sekolah'. $data->foto);
+            $image = $request->file('sertifikat1');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/dokumen';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['sertifikat1'] = $image_name;
+            }
+        }
+        if($request->hasFile('sertifikat2')){
+            // File::delete('imageUpload/sekolah'. $data->foto);
+            $image = $request->file('sertifikat2');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/dokumen';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['sertifikat2'] = $image_name;
+            }
+        }
+        if($request->hasFile('sertifikat3')){
+            // File::delete('imageUpload/sekolah'. $data->foto);
+            $image = $request->file('sertifikat3');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/dokumen';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['sertifikat3'] = $image_name;
+            }
+        }
+
+        // $data->update();
+        Siswa::where('id_siswa', $request->id_siswa)->update($data);
+        return redirect('profile/'.$request->nama)->with(['success' => 'Berhasil Update Data diri!']);
 	}
 
 	public function post_akunsiswa(Request $request){

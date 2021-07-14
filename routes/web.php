@@ -22,6 +22,8 @@ Route::get('daftar/siswa','Home@daftar_siswa');
 Route::post('akunsiswa', 'Home@post_akunsiswa');
 Route::get('detail-sekolah/{nama}/{id}', 'Home@detail_sekolah');
 Route::get('jalur-pendaftaran', 'Home@jalur_pendaftaran');
+Route::get('profile/{nama}', 'Home@profile');
+Route::post('editsiswa', 'Home@editsiswa');
 
 // Route::get('login','Auth\LoginController@index');
 Route::get('login','LoginController@index');

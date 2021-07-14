@@ -2,14 +2,13 @@
   <div class="container d-flex align-items-center justify-content-between">
 
     <div class="logo">
-      <h1><a href="index.html">My School</a></h1>
+      <h1><a href="{{url('/')}}">My School</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
     </div>
 
     <nav id="navbar" class="navbar">
       <ul>
-        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
         <!-- <li><a class="nav-link scrollto" href="#about">About</a></li> -->
         <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li>
         <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
@@ -33,26 +32,45 @@
           </ul>
         </li> -->
         <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
+        <?php
+        $id_user = Session::get('id_user');
+        $siswa = \App\Siswa::where('id_user', $id_user)->first();
+        $jud = $siswa->nama;
+        $string = str_replace(array('[\', \']'), '', $jud);
+        $string = preg_replace('/\[.*\]/U', '', $jud);
+        $string = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $jud);
+        $string = htmlentities($jud, ENT_COMPAT, 'utf-8');
+        $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $jud );
+        $string = preg_replace(array('/[^a-z0-9]/i', '/[-]+/') , '-', $jud);
+        $nama = strtolower(trim($string, '-'));
+        ?>
         @if (!Session::get('loginsiswa')) 
-          <li><a class="getstarted scrollto" href="{{url('login')}}">Login</a></li>
+        <li><a class="getstarted scrollto" href="{{url('login')}}">Login</a></li>
         @else
-          <?php $id = Session::get('id_user');
-          $username = \App\Siswa::where(['id_user' => $id])->first() ?>
+        <?php $id = Session::get('id_user');
+        $username = \App\Siswa::where(['id_user' => $id])->first() ?>
+        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+        <li><a class="nav-link scrollto" href="">Hasil Seleksi</a></li>
+        <li style="margin-right: -20px;"><a><img src="{{asset('general/img/siswa.png')}}" width="40" style="display: inline;"></a></li>
+        <?php if ($username->tempat == NULL && $username->tgl_lahir == NULL && $username->asal_sekolah == NULL && $username->alamat == NULL && $username->nohp == NULL && $username->foto == NULL && $username->akte == NULL && $username->ijazah == NULL && $username->skhun == NULL && $username->kk == NULL) { ?>
+          <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i> <p style="color: red; font-size: 20px;">*</p></a>
+            <ul>
+              <li><a href="{{url('profile/'.$nama)}}"><p style="display: inline;">Lihat Profil</p><p style="color: red;">*</p></a></li>
+              <li><a href="{{url('logout')}}">Logout</a></li>
+            </ul>
+          <?php }else{ ?> 
+            <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a href="{{url('profile/'.$nama)}}"><p style="display: inline;">Lihat Profil</p></a></li>
+                <li><a href="{{url('logout')}}">Logout</a></li>
+              </ul>
+            <?php }?>
 
-          <li><a class="nav-link scrollto" href="">Hasil Seleksi</a></li>
-          <li style="margin-right: -20px;"><a><img src="{{asset('general/img/siswa.png')}}" width="40" style="display: inline;"></a></li>
-          <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a href="#">Lihat Profil</a></li>
-            <li><a href="{{url('logout')}}">Logout</a></li>
-          </ul>
-        </li>
-          <!-- <li><a class="getstarted scrollto" href="">{{Session::get('email')}}</a></li> -->
-          <!-- <li><a class="getstarted scrollto" href="{{url('logout')}}">logout</a></li> -->
-        @endif
-      </ul>
-      <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav><!-- .navbar -->
+          </li>
+          @endif
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
 
-  </div>
-</header>
+    </div>
+  </header>

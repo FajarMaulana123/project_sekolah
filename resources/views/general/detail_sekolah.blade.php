@@ -51,9 +51,13 @@
 
         <h3 style="margin-top: 50px;">Prestasi</h3>
         <hr>
-        <p>
-          Belum ada
-        </p>
+        <ol>
+          
+          @foreach ($prestasi as $pres)
+              <li><h6>{{$pres->judul}}</h6></li>
+              <p style="font-size: 14px;">{!!$pres->deskripsi!!}</p>
+          @endforeach
+        </ol>
 
         <h3 style="margin-top: 50px;">Info Lainnya</h3>
         <hr>
@@ -74,7 +78,21 @@
 
       </div>
     </div>
-    <a href="{{url('jalur-pendaftaran')}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
+    <?php
+          $jud = $siswa->nama;
+          $string = str_replace(array('[\', \']'), '', $jud);
+          $string = preg_replace('/\[.*\]/U', '', $jud);
+          $string = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $jud);
+          $string = htmlentities($jud, ENT_COMPAT, 'utf-8');
+          $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $jud );
+          $string = preg_replace(array('/[^a-z0-9]/i', '/[-]+/') , '-', $jud);
+          $nama = strtolower(trim($string, '-'));
+        ?>
+    <?php if ($siswa->tempat == NULL && $siswa->tgl_lahir == NULL && $siswa->asal_sekolah == NULL && $siswa->alamat == NULL && $siswa->nohp == NULL && $siswa->foto == NULL && $siswa->akte == NULL && $siswa->ijazah == NULL && $siswa->skhun == NULL && $siswa->kk == NULL) { ?>
+      <a href="{{url('profile/'.$nama)}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
+    <?php }else{ ?>
+      <a href="{{url('jalur-pendaftaran')}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
+    <?php } ?>
   </div>
 </section>
 @endsection
