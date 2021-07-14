@@ -56,30 +56,30 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php $no = 1; ?>
-                  @foreach ($list_sekolah as $sekolah)
+                  <?php $no = 1; $i = 0;?>
+                  @foreach ($data as $sekolah)
                   <tr>
                     <td>{{$no++}}</td>
-                    <td>{{$sekolah->nama_sekolah}}</td>
-                    <td>{{$sekolah->nama_kps}}</td>
-                    <td>{{$sekolah->daya_tampung}}</td>
-                    <td>{{$sekolah->jml_diterima}}</td>
+                    <td>{{$sekolah['nama_sekolah']}}</td>
+                    <td>{{$sekolah['nama_kps']}}</td>
+                    <td>{{$sekolah['daya_tampung']}}</td>
+                    <td>{{$sekolah['jml_diterima']}}</td>
                     <td>
-                      @if ($sekolah->status == 'aktif')
+                      @if ($sekolah['status'] == 'aktif')
                       <a type="submit" class="btn btn-info btn-xs " ><i class="fa fa-check"></i>  ACC</a>
                       @else
                       <a type="submit" class="btn btn-secondary btn-xs " >Pending...</a>
                       @endif
                     </td>
                     <td>
-                      @if ($sekolah->status == 'aktif')
-                      <a type="submit" class="btn btn-secondary btn-sm " href="{{ url('/status_sekolah/'.$sekolah->id_user) }}">Pending...</a>
+                      @if ($sekolah['status'] == 'aktif')
+                      <a type="submit" class="btn btn-secondary btn-sm " href="{{ url('/status_sekolah/'.$sekolah['id_user']) }}">Pending...</a>
                       @else
-                      <a type="submit" class="btn btn-info btn-sm " href="{{ url('/status_sekolah/'.$sekolah->id_user) }}"><i class="fa fa-check"></i> ACC</a>
+                      <a type="submit" class="btn btn-info btn-sm " href="{{ url('/status_sekolah/'.$sekolah['id_user']) }}"><i class="fa fa-check"></i> ACC</a>
                       @endif
                       <a href="#" data-toggle="modal" data-target="#modal-lg{{$no}}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> Detail</a>
-                      <a type="submit" class="btn btn-warning btn-sm " href="{{ url('/editsekolah/'.$sekolah->id_sekolah) }}"><i class="fa fa-edit"></i> Edit</a>
-                      <a type="submit" class="btn btn-danger btn-sm " href="{{ url('/sekolah/'.$sekolah->id_sekolah) }}" onclick="return confirm('Yakin data akan dihapus?')"><i class="fa fa-trash"></i> Hapus</a>
+                      <a type="submit" class="btn btn-warning btn-sm " href="{{ url('/editsekolah/'.$sekolah['id_sekolah']) }}"><i class="fa fa-edit"></i> Edit</a>
+                      <a type="submit" class="btn btn-danger btn-sm " href="{{ url('/sekolah/'.$sekolah['id_sekolah']) }}" onclick="return confirm('Yakin data akan dihapus?')"><i class="fa fa-trash"></i> Hapus</a>
                     </td>
                   </tr>
                   <div class="modal fade" id="modal-lg{{$no}}">
@@ -99,28 +99,28 @@
                                   <div>
                                     <div class="text-center">
                                       <img class="profile-user-img img-fluid img-circle"
-                                      src="{{asset('imageUpload/logo/'.$sekolah->logo)}}"
+                                      src="{{asset('imageUpload/logo/'.$sekolah['logo'])}}"
                                       alt="User profile picture" >
                                     </div>
                                     <div class="form-group mt-4" style="font-size: 14px;">
                                       <label for="kps" >Nama Kepala Sekolah</label>
-                                      <p style="margin-top: -10px;">{{$sekolah->nama_kps}}</p>
+                                      <p style="margin-top: -10px;">{{$sekolah['nama_kps']}}</p>
                                     </div>
                                     <div class="form-group" style="font-size: 14px; margin-top: -10px;">
                                       <label for="email">Email</label>
-                                      <p style="margin-top: -10px;">{{$sekolah->email}}</p>
+                                      <p style="margin-top: -10px;">{{$sekolah['email']}}</p>
                                     </div>
                                     <div class="form-group" style="font-size: 14px;margin-top: -10px;">
                                       <label for="nohp">No hp</label>
-                                      <p style="margin-top: -10px;">{{$sekolah->nohp}}</p>
+                                      <p style="margin-top: -10px;">{{$sekolah['nohp']}}</p>
                                     </div>
                                     <div class="form-group" style="font-size: 14px;margin-top: -10px;">
                                       <label>Tingkat</label>
-                                      <p style="margin-top: -10px;">{{$sekolah->tingkat}}</p>
+                                      <p style="margin-top: -10px;">{{$sekolah['tingkat']}}</p>
                                     </div>
                                     <div class="form-group" style="font-size: 14px;margin-top: -10px;">
                                       <label>Alamat</label>
-                                      <p style="margin-top: -10px;">{{$sekolah->alamat}}</p>
+                                      <p style="margin-top: -10px;">{{$sekolah['alamat']}}</p>
                                     </div>
                                   </div>
                                   <h3 class="profile-username text-center"></h3>
@@ -130,22 +130,22 @@
                             <div class="col-md-9">
                               <div class="card">
                                 <div class="card-body">
-                                  <input type="hidden" name="id_sekolah" value="{{$sekolah->id_sekolah}}">
+                                  <input type="hidden" name="id_sekolah" value="{{$sekolah['id_sekolah']}}">
                                   <div class="card-body">
                                     <div class="form-group">
-                                      <label for="sekolah" ><h1>{{$sekolah->nama_sekolah}}</h1></label>
+                                      <label for="sekolah" ><h1>{{$sekolah['nama_sekolah']}}</h1></label>
                                     </div>
                                     <hr style="height: 1px;">
                                     <div class="form-group">
                                       <label><h4>Visi & Misi Sekolah</h4></label>
                                       <hr>
-                                      <p>{!!$sekolah->visimisi!!}</p>
+                                      <p>{!!$sekolah['visimisi']!!}</p>
                                     </div>
                                     <hr>
                                     <div class="form-group">
                                       <label><h4>Deskripsi Sekolah</h4></label>
                                       <hr>
-                                      <p>{!!$sekolah->deskripsi!!}</p>
+                                      <p>{!!$sekolah['deskripsi']!!}</p>
                                     </div>
                                     <hr>
                                     <div class="row">
@@ -153,7 +153,7 @@
                                         <div class="form-group">
                                           <label for="daya_tampung">Daya Tampung</label>
                                           <div class="inner">
-                                            <h3>{{$sekolah->daya_tampung}}</h3>
+                                            <h3>{{$sekolah['daya_tampung']}}</h3>
                                           </div>
                                           </div>
                                         </div>
@@ -161,14 +161,14 @@
                                           <div class="form-group">
                                             <label for="jml_diterima">Jumlah Diterima</label>
                                             <div class="inner">
-                                              <h3>{{$sekolah->jml_diterima}}</h3>
+                                              <h3>{{$sekolah['jml_diterima']}}</h3>
                                           </div>
                                           </div>
                                         </div>
                                         <div class="col-md-4">
                                           <div class="form-group">
                                             <label for="exampleInputFile">Dokumen sekolah</label><br>
-                                            <a target="_blank" href="{{asset('bukti/'.$sekolah->bukti)}}">{{$sekolah->bukti}}</a>
+                                            <a target="_blank" href="{{asset('bukti/'.$sekolah['bukti'])}}">{{$sekolah['bukti']}}</a>
                                           </div>
                                         </div>
                                       </div>
@@ -178,7 +178,7 @@
                                         <div class="col-md-12">
                                           <div class="form-group">
                                             <label for="exampleInputFile"><h3>Foto sekolah</h3></label><br>
-                                            <a target="_blank" href="{{asset('imageUpload/sekolah/'.$sekolah->foto)}}"><img src="{{asset('imageUpload/sekolah/'.$sekolah->foto)}}" alt=""  style="width: 80%"></a>
+                                            <a target="_blank" href="{{asset('imageUpload/sekolah/'.$sekolah['foto'])}}"><img src="{{asset('imageUpload/sekolah/'.$sekolah['foto'])}}" alt=""  style="width: 80%"></a>
                                           </div>
                                         </div>
                                       </div>
@@ -213,7 +213,7 @@
 @section('js')
 <script type="text/javascript">
   // $('document').ready(function (){
-  //     var data = <?php echo $list_sekolah ?>;
+  //     var data = ;
   //     var isi = '';
   //     for(var i = 0; i < data.length; i++){
   //     // console.log(data[i]['nama_sekolah']);

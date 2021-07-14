@@ -11,14 +11,24 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Crypt;
+use Carbon;
 
 class Home extends Controller
 {
 	public function index(){
-		$list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();
+		$date = Carbon\Carbon::now();
+		$list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')
+		->join('ppdb','sekolah.id_sekolah','=','ppdb.id_sekolah')
+		->select('ppdb.*', 'sekolah.*')
+		->where('ppdb.tgl_mulai','<=', $date->toDateString())
+		->where('ppdb.tgl_berakhir', '>=', $date->toDateString())
+		->get();
 		$sd = Sekolah::where('tingkat', 'SD');
 		$smp = Sekolah::where('tingkat', 'SMP');
 		$list_kecamatan = Kecamatan::orderBy('nama_kec', 'ASC')->get();
+		
+		
+		// dd();
 		return view('general.index', compact('list_sekolah','list_kecamatan','sd','smp'));
 	}
 
@@ -36,11 +46,16 @@ class Home extends Controller
 
 	public function detail_sekolah($nama, $id){
 		$id_sekolah = Crypt::decrypt($id);
+<<<<<<< HEAD
 		$id_user = session::get('id_user');
 		$sekolah = Sekolah::where('id_sekolah', $id_sekolah)->first();
 		$prestasi = Prestasi::where('id_sekolah', $id_sekolah)->get();
 		$siswa = Siswa::where('id_user', $id_user)->first();
 		return view('general.detail_sekolah', compact('sekolah','prestasi','siswa'));
+=======
+		$sekolah = Sekolah::join('ppdb','sekolah.id_sekolah','=','ppdb.id_sekolah')->where('sekolah.id_sekolah', $id_sekolah)->first();
+		return view('general.detail_sekolah', compact('sekolah'));
+>>>>>>> 3c4b7e2123957c51900b672b411ef6d65923d8c8
 	}
 
 	public function jalur_pendaftaran(){
