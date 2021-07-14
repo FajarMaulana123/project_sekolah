@@ -64,5 +64,6 @@ Route::post('tahunajaran/update','SekolahController@update_thajaran');
 Route::get('tahunajaran/{id}', 'SekolahController@hapus_thajaran');
 
 //ppdb_sekolah
-Route::get('ppdb_sekolah', 'PostCategoryController@ppdb_sekolah');
+Route::get('ppdb_sekolah', 'SekolahController@ppdb_sekolah');
+Route::post('ppdb/update', 'SekolahController@update_ppdb');
 

@@ -8,6 +8,7 @@ use App\Kecamatan;
 use App\Users;
 use App\Prestasi;
 use App\TahunAjaran;
+use App\Ppdb;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
@@ -19,8 +20,35 @@ class SekolahController extends Controller
             return redirect('login');
         }else{
             $list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();
+            // dd($list_sekolah);
+            $data = [];
+            foreach($list_sekolah as $key => $val){
+                $ppdb = Ppdb::where('id_sekolah', $val->id_sekolah)->first();
+                $data[] = [
+                    'id_user' => $val->id_user,
+                    'id_sekolah' => $val->id_sekolah,
+                    'nama_sekolah' => $val->nama_sekolah,
+                    'nama_kps' => $val->nama_kps,
+                    'daya_tampung' => $ppdb['daya_tampung'],
+                    'jml_diterima' => $ppdb['jml_diterima'],
+                    'status' => $val->status,
+                    'tingkat' => $val->tingkat,
+                    'email' => $val->email,
+                    'nohp' => $val->nohp,
+                    'alamat' => $val->alamat,
+                    'visimisi' => $val->visimisi,
+                    'deskripsi' => $val->deskripsi,
+                    'bukti' => $val->bukti,
+                    'logo' => $val->logo,
+                    'foto' => $val->foto,
+                    'longitude' => $val->longitude,
+                    'latitude' => $val->latitude,
+                ];
+            }
+
+            // dd($data[0]['nama_sekolah']);
             
-            return view('admin.sekolah.index',compact('list_sekolah'));
+            return view('admin.sekolah.index',compact('data'));
         }
 	}
 
@@ -58,8 +86,6 @@ class SekolahController extends Controller
 		$sekolah->alamat =$request->alamat;
         $sekolah->visimisi =$request->visimisi;
 		$sekolah->deskripsi =$request->deskripsi;
-		$sekolah->daya_tampung =$request->daya_tampung;
-		$sekolah->jml_diterima =$request->jml_diterima;
 		if($request->hasFile('bukti')){
             $image = $request->file('bukti');
 
@@ -141,8 +167,6 @@ class SekolahController extends Controller
 		$data->alamat =$request->alamat;
         $data->visimisi =$request->visimisi;
 		$data->deskripsi =$request->deskripsi;
-		$data->daya_tampung =$request->daya_tampung;
-		$data->jml_diterima =$request->jml_diterima;
         if($request->hasFile('bukti')){
             // File::delete('bukti'. $data->bukti);
             $image = $request->file('bukti');
@@ -297,9 +321,37 @@ class SekolahController extends Controller
         if (!session::get('loginadmin')) {
             return redirect('login');
         }else{
-            return view('admin.ppdb.index');
+            $data = TahunAjaran::all();
+            $id = Sekolah::where('id_user', Session::get('id_user'))->first();
+            $ppdb = Ppdb::where('id_sekolah', $id->id_sekolah)->first();
+            // dd($ppdb);
+            return view('admin.ppdb.index', compact('data','id','ppdb'));
         
         }
+    }
+
+    public function update_ppdb(Request $request){
+        $j = Ppdb::where('id_sekolah', $request->id_sekolah)->count();
+        if($j <= 0){
+            $data = new Ppdb;
+            $data->id_sekolah = $request->id_sekolah;
+            $data->tahun_ajaran = $request->tahun_ajaran;
+            $data->daya_tampung = $request->daya_tampung;
+            $data->jml_diterima = $request->jml_diterima;
+            $data->tgl_mulai = $request->tgl_mulai;
+            $data->tgl_berakhir = $request->tgl_berakhir;
+            // dd($data);
+            $data->save();
+        } else {
+            Ppdb::where('id_sekolah', $request->id_sekolah)->update([
+                'tahun_ajaran' => $request->tahun_ajaran,
+                'daya_tampung' => $request->daya_tampung,
+                'jml_diterima' => $request->jml_diterima,
+                'tgl_mulai' => $request->tgl_mulai,
+                'tgl_berakhir' => $request->tgl_berakhir,
+            ]);
+        }
+        return redirect('/ppdb_sekolah');
     }
 
 }
