@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Jul 2021 pada 19.44
+-- Waktu pembuatan: 15 Jul 2021 pada 19.45
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -75,6 +75,28 @@ INSERT INTO `kecamatan` (`id_kec`, `kode_pos`, `nama_kec`, `created_at`, `update
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `pendaftaran`
+--
+
+CREATE TABLE `pendaftaran` (
+  `id_pendaftaran` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `id_sekolah` int(11) NOT NULL,
+  `jalur` varchar(30) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `pendaftaran`
+--
+
+INSERT INTO `pendaftaran` (`id_pendaftaran`, `id_siswa`, `id_sekolah`, `jalur`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 'prestasi', '2021-07-15 17:01:20', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `ppdb`
 --
 
@@ -95,7 +117,7 @@ CREATE TABLE `ppdb` (
 --
 
 INSERT INTO `ppdb` (`id_ppdb`, `id_sekolah`, `tahun_ajaran`, `daya_tampung`, `jml_diterima`, `tgl_mulai`, `tgl_berakhir`, `created_at`, `updated_at`) VALUES
-(1, 2, '2020 / 2021', 1000, 800, '2021-07-12', '2021-07-14', '2021-07-14 08:09:24', '2021-07-14 08:09:24');
+(1, 2, '2020 / 2021', 1000, 800, '2021-07-12', '2021-07-16', '2021-07-14 08:09:24', '2021-07-14 08:09:24');
 
 -- --------------------------------------------------------
 
@@ -167,11 +189,14 @@ CREATE TABLE `siswa` (
   `id_user` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `jk` enum('Laki-laki','Perempuan') DEFAULT NULL,
   `tempat` varchar(100) DEFAULT NULL,
   `tgl_lahir` date DEFAULT NULL,
+  `agama` varchar(30) DEFAULT NULL,
   `asal_sekolah` varchar(100) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
   `nohp` varchar(20) DEFAULT NULL,
+  `tingkat` enum('SD','TK','Tidak ada') DEFAULT NULL,
   `foto` text DEFAULT NULL,
   `akte` text DEFAULT NULL,
   `ijazah` text DEFAULT NULL,
@@ -190,9 +215,9 @@ CREATE TABLE `siswa` (
 -- Dumping data untuk tabel `siswa`
 --
 
-INSERT INTO `siswa` (`id_siswa`, `id_user`, `nama`, `email`, `tempat`, `tgl_lahir`, `asal_sekolah`, `alamat`, `nohp`, `foto`, `akte`, `ijazah`, `skhun`, `kk`, `sertifikat1`, `sertifikat2`, `sertifikat3`, `longitude`, `latitude`, `created_at`, `updated_at`) VALUES
-(1, 10, 'Hyuwan', 'siswa@gmail.com', 'Indramayu', '1998-05-16', 'SD', 'Mundakjaya', '089688177247', 'bri.png', 'QR Code (1) (1).png', 'bri.png', 'bank-bri-logo-630x380.png', 'ovo.png', NULL, NULL, NULL, NULL, NULL, '2021-07-10 09:00:27', '2021-07-14 10:14:58'),
-(6, 15, 'Test', 'siswa1@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-07-12 09:19:13', '2021-07-12 09:19:13');
+INSERT INTO `siswa` (`id_siswa`, `id_user`, `nama`, `email`, `jk`, `tempat`, `tgl_lahir`, `agama`, `asal_sekolah`, `alamat`, `nohp`, `tingkat`, `foto`, `akte`, `ijazah`, `skhun`, `kk`, `sertifikat1`, `sertifikat2`, `sertifikat3`, `longitude`, `latitude`, `created_at`, `updated_at`) VALUES
+(1, 10, 'Hyuwan', 'siswa@gmail.com', 'Laki-laki', 'Indramayu', '1998-05-16', 'Islam', 'SD N Mundak jaya 2', 'Mundakjaya', '089688177247', 'SD', 'wahyu_hermawan.jpg', 'QR Code (1) (1).png', 'bri.png', 'bank-bri-logo-630x380.png', 'ovo.png', 'siswa.png', NULL, NULL, NULL, NULL, '2021-07-10 09:00:27', '2021-07-15 10:42:16'),
+(7, 17, 'Hermawan', 'siswa1@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-07-15 06:39:27', '2021-07-15 06:39:27');
 
 -- --------------------------------------------------------
 
@@ -206,6 +231,13 @@ CREATE TABLE `tahun_ajaran` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tahun_ajaran`
+--
+
+INSERT INTO `tahun_ajaran` (`id_tahunajaran`, `tahun_ajaran`, `created_at`, `updated_at`) VALUES
+(2, '2020 / 2021', '2021-07-14 10:51:57', '2021-07-14 10:51:57');
 
 -- --------------------------------------------------------
 
@@ -231,8 +263,8 @@ INSERT INTO `users` (`id_user`, `email`, `password`, `role`, `status`, `created_
 (1, 'admin@gmail.com', '$2y$10$kxfaZhqxlXRl1eRagSDLBu.2DLAT.iRTkoDTDc9gNLVizFQ/in.bK', 'super', 'nonaktif', '2021-07-05 15:35:23', '2021-07-10 07:13:59'),
 (3, 'sekolahsmp@gmail.com', '$2y$10$kxfaZhqxlXRl1eRagSDLBu.2DLAT.iRTkoDTDc9gNLVizFQ/in.bK', 'admin', 'aktif', '2021-07-06 09:11:59', '2021-07-06 09:34:41'),
 (10, 'siswa@gmail.com', '$2y$10$RmyjGl7vattI2sZNxjiqleIVgrBb6vGh9UduCy1ZXc5ktcG0/URa6', 'siswa', 'aktif', '2021-07-10 09:00:27', '2021-07-10 09:00:27'),
-(15, 'siswa1@gmail.com', '$2y$10$xUcdxv4.g5mNkBt7rY0It.Gqd3AnwSiNQrVyiJvcxIO.2.8pDssdi', 'siswa', 'aktif', '2021-07-12 09:19:13', '2021-07-12 09:19:13'),
-(16, 'sekolahsd@gmail.com', '$2y$10$kxfaZhqxlXRl1eRagSDLBu.2DLAT.iRTkoDTDc9gNLVizFQ/in.bK', 'admin', 'aktif', '2021-07-14 13:50:30', '2021-07-14 13:50:30');
+(16, 'sekolahsd@gmail.com', '$2y$10$kxfaZhqxlXRl1eRagSDLBu.2DLAT.iRTkoDTDc9gNLVizFQ/in.bK', 'admin', 'aktif', '2021-07-14 13:50:30', '2021-07-14 13:50:30'),
+(17, 'siswa1@gmail.com', '$2y$10$CM0OoKMn1LIzSCl6nJMPVevdGLsNOEAotafLBQ7O9L8swbuQZsL9K', 'siswa', 'aktif', '2021-07-15 06:39:27', '2021-07-15 06:39:27');
 
 --
 -- Indexes for dumped tables
@@ -243,6 +275,14 @@ INSERT INTO `users` (`id_user`, `email`, `password`, `role`, `status`, `created_
 --
 ALTER TABLE `kecamatan`
   ADD PRIMARY KEY (`id_kec`);
+
+--
+-- Indeks untuk tabel `pendaftaran`
+--
+ALTER TABLE `pendaftaran`
+  ADD PRIMARY KEY (`id_pendaftaran`),
+  ADD KEY `id_siswa` (`id_siswa`),
+  ADD KEY `id_sekolah` (`id_sekolah`);
 
 --
 -- Indeks untuk tabel `ppdb`
@@ -294,6 +334,12 @@ ALTER TABLE `kecamatan`
   MODIFY `id_kec` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
+-- AUTO_INCREMENT untuk tabel `pendaftaran`
+--
+ALTER TABLE `pendaftaran`
+  MODIFY `id_pendaftaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
 -- AUTO_INCREMENT untuk tabel `ppdb`
 --
 ALTER TABLE `ppdb`
@@ -315,23 +361,29 @@ ALTER TABLE `sekolah`
 -- AUTO_INCREMENT untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `tahun_ajaran`
 --
 ALTER TABLE `tahun_ajaran`
-  MODIFY `id_tahunajaran` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_tahunajaran` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
+
+--
+-- Ketidakleluasaan untuk tabel `pendaftaran`
+--
+ALTER TABLE `pendaftaran`
+  ADD CONSTRAINT `siswa` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `sekolah`
