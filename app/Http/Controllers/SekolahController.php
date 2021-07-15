@@ -19,32 +19,34 @@ class SekolahController extends Controller
         if (!session::get('loginsuper')) {
             return redirect('login');
         }else{
-            $list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();
+            $data = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();
             // dd($list_sekolah);
-            $data = [];
-            foreach($list_sekolah as $key => $val){
-                $ppdb = Ppdb::where('id_sekolah', $val->id_sekolah)->first();
-                $data[] = [
-                    'id_user' => $val->id_user,
-                    'id_sekolah' => $val->id_sekolah,
-                    'nama_sekolah' => $val->nama_sekolah,
-                    'nama_kps' => $val->nama_kps,
+            /*$data = [];
+            foreach($list_sekolah as $key){
+            $ppdb = Ppdb::where('id_sekolah', $key->id_sekolah);
+             dd($ppdb);
+                $data  = array(
+                    'id_user' => $key->id_user,
+                    'id_sekolah' => $key->id_sekolah,
+                    'nama_sekolah' => $key->nama_sekolah,
+                    'nama_kps' => $key->nama_kps,
                     'daya_tampung' => $ppdb['daya_tampung'],
                     'jml_diterima' => $ppdb['jml_diterima'],
-                    'status' => $val->status,
-                    'tingkat' => $val->tingkat,
-                    'email' => $val->email,
-                    'nohp' => $val->nohp,
-                    'alamat' => $val->alamat,
-                    'visimisi' => $val->visimisi,
-                    'deskripsi' => $val->deskripsi,
-                    'bukti' => $val->bukti,
-                    'logo' => $val->logo,
-                    'foto' => $val->foto,
-                    'longitude' => $val->longitude,
-                    'latitude' => $val->latitude,
-                ];
-            }
+                    'status' => $key->status,
+                    'tingkat' => $key->tingkat,
+                    'email' => $key->email,
+                    'nohp' => $key->nohp,
+                    'alamat' => $key->alamat,
+                    'visimisi' => $key->visimisi,
+                    'deskripsi' => $key->deskripsi,
+                    'bukti' => $key->bukti,
+                    'logo' => $key->logo,
+                    'foto' => $key->foto,
+                    'longitude' => $key->longitude,
+                    'latitude' => $key->latitude
+                );
+            }*/
+
 
             // dd($data[0]['nama_sekolah']);
             

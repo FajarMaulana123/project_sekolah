@@ -3,6 +3,17 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style type="text/css">
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
 <section id="contact" class="contact" style="margin-top: 60px;">
   <div class="container">
 
@@ -10,27 +21,55 @@
       <h2>Profile </h2>
     </div>
     @if ($message = Session::get('success'))
-    <div class="alert alert-success alert-block">
+    <div class="alert alert-success alert-block" data-aos="fade-up" data-aos-delay="300">
       <button type="button" class="close" data-dismiss="alert">×</button> 
       <strong>{{ $message }}</strong>
     </div>
     @endif
-    <div class="row" style="margin-top:20px;">
+    <?php if ($siswa->agama == NULL || $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->ijazah == NULL || $siswa->skhun == NULL || $siswa->kk == NULL ) { ?>
+      <div class="alert alert-danger alert-block" data-aos="fade-up" data-aos-delay="300">
+        <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>Segera Lengkapi data diri kamu!</strong>
+      </div>
+    <?php } ?>
+    <form method="post" action="{{ url('editsiswa') }}" enctype="multipart/form-data"  role="form">
+      <?php if ($siswa->foto == null) { ?>
+        <img src="{{asset('imageUpload/default.png')}}" class="rounded-circle center" alt="Cinque Terre" width="250" height="250" data-aos="fade-up" data-aos-delay="300">
+      <?php }else{ ?>
+        <img src="{{asset('imageUpload/dokumen/'.$siswa->foto)}}" class="rounded-circle center" alt="Cinque Terre" width="250" height="250" data-aos="fade-up" data-aos-delay="300">
+      <?php } ?>
+      <input type="file" name="foto" class="form-control center mt-3" value="{{$siswa->foto}}" style="width: 250px;" data-aos="fade-up" data-aos-delay="300"> 
+      <div class="row" style="margin-top:20px;">
+        <div class="col-lg-12 col-md-12" data-aos="fade-up" data-aos-delay="300">
 
-      <div class="col-lg-12 col-md-12" data-aos="fade-up" data-aos-delay="300">
-        <form method="post" action="{{ url('editsiswa') }}" enctype="multipart/form-data"  role="form">
           @csrf
           <input type="hidden" name="id_siswa"  value="{{$siswa->id_siswa}}" >
           <div class="row" style="margin-top:20px;">
             <div class="col-md-6">
-              <div class="form-group">
-                <?php if ($siswa->nama == null) { ?>
-                  <label style="color: red">Nama Lengkap*</label>
-                <?php }else{ ?>
-                  <label >Nama Lengkap</label>
-                <?php } ?>
-                <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukan Nama" value="{{$siswa->nama}}" >
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <?php if ($siswa->nama == null) { ?>
+                      <label style="color: red">Nama Lengkap*</label>
+                    <?php }else{ ?>
+                      <label >Nama Lengkap</label>
+                    <?php } ?>
+                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukan Nama" value="{{$siswa->nama}}" >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <?php if ($siswa->agama == null) { ?>
+                      <label style="color: red">Agama*</label>
+                    <?php }else{ ?>
+                      <label >Agama</label>
+                    <?php } ?>
+                    <input type="text" name="agama" class="form-control" id="agama" placeholder="Masukan Agama" value="{{$siswa->agama}}" >
+                  </div>
+                </div>
               </div>
+
             </div>
             <div class="col-md-6">
               <?php if ($siswa->email == null) { ?>
@@ -64,7 +103,21 @@
                 <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" placeholder="Masukan Tanggal Lahir" value="{{$siswa->tgl_lahir}}">
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
+              <?php if ($siswa->jk == null) { ?>
+                <label style="color: red">Jenis Kelamin*</label>
+              <?php }else{ ?>
+                <label >Jenis Kelamin</label>
+              <?php } ?>
+              <div class="form-group">
+                <select class="form-control" name="jk">
+                  <option value="" <?php if($siswa->jk == null) echo 'selected="selected"'; ?>>-Pilih Jenis Kelamin-</option>
+                  <option value="Laki-laki" <?php if($siswa->jk == 'Laki-laki') echo 'selected="selected"'; ?>>Laki-laki</option>
+                  <option value="Perempuan" <?php if($siswa->jk == 'Perempuan') echo 'selected="selected"'; ?>>Perempuan</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
               <?php if ($siswa->nohp == null) { ?>
                 <label style="color: red">No Hp*</label>
               <?php }else{ ?>
@@ -77,24 +130,45 @@
           </div>
           <div class="row" style="margin-top:20px;">
             <div class="col-md-6">
-              <div class="form-group">
-                <?php if ($siswa->asal_sekolah == null) { ?>
-                  <label style="color: red">Asal Sekolah*</label>
-                <?php }else{ ?>
-                  <label >Asal Sekolah</label>
-                <?php } ?>
-                <input type="text" name="asal_sekolah" class="form-control" id="asal_sekolah" placeholder="Masukan Asal Sekolah" value="{{$siswa->asal_sekolah}}" >
-              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <?php if ($siswa->asal_sekolah == null) { ?>
+                      <label style="color: red">Asal Sekolah*</label>
+                    <?php }else{ ?>
+                      <label >Asal Sekolah</label>
+                    <?php } ?>
+                    <input type="text" name="asal_sekolah" class="form-control" id="asal_sekolah" placeholder="Masukan Asal Sekolah" value="{{$siswa->asal_sekolah}}" >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <?php if ($siswa->jk == null) { ?>
+                    <label style="color: red">Jenis Kelamin*</label>
+                  <?php }else{ ?>
+                    <label >Jenis Kelamin</label>
+                  <?php } ?>
+                  <div class="form-group">
+                    <select class="form-control" name="tingkat">
+                      <option value="" <?php if($siswa->tingkat == null) echo 'selected="selected"'; ?>>-Pilih Tingkat-</option>
+                      <option value="Tidak ada" <?php if($siswa->tingkat == 'Tidak ada') echo 'selected="selected"'; ?>>Tidak ada</option>
+                      <option value="TK" <?php if($siswa->tingkat == 'TK') echo 'selected="selected"'; ?>>TK</option>
+                      <option value="SD" <?php if($siswa->tingkat == 'SD') echo 'selected="selected"'; ?>>SD</option>
+                    </select>
+                  </div>
+                </div>
 
+              </div>
               <div class="row" style="margin-top:20px;">
                 <div class="col-md-6">
                   <div class="form-group">
                     <?php if ($siswa->ijazah == null) { ?>
                       <label style="color: red">Scan Ijazah*</label>
                     <?php }else{ ?>
-                      <label >Scan Ijazah</label>
+                      <label >Scan Ijazah</label><br>
+                      <a href="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}" width="100"></a>
                     <?php } ?>
-                    <input type="file" name="ijazah" class="form-control" value="{{$siswa->ijazah}}">
+
+                    <input type="file" name="ijazah" class="form-control mt-2" value="{{$siswa->ijazah}}">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -102,7 +176,8 @@
                     <?php if ($siswa->skhun == null) { ?>
                       <label style="color: red">Scan SKHUN*</label>
                     <?php }else{ ?>
-                      <label >Scan SKHUN</label>
+                      <label >Scan SKHUN</label><br>
+                      <a href="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}" width="100"></a>
                     <?php } ?>
                     <input type="file" name="skhun" class="form-control" value="{{$siswa->skhun}}">
                   </div>
@@ -114,7 +189,8 @@
                     <?php if ($siswa->akte == null) { ?>
                       <label style="color: red">Scan Akte*</label>
                     <?php }else{ ?>
-                      <label >Scan Akte</label>
+                      <label >Scan Akte</label><br>
+                      <a href="{{asset('imageUpload/dokumen/'.$siswa->akte)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->akte)}}" width="100"></a>
                     <?php } ?>
                     <input type="file" name="akte" class="form-control" value="{{$siswa->akte}}">
                   </div>
@@ -124,7 +200,8 @@
                     <?php if ($siswa->kk == null) { ?>
                       <label style="color: red">Scan Kartu Keluarga*</label>
                     <?php }else{ ?>
-                      <label >Scan Kartu Keluarga</label>
+                      <label >Scan Kartu Keluarga</label><br>
+                      <a href="{{asset('imageUpload/dokumen/'.$siswa->kk)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->kk)}}" width="100"></a>
                     <?php } ?>
                     <input type="file" name="kk" class="form-control" value="{{$siswa->kk}}">
                   </div>
@@ -180,11 +257,11 @@
           <div class="text-center" style="float: right; margin-top: 20px;">
             <button type="submit" class="btn btn-primary">Simpan</button>
           </div>
-        </form>
+
+        </div>
+
       </div>
-
-    </div>
-
+    </form>
   </div>
 </section>
 @endsection

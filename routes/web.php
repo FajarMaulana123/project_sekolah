@@ -21,9 +21,13 @@ Route::get('daftar','Home@daftar');
 Route::get('daftar/siswa','Home@daftar_siswa');
 Route::post('akunsiswa', 'Home@post_akunsiswa');
 Route::get('detail-sekolah/{nama}/{id}', 'Home@detail_sekolah');
-Route::get('jalur-pendaftaran', 'Home@jalur_pendaftaran');
+Route::get('jalur-pendaftaran/{id}', 'Home@jalur_pendaftaran');
 Route::get('profile/{nama}', 'Home@profile');
 Route::post('editsiswa', 'Home@editsiswa');
+Route::post('addsertifikat/{prestasi}/{id}', 'Home@addsertifikat');
+Route::get('jalur-pendaftaran/{prestasi}/{id}', 'Home@prestasi');
+Route::get('data-diri/{prestasi}/{id}', 'Home@data_diri');
+Route::post('pendaftaran-siswa', 'Home@pendaftaran');
 
 // Route::get('login','Auth\LoginController@index');
 Route::get('login','LoginController@index');
