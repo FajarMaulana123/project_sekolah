@@ -9,7 +9,7 @@ class Pendaftaran extends Model
     protected $table ="pendaftaran";
 
     protected $fillable = [
-     'id_siswa','id_sekolah','jalur'
+     'id_siswa','id_sekolah','jalur','status'
  ];
  protected $primaryKey = 'id_pendaftaran';
 }

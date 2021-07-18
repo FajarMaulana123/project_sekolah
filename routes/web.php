@@ -14,6 +14,7 @@
 Route::get('/','Home@index');
 Route::get('kategori_kecamatan','Home@kategori');
 Route::get('home','admin\HomeController@index');
+Route::get('hasil-seleksi','Home@hasil_seleksi');
 
 
 Route::get('login','Auth\LoginController@index');
@@ -25,8 +26,11 @@ Route::get('jalur-pendaftaran/{id}', 'Home@jalur_pendaftaran');
 Route::get('profile/{nama}', 'Home@profile');
 Route::post('editsiswa', 'Home@editsiswa');
 Route::post('addsertifikat/{prestasi}/{id}', 'Home@addsertifikat');
-Route::get('jalur-pendaftaran/{prestasi}/{id}', 'Home@prestasi');
-Route::get('data-diri/{prestasi}/{id}', 'Home@data_diri');
+Route::post('addperpindahan/{perpindahan}/{id}', 'Home@addperpindahan');
+Route::post('addafirmasi/{afirmasi}/{id}', 'Home@addafirmasi');
+Route::get('jalur-pendaftaran/{jalur}/{id}', 'Home@jalur');
+Route::get('jalur-pendaftaran/{jalur}/update/{id}', 'Home@jalur_update');
+Route::get('data-diri/{jalur}/{id}', 'Home@data_diri');
 Route::post('pendaftaran-siswa', 'Home@pendaftaran');
 
 // Route::get('login','Auth\LoginController@index');

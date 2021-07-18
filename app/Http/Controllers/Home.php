@@ -37,6 +37,13 @@ class Home extends Controller
 		return view('auth.regist_select');
 	}
 
+    public function hasil_seleksi(){
+        $id_user = session::get('id_user');
+        $siswa = Siswa::where('id_user', $id_user)->first();
+        $pendaftaran = Pendaftaran::join('sekolah', 'sekolah.id_sekolah','=','pendaftaran.id_sekolah')->join('ppdb', 'ppdb.id_sekolah','=','sekolah.id_sekolah')->where('pendaftaran.id_siswa', $siswa->id_siswa)->orderByDesc('id_pendaftaran')->get();
+        return view('general.hasil_seleksi', compact('pendaftaran'));
+    }
+
 	public function daftar_siswa(){
 		$cpassword = null;
 		$password = null;
@@ -61,11 +68,30 @@ class Home extends Controller
         $id_sekolah = Crypt::decrypt($id);
 		return view('auth.jenis_pendaftaran', compact('id_sekolah', 'siswa'));
 	}
-    public function prestasi($prestasi, $id){
+    public function jalur($jalur, $id){
         $id_user = session::get('id_user');
         $siswa = Siswa::where('id_user', $id_user)->first();
         $id_sekolah = Crypt::decrypt($id);
-        return view('auth.form_sertifikat', compact('id_sekolah', 'prestasi','siswa'));
+        if ($jalur == "prestasi") {
+            return view('auth.form_sertifikat', compact('id_sekolah', 'jalur','siswa'));
+        }else if($jalur == "afirmasi"){
+            return view('auth.form_afirmasi', compact('id_sekolah', 'jalur','siswa'));
+        }else{
+            return view('auth.form_perpindahan', compact('id_sekolah', 'jalur','siswa'));
+        }
+    }
+
+    public function jalur_update($jalur, $id){
+        $id_user = session::get('id_user');
+        $siswa = Siswa::where('id_user', $id_user)->first();
+        $id_sekolah = Crypt::decrypt($id);
+        if ($jalur == "prestasi") {
+            return view('auth.update_prestasi', compact('id_sekolah', 'jalur','siswa'));
+        }else if($jalur == "afirmasi"){
+            return view('auth.update_afirmasi', compact('id_sekolah', 'jalur','siswa'));
+        }else{
+            return view('auth.update_perpindahan', compact('id_sekolah', 'jalur','siswa'));
+        }
     }
 
 	public function profile($nama){
@@ -74,12 +100,12 @@ class Home extends Controller
 		return view('general.profile', compact('siswa'));
 	}
 
-    public function data_diri($prestasi, $id){
+    public function data_diri($jalur, $id){
         $id_sekolah = Crypt::decrypt($id);
         $id_user = session::get('id_user');
         $siswa = Siswa::where('id_user', $id_user)->first();
         $sekolah = Sekolah::where('id_sekolah', $id_sekolah)->first();
-        return view('auth.data', compact('siswa','prestasi','id','sekolah'));
+        return view('auth.data', compact('siswa','jalur','id_sekolah','sekolah'));
     }
 
 	public function editsiswa(Request $request){
@@ -233,12 +259,59 @@ class Home extends Controller
         return redirect('data-diri/'.$prestasi.'/'.$id)->with(['success' => 'Berhasil Update Data diri!']);
     }
 
+    public function addperpindahan($perpindahan, $id, Request $request){
+        $data = $request->all();
+        $data = request()->except(['_token']);
+        
+        if($request->hasFile('perpindahan')){
+            // File::delete('imageUpload/sekolah'. $data->foto);
+            $image = $request->file('perpindahan');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/dokumen';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['perpindahan'] = $image_name;
+            }
+        }
+        
+
+        // $data->update();
+        Siswa::where('id_siswa', $request->id_siswa)->update($data);
+        return redirect('data-diri/'.$perpindahan.'/'.$id)->with(['success' => 'Berhasil Update Data diri!']);
+    }
+
+    public function addafirmasi($afirmasi, $id, Request $request){
+        $data = $request->all();
+        $data = request()->except(['_token']);
+        
+        if($request->hasFile('afirmasi')){
+            // File::delete('imageUpload/sekolah'. $data->foto);
+            $image = $request->file('afirmasi');
+
+            if($image->isValid()){
+                $image_name = $image->getClientOriginalName();
+                $upload_path = 'imageUpload/dokumen';
+                $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+                $data['afirmasi'] = $image_name;
+            }
+        }
+        
+
+        // $data->update();
+        Siswa::where('id_siswa', $request->id_siswa)->update($data);
+        return redirect('data-diri/'.$afirmasi.'/'.$id)->with(['success' => 'Berhasil Update Data diri!']);
+    }
+
     public function pendaftaran(Request $request){
         $jalur = $request->jalur;
         $data = $request->all();
         $data = request()->except(['_token']);
+        $data['status'] = 0;
         Pendaftaran::insert($data);
-        $sekolah = Sekolah::where('id_sekolah', $request->id_siswa)->first();
+        $sekolah = Sekolah::where('id_sekolah', $request->id_sekolah)->first();
         return view('auth.informasi', compact('jalur','sekolah'));
     }
 

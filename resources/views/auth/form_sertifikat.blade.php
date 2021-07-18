@@ -4,11 +4,11 @@
 <link href="{{asset('general/css/log.css')}}" rel="stylesheet">
 <style type="text/css">
   a {
-  color: #92badd;
-  display:inline-block;
-  text-decoration: none;
-  font-weight: 400;
-}
+    color: #92badd;
+    display:inline-block;
+    text-decoration: none;
+    font-weight: 400;
+  }
 </style>
 <div class="wrapper fadeInDown">
   <div id="formContent">
@@ -22,17 +22,29 @@
       <strong>{{ $message }}</strong>
     </div>
     @endif
-    <form method="post" action="{{ url('addsertifikat/'.$prestasi.'/'.Crypt::encrypt($id_sekolah)) }}" enctype="multipart/form-data"  role="form" style="padding-left: 40px;padding-right: 40px; text-align: left;">
+    <form method="post" action="{{ url('addsertifikat/'.$jalur.'/'.Crypt::encrypt($id_sekolah)) }}" enctype="multipart/form-data"  role="form" style="padding-left: 40px;padding-right: 40px; text-align: left;">
       @csrf
       <input type="hidden" name="id_siswa" value="{{$siswa->id_siswa}}">
       <label style="margin-top: 10px;">Sertifikat 1</label>
-      <input type="file" id="sertifikat1" class="fadeIn second form-control" name="sertifikat1" placeholder="Sertifikat1">
+      <?php if ($siswa->sertifikat1 != null) { ?>
+        <br>
+        <a href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat1)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->sertifikat1)}}" width="80" ></a>
+      <?php } ?>
+      <input type="file" id="sertifikat1" class="fadeIn second form-control mt-2" name="sertifikat1" placeholder="Sertifikat1">
 
       <label style="margin-top: 10px;">Sertifikat 2</label>
-      <input type="file" id="sertifikat2" class="fadeIn second form-control" name="sertifikat2" placeholder="Sertifikat2">
+      <?php if ($siswa->sertifikat2 != null) { ?>
+        <br>
+        <a href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat2)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->sertifikat2)}}" width="80" ></a>
+      <?php } ?>
+      <input type="file" id="sertifikat2" class="fadeIn second form-control mt-2" name="sertifikat2" placeholder="Sertifikat2">
 
       <label style="margin-top: 10px;">Sertifikat 3</label>
-      <input type="file" id="sertifikat3" class="fadeIn second form-control" name="sertifikat3" placeholder="Sertifikat3">
+      <?php if ($siswa->sertifikat3 != null) { ?>
+        <br>
+        <a href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat3)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->sertifikat3)}}" width="80" ></a>
+      <?php } ?>
+      <input type="file" id="sertifikat3" class="fadeIn second form-control mt-2" name="sertifikat3" placeholder="Sertifikat3">
       
       <input type="submit" class="fadeIn fourth" value="Upload" style="margin-left: 25%;">
     </form>

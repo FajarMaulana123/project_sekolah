@@ -15,7 +15,8 @@
   <div class="wrapper fadeInDown">
     <div id="formData">
       <div id="formFooter" style="text-align: left;">
-        <a class="underlineHover" style="color: grey; font-size: 18px; ">Pendaftaran Jalur {{ucfirst($prestasi)}}</a>
+        <?php $jalur_pendaftaran = str_replace('-', ' ', $jalur) ?>
+        <a class="underlineHover" style="color: grey; font-size: 18px; ">Pendaftaran Jalur {{ucfirst($jalur_pendaftaran)}}</a>
       </div>
 
       <form method="post" action="{{ url('pendaftaran-siswa') }}" enctype="multipart/form-data"  role="form">
@@ -90,6 +91,22 @@
                     <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat3)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->sertifikat3)}}" width="70"></a>
                     <?php } ?>
                 </div>
+                <?php if ($jalur == "perpindahan-orang-tua") { ?>
+                  <hr>
+                  <div class="form-group" style="margin-top: -10px">
+                    <b><label >Bukti Perpindahan Ortu</label></b><br>
+                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->perpindahan)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->perpindahan)}}" width="80"></a>
+                  </div>
+                <?php }?>
+                <?php if ($jalur == "afirmasi") { ?>
+                  <hr>
+                  <div class="form-group" style="margin-top: -10px">
+                    <b><label >SKTM</label></b><br>
+                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->afirmasi)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->afirmasi)}}" width="80"></a>
+                  </div>
+                <?php }?>
+
+                
 
               </div>
               <div class="col-md-7">
@@ -102,7 +119,7 @@
 
             <input type="hidden" name="id_sekolah" value="{{$sekolah->id_sekolah}}">
             <input type="hidden" name="id_siswa" value="{{$siswa->id_siswa}}">
-            <input type="hidden" name="jalur" value="{{$prestasi}}">
+            <input type="hidden" name="jalur" value="{{$jalur_pendaftaran}}">
 
             <button type="submit" href="" class="btn btn-primary" style="float: right; color: white;">Daftar sekarang</button>
 

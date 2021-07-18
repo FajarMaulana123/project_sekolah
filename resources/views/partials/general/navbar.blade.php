@@ -37,7 +37,12 @@
         <li><a class="getstarted scrollto" href="{{url('login')}}">Login</a></li>
         @else
         <?php $id = Session::get('id_user');
-        $username = \App\Siswa::where(['id_user' => $id])->first() ?>
+        $username = \App\Siswa::where(['id_user' => $id])->first();
+
+        $pendaftaran = \App\Pendaftaran::where('id_siswa', $username->id_siswa)->where('status', 0);
+
+
+         ?>
         <?php
             $n = $username->nama;
             $na = str_replace(' ', '-', $n);
@@ -46,7 +51,12 @@
          ?>
 
         <li><a class="nav-link scrollto active" href="{{url('/')}}">Home</a></li>
-        <li><a class="nav-link scrollto" href="">Hasil Seleksi</a></li>
+        <?php if ($pendaftaran->count() != 0) { ?>
+          <li><a class="nav-link scrollto" href="{{url('hasil-seleksi')}}" style="display: inline;">Hasil Seleksi <sup style="background-color: red; padding:3px 7px 3px 7px; border-radius: 10px; color: white"><b>{{$pendaftaran->count()}}</b></sup></a> </li>
+        <?php }else{ ?>
+          <li><a class="nav-link scrollto" href="{{url('hasil-seleksi')}}" >Hasil Seleksi</a> </li>
+        <?php } ?>
+
         <li style="margin-right: -20px;"><a><img src="{{asset('general/img/siswa.png')}}" width="40" style="display: inline;"></a></li>
         <?php if ($username->agama == NULL ||$username->tingkat == NULL || $username->jk == NULL || $username->tempat == NULL || $username->tgl_lahir == NULL || $username->asal_sekolah == NULL || $username->alamat == NULL || $username->nohp == NULL || $username->foto == NULL || $username->akte == NULL || $username->ijazah == NULL || $username->skhun == NULL || $username->kk == NULL ) { ?>
           <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i> <p style="color: red; font-size: 20px;">*</p></a>
