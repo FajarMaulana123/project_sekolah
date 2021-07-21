@@ -27,7 +27,7 @@
                 </p>
                 <a href="">
                 <?php if ($use->status == 0) { ?>
-                  <h4 style="float: right; color: red; background-color: yellow; padding: 10px; border-radius: 5px;">Menunggu Hasil</h4>
+                  <h4 style="float: right; color: white; background-color: grey; padding: 10px; border-radius: 5px;">Menunggu Hasil</h4>
                 <?php }else if($use->status == 1){ ?>
                   <h4 style="float: right; color: white; background-color: green; padding: 10px; border-radius: 5px;">Diterima</h4>
                 <?php }else{ ?>

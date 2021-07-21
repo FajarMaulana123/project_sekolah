@@ -50,9 +50,9 @@
 
          ?>
 
-        <li><a class="nav-link scrollto active" href="{{url('/')}}">Home</a></li>
+        <li><a class="nav-link scrollto {{ request()->is('/') ? 'active' : ''}}" href="{{url('/')}}">Home</a></li>
         <?php if ($pendaftaran->count() != 0) { ?>
-          <li><a class="nav-link scrollto" href="{{url('hasil-seleksi')}}" style="display: inline;">Hasil Seleksi <sup style="background-color: red; padding:3px 7px 3px 7px; border-radius: 10px; color: white"><b>{{$pendaftaran->count()}}</b></sup></a> </li>
+          <li><a class="nav-link scrollto {{ request()->is('hasil-seleksi') ? 'active' : ''}}" href="{{url('hasil-seleksi')}}" style="display: inline;">Hasil Seleksi <sup style="background-color: red; padding:3px 7px 3px 7px; border-radius: 10px; color: white"><b>{{$pendaftaran->count()}}</b></sup></a> </li>
         <?php }else{ ?>
           <li><a class="nav-link scrollto" href="{{url('hasil-seleksi')}}" >Hasil Seleksi</a> </li>
         <?php } ?>
