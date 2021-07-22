@@ -52,6 +52,10 @@ class Home extends Controller
 		return view('auth.regist_siswa');
 	}
 
+    public function daftar_sekolah(){
+        return view('auth.regist_sekolah');
+    }
+
 	public function detail_sekolah($nama, $id){
 		$id_sekolah = Crypt::decrypt($id);
 		$id_user = session::get('id_user');
@@ -344,6 +348,48 @@ class Home extends Controller
 			return redirect('login')->with(['success' => 'Pendaftaran Berhasil!']);
 		}
 	}
+
+    public function post_akunsekolah(Request $request){
+        $cpassword = $request->cpassword;
+        $password = $request->password;
+        $nama = $request->nama;
+        $email = $request->email;
+
+        if ($cpassword != $password) {
+            return redirect('/daftar/sekolah')->withInput()->with(['warning' => 'Konfirmasi password tidak sama!']);
+        }else{
+
+            $users = new Users;
+            $users->email =$request->email;
+            $users->password = password_hash($request->password, PASSWORD_DEFAULT);
+            $users->role = 'admin';
+            $users->status = 'nonaktif';
+            $users->save();
+
+            $id_user = $users->id_user;
+            $sekolah = new Sekolah;
+            $sekolah->id_user =$id_user;
+            $sekolah->nama_sekolah =$request->nama_sekolah;
+            $sekolah->email =$request->email;
+            if($request->hasFile('bukti')){
+                // File::delete('imageUpload/sekolah'. $data->foto);
+                $image = $request->file('bukti');
+
+                if($image->isValid()){
+                    $image_name = $image->getClientOriginalName();
+                    $upload_path = 'imageUpload/dokumen';
+                    $image->move($upload_path, $image_name);
+                    // $bank->gambar = $image_name;
+                    $sekolah['bukti'] = $image_name;
+                }
+            }
+            
+            
+            $sekolah->save();
+
+            return redirect('login')->with(['success' => 'Pendaftaran Berhasil!']);
+        }
+    }
 
 	public function kategori(){
 		$list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();

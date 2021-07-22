@@ -20,7 +20,10 @@ Route::get('hasil-seleksi','Home@hasil_seleksi');
 Route::get('login','Auth\LoginController@index');
 Route::get('daftar','Home@daftar');
 Route::get('daftar/siswa','Home@daftar_siswa');
+Route::get('daftar/sekolah','Home@daftar_sekolah');
+
 Route::post('akunsiswa', 'Home@post_akunsiswa');
+Route::post('akunsekolah', 'Home@post_akunsekolah');
 Route::get('detail-sekolah/{nama}/{id}', 'Home@detail_sekolah');
 Route::get('jalur-pendaftaran/{id}', 'Home@jalur_pendaftaran');
 Route::get('profile/{nama}', 'Home@profile');

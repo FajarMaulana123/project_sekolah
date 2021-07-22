@@ -7,6 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style type="text/css">
   .center {
     display: block;
@@ -38,7 +39,7 @@
       <?php }else{ ?>
         <img src="{{asset('imageUpload/dokumen/'.$siswa->foto)}}" class="rounded-circle center" alt="Cinque Terre" width="250" height="250" data-aos="fade-up" data-aos-delay="300">
       <?php } ?>
-      <input type="file" name="foto" class="form-control center mt-3" value="{{$siswa->foto}}" style="width: 250px;" data-aos="fade-up" data-aos-delay="300"> 
+      <input type="file" name="foto" class="form-control center mt-3" value="{{$siswa->foto}}" style="width: 250px;" data-aos="fade-up" data-aos-delay="300" accept="image/png, image/jpg, image/jpeg"> 
       <div class="row" style="margin-top:20px;">
         <div class="col-lg-12 col-md-12" data-aos="fade-up" data-aos-delay="300">
 
@@ -143,9 +144,9 @@
                 </div>
                 <div class="col-md-6">
                   <?php if ($siswa->jk == null) { ?>
-                    <label style="color: red">Jenis Kelamin*</label>
+                    <label style="color: red">Tingkat Sekolah*</label>
                   <?php }else{ ?>
-                    <label >Jenis Kelamin</label>
+                    <label >Tingkat Sekolah</label>
                   <?php } ?>
                   <div class="form-group">
                     <select class="form-control" name="tingkat">
@@ -165,10 +166,10 @@
                       <label style="color: red">Scan Ijazah*</label>
                     <?php }else{ ?>
                       <label >Scan Ijazah</label><br>
-                      <a href="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}" width="100"></a>
+                      <a href="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Ijazah</a>
                     <?php } ?>
 
-                    <input type="file" name="ijazah" class="form-control mt-2" value="{{$siswa->ijazah}}">
+                    <input type="file" name="ijazah" class="form-control mt-2" value="{{$siswa->ijazah}}" accept="application/pdf, application/msword,.doc,.docx">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -177,9 +178,9 @@
                       <label style="color: red">Scan SKHUN*</label>
                     <?php }else{ ?>
                       <label >Scan SKHUN</label><br>
-                      <a href="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}" width="100"></a>
+                      <a href="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}" target="_blank"><i class="fa fa-eye"></i> Lihat SKHUN</a>
                     <?php } ?>
-                    <input type="file" name="skhun" class="form-control" value="{{$siswa->skhun}}">
+                    <input type="file" name="skhun" class="form-control mt-2" value="{{$siswa->skhun}}" accept="application/pdf, application/msword,.doc,.docx">
                   </div>
                 </div>
               </div>
@@ -190,9 +191,9 @@
                       <label style="color: red">Scan Akte*</label>
                     <?php }else{ ?>
                       <label >Scan Akte</label><br>
-                      <a href="{{asset('imageUpload/dokumen/'.$siswa->akte)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->akte)}}" width="100"></a>
+                      <a href="{{asset('imageUpload/dokumen/'.$siswa->akte)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Akte</a>
                     <?php } ?>
-                    <input type="file" name="akte" class="form-control" value="{{$siswa->akte}}">
+                    <input type="file" name="akte" class="form-control" value="{{$siswa->akte}}" accept="application/pdf, application/msword,.doc,.docx">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -201,9 +202,9 @@
                       <label style="color: red">Scan Kartu Keluarga*</label>
                     <?php }else{ ?>
                       <label >Scan Kartu Keluarga</label><br>
-                      <a href="{{asset('imageUpload/dokumen/'.$siswa->kk)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->kk)}}" width="100"></a>
+                      <a href="{{asset('imageUpload/dokumen/'.$siswa->kk)}}" target="_blank"><i class="fa fa-eye"></i> Lihat KK</a>
                     <?php } ?>
-                    <input type="file" name="kk" class="form-control" value="{{$siswa->kk}}">
+                    <input type="file" name="kk" class="form-control" value="{{$siswa->kk}}" accept="application/pdf, application/msword,.doc,.docx">
                   </div>
                 </div>
               </div>
@@ -225,9 +226,10 @@
                   <?php if ($siswa->sertifikat1 == null) { ?>
                     <label style="color: red">Scan Sertifikat 1*</label>
                   <?php }else{ ?>
-                    <label >Scan Sertifikat 1</label>
+                    <label >Scan Sertifikat 1</label><br>
+                    <a href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat1)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Sertifikat1</a>
                   <?php } ?>
-                  <input type="file" name="sertifikat1" class="form-control" value="{{$siswa->sertifikat1}}">
+                  <input type="file" name="sertifikat1" class="form-control" value="{{$siswa->sertifikat1}}" accept="application/pdf, application/msword,.doc,.docx">
                 </div>
               </div>
               <div class="col-md-4">
@@ -235,9 +237,10 @@
                   <?php if ($siswa->sertifikat2 == null) { ?>
                     <label style="color: red">Scan Sertifikat 2*</label>
                   <?php }else{ ?>
-                    <label >Scan Sertifikat 2</label>
+                    <label >Scan Sertifikat 2</label><br>
+                    <a href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat2)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Sertifikat2</a>
                   <?php } ?>
-                  <input type="file" name="sertifikat2" class="form-control" value="{{$siswa->sertifikat2}}">
+                  <input type="file" name="sertifikat2" class="form-control" value="{{$siswa->sertifikat2}}" accept="application/pdf, application/msword,.doc,.docx">
                 </div>
               </div>
               <div class="col-md-4">
@@ -245,9 +248,10 @@
                   <?php if ($siswa->sertifikat3 == null) { ?>
                     <label style="color: red">Scan Sertifikat 3*</label>
                   <?php }else{ ?>
-                    <label >Scan Sertifikat 3</label>
+                    <label >Scan Sertifikat 3</label><br>
+                    <a href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat3)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Sertifikat3</a>
                   <?php } ?>
-                  <input type="file" name="sertifikat3" class="form-control" value="{{$siswa->sertifikat3}}">
+                  <input type="file" name="sertifikat3" class="form-control" value="{{$siswa->sertifikat3}}" accept="application/pdf, application/msword,.doc,.docx">
                 </div>
               </div>
             </div>
