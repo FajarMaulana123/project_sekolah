@@ -32,7 +32,18 @@
           </ul>
         </li> -->
         <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
-        <!--  -->
+        <?php
+        $id_user = Session::get('id_user');
+        $siswa = \App\Siswa::where('id_user', $id_user)->first();
+        $jud = $siswa['nama'];
+        $string = str_replace(array('[\', \']'), '', $jud);
+        $string = preg_replace('/\[.*\]/U', '', $jud);
+        $string = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $jud);
+        $string = htmlentities($jud, ENT_COMPAT, 'utf-8');
+        $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $jud );
+        $string = preg_replace(array('/[^a-z0-9]/i', '/[-]+/') , '-', $jud);
+        $nama = strtolower(trim($string, '-'));
+        ?>
         @if (!Session::get('loginsiswa')) 
         <li><a class="getstarted scrollto" href="{{url('login')}}">Login</a></li>
         @else

@@ -9,6 +9,8 @@ use App\Users;
 use App\Prestasi;
 use App\TahunAjaran;
 use App\Ppdb;
+use App\Agama;
+use App\Pendaftaran;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
@@ -23,15 +25,21 @@ class SekolahController extends Controller
             // dd($list_sekolah);
             $data = [];
             foreach($list_sekolah as $key){
-                $ppdb = Ppdb::where('id_sekolah', $key->id_sekolah)->get();
-                foreach ($ppdb as $pp) {
-                        $data  = [
+                $ppdb = Ppdb::where('id_sekolah', $key->id_sekolah)->first();
+               if(isset($ppdb)){
+                   $dt = $ppdb['daya_tampung'];
+                   $jd = $ppdb['jml_diterima'];
+               }else{
+                   $dt = 0;
+                   $jd = 0;
+               }
+                        $data[]  = [
                             'id_user' => $key->id_user,
                             'id_sekolah' => $key->id_sekolah,
                             'nama_sekolah' => $key->nama_sekolah,
                             'nama_kps' => $key->nama_kps,
-                            'daya_tampung' => $pp['daya_tampung'],
-                            'jml_diterima' => $pp['jml_diterima'],
+                            'daya_tampung' => $dt,
+                            'jml_diterima' => $jd,
                             'status' => $key->status,
                             'tingkat' => $key->tingkat,
                             'email' => $key->email,
@@ -44,8 +52,7 @@ class SekolahController extends Controller
                             'foto' => $key->foto,
                             'longitude' => $key->longitude,
                             'latitude' => $key->latitude
-                        ];            
-                    }
+                        ];  
 
                 }
 
@@ -247,7 +254,7 @@ public function post_prestasi(Request $request){
     $data->judul = $request->judul;
     $data->deskripsi = $request->deskripsi;
     $data->save();
-    return redirect('/prestasi');
+    return redirect('/prestasi')->with(['success' => 'Berhasil Tambah Data!']);
 }
 
 public function edit_prestasi($id){
@@ -264,13 +271,13 @@ public function update_prestasi(Request $request, $id){
         'judul' => $request->judul,
         'deskripsi' => $request->deskripsi,
     ]);
-    return redirect('/prestasi');
+    return redirect('/prestasi')->with(['success' => 'Berhasil Edit Data!']);
 }
 
 public function hapus_prestasi($id){
     $data = Prestasi::findOrFail($id);
     $data->delete();
-    return redirect('/prestasi');
+    return redirect('/prestasi')->with(['success' => 'Berhasil Hapus Data!']);
 }
 
 public function tahunajaran(){
@@ -294,7 +301,7 @@ public function post_thajaran(Request $request){
     $data = new TahunAjaran;
     $data->tahun_ajaran = $request->tahun_ajaran;
     $data->save();
-    return redirect('/tahunajaran');
+    return redirect('/tahunajaran')->with(['success' => 'Berhasil Tambah Data!']);
 }
 
 public function edit_thajaran($id){
@@ -310,13 +317,13 @@ public function update_thajaran(Request $request){
     TahunAjaran::where('id_tahunajaran', $request->id)->update([
         'tahun_ajaran' => $request->tahun_ajaran,
     ]);
-    return redirect('/tahunajaran');
+    return redirect('/tahunajaran')->with(['success' => 'Berhasil Edit Data!']);
 }
 
 public function hapus_thajaran($id){
     $data = TahunAjaran::findOrFail($id);
     $data->delete();
-    return redirect('/tahunajaran');
+    return redirect('/tahunajaran')->with(['success' => 'Berhasil Hapus Data!']);
 }
 
 public function ppdb_sekolah(){
@@ -353,7 +360,69 @@ public function update_ppdb(Request $request){
             'tgl_berakhir' => $request->tgl_berakhir,
         ]);
     }
-    return redirect('/ppdb_sekolah');
+    return redirect('/ppdb_sekolah')->with(['success' => 'Berhasil Update Data!']);
 }
+
+public function agama(){
+    if (!session::get('loginsuper')) {
+        return redirect('login');
+    }else{
+        $data = Agama::all();
+        return view('admin.agama.index', compact('data'));
+    }
+}
+
+public function create_agama(){
+    if (!session::get('loginsuper')) {
+        return redirect('login');
+    }else{
+        return view('admin.agama.create');
+    }
+}
+
+public function post_agama(Request $request){
+    $data = new Agama;
+    $data->nama_agama = $request->nama_agama;
+    $data->save();
+    return redirect('/agama')->with(['success' => 'Berhasil Tambah Data!']);
+}
+
+public function edit_agama($id){
+    if (!session::get('loginsuper')) {
+        return redirect('login');
+    }else{
+        $data = Agama::where('id_agama', $id)->first();
+        return view('admin.agama.edit', compact('data'));
+    }
+}
+
+public function update_agama(Request $request){
+    Agama::where('id_agama', $request->id)->update([
+        'nama_agama' => $request->nama_agama,
+    ]);
+    return redirect('/agama')->with(['success' => 'Berhasil Edit Data!']);
+}
+
+public function hapus_agama($id){
+    $data = Agama::findOrFail($id);
+    $data->delete();
+    return redirect('/agama')->with(['success' => 'Berhasil Hapus Data!']);
+}
+
+public function data_daftar(){
+    $sekolah = Sekolah::where('id_user',Session::get('id_user'))->first();
+    $data = Pendaftaran::join('siswa', 'pendaftaran.id_siswa', '=', 'siswa.id_siswa')
+            ->where('id_sekolah', $sekolah->id_sekolah)
+            ->select('pendaftaran.*', 'siswa.*')
+            ->get();
+    return view('admin.data_daftar.index', compact('data'));
+}
+
+public function status_daftar(Request $request){
+    Pendaftaran::where('id_pendaftaran', $request->id)->update([
+        'status' => $request->status,
+    ]);
+    return redirect()->back();
+} 
 
 }

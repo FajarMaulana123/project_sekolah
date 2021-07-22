@@ -76,7 +76,19 @@ Route::get('tahunajaran/{id}/edit', 'SekolahController@edit_thajaran');
 Route::post('tahunajaran/update','SekolahController@update_thajaran');
 Route::get('tahunajaran/{id}', 'SekolahController@hapus_thajaran');
 
+//agama
+Route::get('agama', 'SekolahController@agama');
+Route::get('agama/create', 'SekolahController@create_agama');
+Route::post('agama/create', 'SekolahController@post_agama');
+Route::get('agama/{id}/edit', 'SekolahController@edit_agama');
+Route::post('agama/update','SekolahController@update_agama');
+Route::get('agama/{id}', 'SekolahController@hapus_agama');
+
 //ppdb_sekolah
 Route::get('ppdb_sekolah', 'SekolahController@ppdb_sekolah');
 Route::post('ppdb/update', 'SekolahController@update_ppdb');
+
+//data_pendaftaran
+Route::get('data_pendaftaran', 'SekolahController@data_daftar');
+Route::post('data_pendaftaran/status', 'SekolahController@status_daftar');
 

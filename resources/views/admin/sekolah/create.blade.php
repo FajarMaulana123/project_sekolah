@@ -88,20 +88,7 @@
                     </textarea>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="daya_tampung">Daya Tampung</label>
-                      <input type="number" class="form-control" id="daya_tampung" placeholder="Masukan Daya Tampung" name="daya_tampung" required>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="jml_diterima">Jumlah Diterima</label>
-                      <input type="number" class="form-control" id="jml_diterima" placeholder="Masukan Jumlah Diterima" name="jml_diterima" required>
-                    </div>
-                  </div>
-                </div>
+                
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">

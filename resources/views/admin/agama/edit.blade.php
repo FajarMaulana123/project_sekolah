@@ -5,12 +5,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Tahun Ajaran</h1>
+          <h1 class="m-0">Agama</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Tahun Ajaran</li>
+            <li class="breadcrumb-item active">Agama</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -24,18 +24,19 @@
           <!-- general form elements -->
           <div class="card card-light">
             <div class="card-header">
-              <h3 class="card-title">Tambah Tahun Ajaran</h3>
+              <h3 class="card-title">Edit Agama</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="post" action="{{ url('tahunajaran/create')}}">
+            <form method="post" action="{{ url('/agama/update') }}">
               @csrf
               <div class="card-body">
                 <div class="form-group">
-                  <label for="tahun_ajaran">Tahun Ajaran</label>
-                  <input type="text" class="form-control" id="tahun_ajaran" placeholder="Enter Tahun Ajaran" name="tahun_ajaran" required>
+                  <label for="agama">Agama</label>
+                  <input type="hidden" name="id" value="{{$data->id_agama}}">
+                  <input type="text" class="form-control" id="agama" placeholder="Enter Agama" name="nama_agama" value="{{$data->nama_agama}}" required>
                 </div>
-               
+                
                 <!-- <div class="form-group">
                   <label for="exampleInputFile">File input</label>
                   <div class="input-group">
