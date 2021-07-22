@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2021 at 07:20 PM
+-- Generation Time: Jul 22, 2021 at 06:14 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -25,12 +25,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tahun_ajaran`
+-- Table structure for table `agama`
 --
 
-CREATE TABLE `tahun_ajaran` (
-  `id_tahunajaran` bigint(255) NOT NULL,
-  `tahun_ajaran` varchar(255) NOT NULL,
+CREATE TABLE `agama` (
+  `id_agama` bigint(255) NOT NULL,
+  `nama_agama` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -40,20 +40,20 @@ CREATE TABLE `tahun_ajaran` (
 --
 
 --
--- Indexes for table `tahun_ajaran`
+-- Indexes for table `agama`
 --
-ALTER TABLE `tahun_ajaran`
-  ADD PRIMARY KEY (`id_tahunajaran`);
+ALTER TABLE `agama`
+  ADD PRIMARY KEY (`id_agama`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `tahun_ajaran`
+-- AUTO_INCREMENT for table `agama`
 --
-ALTER TABLE `tahun_ajaran`
-  MODIFY `id_tahunajaran` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `agama`
+  MODIFY `id_agama` bigint(255) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

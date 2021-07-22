@@ -62,8 +62,12 @@
                     <td>{{$no++}}</td>
                     <td>{{$sekolah['nama_sekolah']}}</td>
                     <td>{{$sekolah['nama_kps']}}</td>
-                    <td>{{$sekolah['daya_tampung']}}</td>
-                    <td>{{$sekolah['jml_diterima']}}</td>
+                    <td>
+                      {{$sekolah['daya_tampung']}}
+                    </td>
+                    <td>
+                      {{$sekolah['jml_diterima']}}
+                    </td>
                     <td>
                       @if ($sekolah['status'] == 'aktif')
                       <a type="submit" class="btn btn-info btn-xs " ><i class="fa fa-check"></i>  ACC</a>

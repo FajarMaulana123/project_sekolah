@@ -10,7 +10,7 @@
     </div>
     <h5 style="font-family: 'Open Sans', sans-serif; text-align: left; margin-left: 50px; margin-top: 20px;"><b>Pilih Jalur Pendaftaran</b></h5>
     
-    <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black;">
+    <!-- <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black;">
       <div>
         <table>
           <tr>
@@ -24,8 +24,14 @@
           </tr>
         </table>
       </div>
-    </a>
-    <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; margin-top: -10px; " href="{{url('daftar/siswa')}}">
+    </a> -->
+    <?php
+      $prestasi = "prestasi";
+      if ($siswa->sertifikat1 == null && $siswa->sertifikat2 == null && $siswa->sertifikat3 == null) { ?>
+      <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; " href="{{url('jalur-pendaftaran/'.$prestasi.'/'.Crypt::encrypt($id_sekolah))}}">
+    <?php }else{ ?>
+      <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; " href="{{url('jalur-pendaftaran/'.$prestasi.'/update/'.Crypt::encrypt($id_sekolah))}}">
+    <?php } ?>
       <div>
         <table>
           <tr>
@@ -41,7 +47,13 @@
       </div>
     </a>
 
-    <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; margin-top: -10px; " href="{{url('daftar/siswa')}}">
+    <?php
+      $perpindahan = "perpindahan-orang-tua";
+      if ($siswa->perpindahan == null) { ?>
+      <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; margin-top: -10px;" href="{{url('jalur-pendaftaran/'.$perpindahan.'/'.Crypt::encrypt($id_sekolah))}}">
+    <?php }else{ ?>
+      <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; margin-top: -10px;" href="{{url('jalur-pendaftaran/'.$perpindahan.'/update/'.Crypt::encrypt($id_sekolah))}}">
+    <?php } ?>
       <div>
         <table>
           <tr>
@@ -56,7 +68,14 @@
         </table>
       </div>
     </a>
-    <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; margin-top: -10px; margin-bottom: 80px;" href="{{url('daftar/siswa')}}">
+
+    <?php
+      $afirmasi = "afirmasi";
+      if ($siswa->afirmasi == null) { ?>
+      <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; margin-top: -10px;" href="{{url('jalur-pendaftaran/'.$afirmasi.'/'.Crypt::encrypt($id_sekolah))}}">
+    <?php }else{ ?>
+      <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; margin-top: -10px;" href="{{url('jalur-pendaftaran/'.$afirmasi.'/update/'.Crypt::encrypt($id_sekolah))}}">
+    <?php } ?>
       <div>
         <table>
           <tr>

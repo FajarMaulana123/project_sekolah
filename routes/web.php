@@ -14,6 +14,7 @@
 Route::get('/','Home@index');
 Route::get('kategori_kecamatan','Home@kategori');
 Route::get('home','admin\HomeController@index');
+Route::get('hasil-seleksi','Home@hasil_seleksi');
 
 
 Route::get('login','Auth\LoginController@index');
@@ -21,9 +22,16 @@ Route::get('daftar','Home@daftar');
 Route::get('daftar/siswa','Home@daftar_siswa');
 Route::post('akunsiswa', 'Home@post_akunsiswa');
 Route::get('detail-sekolah/{nama}/{id}', 'Home@detail_sekolah');
-Route::get('jalur-pendaftaran', 'Home@jalur_pendaftaran');
+Route::get('jalur-pendaftaran/{id}', 'Home@jalur_pendaftaran');
 Route::get('profile/{nama}', 'Home@profile');
 Route::post('editsiswa', 'Home@editsiswa');
+Route::post('addsertifikat/{prestasi}/{id}', 'Home@addsertifikat');
+Route::post('addperpindahan/{perpindahan}/{id}', 'Home@addperpindahan');
+Route::post('addafirmasi/{afirmasi}/{id}', 'Home@addafirmasi');
+Route::get('jalur-pendaftaran/{jalur}/{id}', 'Home@jalur');
+Route::get('jalur-pendaftaran/{jalur}/update/{id}', 'Home@jalur_update');
+Route::get('data-diri/{jalur}/{id}', 'Home@data_diri');
+Route::post('pendaftaran-siswa', 'Home@pendaftaran');
 
 // Route::get('login','Auth\LoginController@index');
 Route::get('login','LoginController@index');
@@ -65,7 +73,19 @@ Route::get('tahunajaran/{id}/edit', 'SekolahController@edit_thajaran');
 Route::post('tahunajaran/update','SekolahController@update_thajaran');
 Route::get('tahunajaran/{id}', 'SekolahController@hapus_thajaran');
 
+//agama
+Route::get('agama', 'SekolahController@agama');
+Route::get('agama/create', 'SekolahController@create_agama');
+Route::post('agama/create', 'SekolahController@post_agama');
+Route::get('agama/{id}/edit', 'SekolahController@edit_agama');
+Route::post('agama/update','SekolahController@update_agama');
+Route::get('agama/{id}', 'SekolahController@hapus_agama');
+
 //ppdb_sekolah
 Route::get('ppdb_sekolah', 'SekolahController@ppdb_sekolah');
 Route::post('ppdb/update', 'SekolahController@update_ppdb');
+
+//data_pendaftaran
+Route::get('data_pendaftaran', 'SekolahController@data_daftar');
+Route::post('data_pendaftaran/status', 'SekolahController@status_daftar');
 
