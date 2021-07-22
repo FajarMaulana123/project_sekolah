@@ -35,7 +35,7 @@
         <?php
         $id_user = Session::get('id_user');
         $siswa = \App\Siswa::where('id_user', $id_user)->first();
-        $jud = $siswa->nama;
+        $jud = $siswa['nama'];
         $string = str_replace(array('[\', \']'), '', $jud);
         $string = preg_replace('/\[.*\]/U', '', $jud);
         $string = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $jud);
