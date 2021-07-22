@@ -55,26 +55,39 @@
         </li>
         @if(Session::get('loginsuper'))
         <li class="nav-item">
-          <a href="{{url('kecamatan')}}" class="nav-link">
-            <i class="nav-icon fa fa-hotel"></i>
-            <p>
-              Kecamatan
-            </p>
-          </a>
-        </li>
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                Master Data
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../../index2.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Agama</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('kecamatan')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kecamatan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('tahunajaran')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tahun Ajaran</p>
+                </a>
+              </li>
+            </ul>
+          </li>
         <li class="nav-item">
           <a href="{{url('sekolah')}}" class="nav-link">
             <i class="nav-icon fas fa-school"></i>
             <p>
               Sekolah
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{url('tahunajaran')}}" class="nav-link">
-            <i class="nav-icon fa fa-trophy"></i>
-            <p>
-              Tahun Ajaran
             </p>
           </a>
         </li>

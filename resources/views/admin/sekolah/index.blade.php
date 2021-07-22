@@ -62,7 +62,6 @@
                     <td>{{$no++}}</td>
                     <td>{{$sekolah->nama_sekolah}}</td>
                     <td>{{$sekolah->nama_kps}}</td>
-                    <?php $ppdb = \App\Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first() ?>
                     <td>
                       {{$ppdb->daya_tampung}}
                     </td>

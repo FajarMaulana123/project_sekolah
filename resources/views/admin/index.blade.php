@@ -1,82 +1,147 @@
 @extends('template')
 @section('content')
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Dashboard</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard v1</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <style type="text/css">
+    #map {
+      height: 100%;
+      width: 80%;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <!-- /.content-header -->
+  <div id="map"></div>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
+  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+  </script>
+  <script type="text/javascript">
+    <script>
+    var apiKey='AIzaSyCzYzyGAR3mvDJeIRquMhAJ71AbhfS8_zg';
+    var longitude, latitude, map;
 
-                <p>New Orders</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
+    jQuery(document).ready(function( $ ) {
+      $('#find-address').click(function () {
+        var address = $('#address').val();
+        var postcode = $('#postcode').val();
+        var addressClean = address.replace(/\s+/g, '+');
+        var postcodeClean = postcode.replace(/\s+/g, '+');
+        var apiCall = 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressClean+',+'+postcodeClean+'&key='+apiKey+'';
+
+        $.getJSON(apiCall,function (data, textStatus) {
+          longitude = data.results[0].geometry.location.lng;
+          latitude = data.results[0].geometry.location.lat;
+          document.getElementById("long").value = longitude;
+          document.getElementById("lat").value = latitude;
+        });
+
+        setTimeout(function(){
+          longitude = $("input#long").val();
+          latitude = $("input#lat").val();
+
+          if(longitude && latitude){
+            longitude = parseFloat(longitude);
+            latitude = parseFloat(latitude);
+
+            initMap(longitude,latitude);
+          }
+        }, 1000);
+      });
+    });
+
+    function initMap(longitude,latitude) {
+      var myLatlng = new google.maps.LatLng(latitude,longitude);
+
+      var mapOptions = {
+        zoom: 12,
+        center: myLatlng
+      }
+
+      var map = new google.maps.Map(document.getElementById("map-embed-div"), mapOptions);
+
+      var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        draggable: true,
+        title: "Where's your garden?"
+      });
+    };
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzYzyGAR3mvDJeIRquMhAJ71AbhfS8_zg&callback=initMap" async defer></script>
+</script>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>150</h3>
+
+            <p>New Orders</p>
           </div>
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
           </div>
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
-
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-
-                <p>Unique Visitors</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+            <p>Bounce Rate</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>44</h3>
+
+            <p>User Registrations</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>65</h3>
+
+            <p>Unique Visitors</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+    </div>
         <!-- <div class="row">
           <section class="col-lg-7 connectedSortable">
             <div class="card">
