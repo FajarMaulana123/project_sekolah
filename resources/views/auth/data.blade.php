@@ -45,7 +45,7 @@
                 <hr>
                 <div class="form-group" style="margin-top: -10px">
                   <b><label >Agama</label></b>
-                  <p style="margin-top: -10px">{{$siswa->agama}}</p>
+                  <p style="margin-top: -10px">{{$siswa->nama_agama}}</p>
                 </div>
                 <hr>
                 <div class="form-group" style="margin-top: -10px">
@@ -68,11 +68,13 @@
                   <p style="margin-top: -10px">{{$siswa->tingkat}}</p>
                 </div>
                 <hr>
-                <div class="form-group" style="margin-top: -10px">
-                  <b><label >Ijasah & SKHUN</label></b><br>
-                  <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}"><i class="fa fa-eye"></i> Lihat Ijazah</a>
-                  <a style="margin-left: 10px;" target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}"><i class="fa fa-eye"></i> Lihat SKHUN</a>
-                </div>
+                <?php if ($siswa->tingkat == "SD") { ?>
+                  <div class="form-group" style="margin-top: -10px">
+                    <b><label >Ijasah & SKHUN</label></b><br>
+                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}"><i class="fa fa-eye"></i> Lihat Ijazah</a>
+                    <a style="margin-left: 10px;" target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}"><i class="fa fa-eye"></i> Lihat SKHUN</a>
+                  </div>
+                <?php } ?>
                 <hr>
                 <div class="form-group" style="margin-top: -10px">
                   <b><label >Akte & KK</label></b><br>
@@ -111,7 +113,7 @@
 
               </div>
               <div class="col-md-7">
-                <a target="_blank" href="{{asset('imageUpload/sekolah/'.$sekolah->foto)}}"><img src="{{asset('imageUpload/dokumen/'.$sekolah->foto)}}" style="width: 100%"></a>
+                <a target="_blank" href="{{asset('imageUpload/sekolah/'.$sekolah->foto)}}"><img src="{{asset('imageUpload/sekolah/'.$sekolah->foto)}}" style="width: 100%"></a>
                 <h6 style="width: 100%; margin-top: 20px;"><b>{{$sekolah->nama_sekolah}}</b></h6>
                 <hr>
                 <div style="width: 100%; margin-top: 20px;">{!!$sekolah->visimisi!!}</div>

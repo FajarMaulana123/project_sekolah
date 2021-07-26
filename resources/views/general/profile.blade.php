@@ -27,11 +27,20 @@
       <strong>{{ $message }}</strong>
     </div>
     @endif
-    <?php if ($siswa->agama == NULL || $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->ijazah == NULL || $siswa->skhun == NULL || $siswa->kk == NULL ) { ?>
-      <div class="alert alert-danger alert-block" data-aos="fade-up" data-aos-delay="300">
-        <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>Segera Lengkapi data diri kamu!</strong>
-      </div>
+    <?php if ($siswa->tingkat == "SD") { ?>
+      <?php if ( $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->ijazah == NULL || $siswa->skhun == NULL || $siswa->kk == NULL || $siswa->id_agama == NULL) { ?>
+        <div class="alert alert-danger alert-block" data-aos="fade-up" data-aos-delay="300">
+          <button type="button" class="close" data-dismiss="alert">×</button> 
+          <strong>Segera Lengkapi data diri kamu!</strong>
+        </div>
+      <?php } ?>
+    <?php }else{ ?>
+      <?php if ( $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->kk == NULL || $siswa->id_agama == NULL) { ?>
+        <div class="alert alert-danger alert-block" data-aos="fade-up" data-aos-delay="300">
+          <button type="button" class="close" data-dismiss="alert">×</button> 
+          <strong>Segera Lengkapi data diri kamu!</strong>
+        </div>
+      <?php } ?>
     <?php } ?>
     <form method="post" action="{{ url('editsiswa') }}" enctype="multipart/form-data"  role="form">
       <?php if ($siswa->foto == null) { ?>
@@ -61,12 +70,19 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <?php if ($siswa->agama == null) { ?>
+                    <?php if ($siswa->id_agama == null) { ?>
                       <label style="color: red">Agama*</label>
                     <?php }else{ ?>
                       <label >Agama</label>
                     <?php } ?>
-                    <input type="text" name="agama" class="form-control" id="agama" placeholder="Masukan Agama" value="{{$siswa->agama}}" >
+                    <div class="form-group">
+                      <select class="form-control" name="id_agama">
+                        <option value="" <?php if($siswa->id_agama == null) echo 'selected="selected"'; ?>>-Pilih Agama-</option>
+                        @foreach($agama as $ag)
+                          <option value="{{$ag->id_agama}}" <?php if($siswa->id_agama == $ag->id_agama) echo 'selected="selected"'; ?>>{{$ag->nama_agama}}</option>
+                        @endforeach
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -143,7 +159,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <?php if ($siswa->jk == null) { ?>
+                  <?php if ($siswa->tingkat == null) { ?>
                     <label style="color: red">Tingkat Sekolah*</label>
                   <?php }else{ ?>
                     <label >Tingkat Sekolah</label>
@@ -159,6 +175,7 @@
                 </div>
 
               </div>
+              <?php if ($siswa->tingkat == "SD") { ?>
               <div class="row" style="margin-top:20px;">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -184,6 +201,7 @@
                   </div>
                 </div>
               </div>
+              <?php } ?>
               <div class="row" style="margin-top:20px;">
                 <div class="col-md-6">
                   <div class="form-group">

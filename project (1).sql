@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Jul 2021 pada 12.08
+-- Waktu pembuatan: 26 Jul 2021 pada 18.02
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `project`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `agama`
+--
+
+CREATE TABLE `agama` (
+  `id_agama` bigint(255) NOT NULL,
+  `nama_agama` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `agama`
+--
+
+INSERT INTO `agama` (`id_agama`, `nama_agama`, `created_at`, `updated_at`) VALUES
+(1, 'Islam', '2021-07-23 07:15:44', '2021-07-23 07:15:44'),
+(2, 'Kristen', '2021-07-23 07:16:04', '2021-07-23 07:16:04'),
+(3, 'Katolik', '2021-07-23 07:16:18', '2021-07-23 07:16:18'),
+(4, 'Hindu', '2021-07-23 07:16:33', '2021-07-23 07:16:33'),
+(5, 'Buddha', '2021-07-23 07:16:51', '2021-07-23 07:16:51'),
+(6, 'Konghucu', '2021-07-23 07:17:06', '2021-07-23 07:17:06');
 
 -- --------------------------------------------------------
 
@@ -1514,6 +1539,9 @@ CREATE TABLE `pendaftaran` (
   `id_sekolah` int(11) NOT NULL,
   `jalur` varchar(30) NOT NULL,
   `status` int(11) NOT NULL COMMENT '0 menunggu, 1 diterima, 2 ditolak',
+  `daya_tampung` double NOT NULL,
+  `jml_diterima` double DEFAULT NULL,
+  `tahun_ajaran` varchar(20) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1522,11 +1550,10 @@ CREATE TABLE `pendaftaran` (
 -- Dumping data untuk tabel `pendaftaran`
 --
 
-INSERT INTO `pendaftaran` (`id_pendaftaran`, `id_siswa`, `id_sekolah`, `jalur`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, 'prestasi', 0, '2021-07-15 17:01:20', NULL),
-(31, 8, 2, 'prestasi', 0, '2021-07-18 19:05:09', NULL),
-(32, 8, 2, 'afirmasi', 0, '2021-07-18 19:09:35', NULL),
-(33, 1, 2, 'afirmasi', 0, '2021-07-21 05:11:53', NULL);
+INSERT INTO `pendaftaran` (`id_pendaftaran`, `id_siswa`, `id_sekolah`, `jalur`, `status`, `daya_tampung`, `jml_diterima`, `tahun_ajaran`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'prestasi', 0, 1000, NULL, '2020 / 2021', '2021-07-15 17:01:20', NULL),
+(31, 8, 2, 'prestasi', 0, 1000, NULL, '2020 / 2021', '2021-07-18 19:05:09', NULL),
+(32, 8, 2, 'afirmasi', 0, 1000, NULL, '2020 / 2021', '2021-07-18 19:09:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -1536,7 +1563,7 @@ INSERT INTO `pendaftaran` (`id_pendaftaran`, `id_siswa`, `id_sekolah`, `jalur`, 
 
 CREATE TABLE `ppdb` (
   `id_ppdb` bigint(255) NOT NULL,
-  `id_sekolah` int(255) NOT NULL,
+  `id_sekolah` int(11) NOT NULL,
   `tahun_ajaran` varchar(255) NOT NULL,
   `daya_tampung` int(255) NOT NULL,
   `jml_diterima` int(255) NOT NULL,
@@ -1551,7 +1578,8 @@ CREATE TABLE `ppdb` (
 --
 
 INSERT INTO `ppdb` (`id_ppdb`, `id_sekolah`, `tahun_ajaran`, `daya_tampung`, `jml_diterima`, `tgl_mulai`, `tgl_berakhir`, `created_at`, `updated_at`) VALUES
-(1, 2, '2020 / 2021', 1000, 800, '2021-07-12', '2021-07-21', '2021-07-14 08:09:24', '2021-07-14 08:09:24');
+(1, 2, '2020 / 2021', 1000, 800, '2021-07-12', '2021-07-24', '2021-07-14 08:09:24', '2021-07-14 08:09:24'),
+(2, 1, '2021 / 2022', 100, 95, '2021-07-22', '2021-07-31', '2021-07-23 15:38:21', '2021-07-23 15:38:21');
 
 -- --------------------------------------------------------
 
@@ -1586,18 +1614,18 @@ INSERT INTO `prestasi` (`id_prestasi`, `id_sekolah`, `judul`, `deskripsi`, `crea
 CREATE TABLE `sekolah` (
   `id_sekolah` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `id_kec` int(11) NOT NULL,
+  `id_kec` int(11) DEFAULT NULL,
   `nama_sekolah` varchar(150) NOT NULL,
-  `nama_kps` varchar(150) NOT NULL,
-  `tingkat` enum('SD','SMP') NOT NULL,
+  `nama_kps` varchar(150) DEFAULT NULL,
+  `tingkat` enum('SD','SMP') DEFAULT NULL,
   `email` varchar(100) NOT NULL,
-  `nohp` varchar(20) NOT NULL,
-  `alamat` text NOT NULL,
-  `visimisi` text NOT NULL,
-  `deskripsi` text NOT NULL,
+  `nohp` varchar(20) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `visimisi` text DEFAULT NULL,
+  `deskripsi` text DEFAULT NULL,
   `bukti` longtext NOT NULL,
-  `logo` longtext NOT NULL,
-  `foto` longtext NOT NULL,
+  `logo` longtext DEFAULT NULL,
+  `foto` longtext DEFAULT NULL,
   `longitude` varchar(100) DEFAULT NULL,
   `latitude` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1609,8 +1637,9 @@ CREATE TABLE `sekolah` (
 --
 
 INSERT INTO `sekolah` (`id_sekolah`, `id_user`, `id_kec`, `nama_sekolah`, `nama_kps`, `tingkat`, `email`, `nohp`, `alamat`, `visimisi`, `deskripsi`, `bukti`, `logo`, `foto`, `longitude`, `latitude`, `created_at`, `updated_at`) VALUES
-(1, 3, 2, 'SMP N 3 Terisi', 'Wahyu Hermawan, A.Md.Kom', 'SMP', 'sekolahsmp@gmail.com', '089688177247', 'Cikedung', '', '<div style=\"text-align: justify;\"><span style=\"font-size: 1rem;\">SMP Negeri 3 Terisi dulu bernama Sekolah Lanjutan Tingkat Pertama (SLTP) Negeri 3 Cikedung yang dibuka pada tahun 1995 sebagai Kelah Jauh SLTP Negeri 1 Cikedung memiliki 2 (dua) rombongan belajar dengan jumlah siswa 96 orang. Sekolah ini bertempat di gedung eks SLTP Trisila di desa Cikedung Lor, dengan Kepala Sekolah Yth. Bp. GANDHI DANAWIDJAJA, S.Ag.</span></div>', 'bukti.pdf', 'logo.png', 'foto.jpg', '-09087787989898', '0909889898980909', '2021-07-05 15:36:58', '2021-07-09 18:34:58'),
-(2, 16, 22, 'SD N 1 LELEA', 'Hyuwan', 'SD', 'sekolahsd@gmail.com', '089688', 'Mundakjaya', '<p><span style=\"color: rgb(68, 68, 68); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: justify;\"><b>VISI</b></span></p><p><span style=\"color: rgb(68, 68, 68); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: justify;\">Sebagai Lembaga Pendidikan yang dapat mewujudkan peserta didik yang profesional</span></p><p><span style=\"color: rgb(68, 68, 68); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: justify;\"><b>MISI</b></span></p><ul><li>Meningkatkan Kualitas SDM</li><li>Meningkatkan Pelayanan Terhadap Peserta Didik</li><li>Meningkatkan Mutu Lulusan</li></ul>', '<div style=\"text-align: justify;\"><div class=\"post_detail\" style=\"width: 750px; color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: start;\"><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">Sekolah Menengah Kejuaran Negeri 1 Lelea adalah sekolah yang di dirikan\r\npada 18 November2003 di resmikan oleh. SMK NEGERI 1 LELEA ini adalah sekolah\r\nsatu-satunya di kecamatan lelea dan mempunyai program jurusan yang berbeda\r\ndengan SMK lainya. Program jurusan yang pertama hanya ada dua yaitu:<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">1. TEKNIK PENGELASAN<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">2. TATA BUSANA<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;Pada saat itu di pimpin oleh kepala sekolah Bapak Drs. H. Ridwan\r\nSadeli. Beliau dulunya adalah kepala sekolah SMP Negeri 1 Lelea. Beliau yang\r\nmempunyai ide buat membangun SMK&nbsp; NEGERI 1 LELEA ini<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;Drs.H. RIDWAN SADELI<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mulain akfit pada bulan juli 2004/2005\r\nWaktu itu masih sedikit muridnya hanya ada 2 kelas,dan belum punya gedung\r\nsendiri masih memanfaat kan Gedung bekas SD yang sudah tidak terpakai,\r\nGuru-Gurunya juga sebagian besar dari SMP Negeri 1 Lelea.<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">seiring berkembangnya zaman SMK NEGERI 1 LELEA menambahkan program\r\njurusannya satu lagi yaitu:<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">1.TEKNIK OTOMOTIF<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">karena TEKNIK OTOMOTIF banyak sekali peminatnya,Sebagian besar SMK yang\r\nada di wilayah INDRAMAYU ini mempunyai program jurusan ini.<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;pada masa peneriamaan siswa baru SMK NEGERI 1 LELEA bertambah\r\nsiswanya yang tadinya 2 kelas menjadi 3 kelas, walaupun baru mempunyai bebera\r\nruang kelas. seiring bertambahnya tahun SMK NEGERI 1 LELEA semakin&nbsp; di\r\nminati oleh masyarakat buat menyekolahkan anaknya di SMK NEGERI 1 LELEA ini.<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;pada tahun 2007 SMK NEGERI 1 LELEA bertambah lagi siswanya yang\r\ntadinya 3 kelas menjadi 6 kelas, yang di bagi menjadi 3 program jurusan,setiap\r\nprogram jurusan mempunyai 2 kelas. walaupun umur SMK ini baru 4 tahun berdiri\r\ntapi SMK ini tidak mau kalah sama SMK lainya yang sudah lama berdiri.<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;Pada tahun 2009 Kepala sekolah SMK NEGERI 1 LELEA Bapak Drs. H .\r\nRidwan Sadeli di ganti oleh Drs. Rachmat Heriwan sampai sekarang, Bapak Drs. H.\r\nRidwan Sadeli di pindahkan ke SMK NEGERI 1 INDRAMAYU. Beliau sekarang menjadi\r\nkepala sekolah di SMK NEGERI 1 CIKEDUNG.<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;pada tahun 2010 SMK NEGERI 1 LELEA menambahkan program jurusan dua\r\nprogram yaitu:<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">1.TEKNIK KOMPUTER DAN JARINGAN<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">2. MULTIMEDIA<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;Jadi SMK NEGERI 1 LELEA sekarang mempunyai lima program jurusan\r\ndiantaranya:<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">1.TEKNIK PENGELASAN<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">2.TATA BUSANA<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">3.TEKNIK KENDARAAN RINGAN<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">4.TEKNIK KOMPUTER DAN JARINAGAN<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">5. MULTIMEDIA<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span lang=\"IN\" style=\"font-size:10.5pt;font-family:\r\n&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;\r\nmso-ansi-language:IN;mso-fareast-language:EN-ID\">6. TEKNIK OTOMASI INDUSTRI</span><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:\r\n&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:EN-ID\"><o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">Guru SMK NEGERI 1 LELEA sekarang ada 46 Guru 12 PN (PEGAWAI\r\nNEGERI).&nbsp;Tata Usaha SMK NEGERI 1 LELEA sekarang ada 17 orang dan 7 PN\r\n(PEGAWAI NEGERI).<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"text-align: justify; color: rgb(68, 68, 68); margin-right: 0px; margin-bottom: 10px; margin-left: 0px; line-height: 22px; -webkit-font-smoothing: antialiased;\">\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n</p><p class=\"MsoNormal\"><o:p>&nbsp;</o:p></p></div></div>', 'bukti.pdf', 'Windows_Settings_app_icon.png', 'lelea.jpg', NULL, NULL, '2021-07-06 09:11:59', '2021-07-09 20:34:43');
+(1, 3, 2, 'SMP N 3 Terisi', 'Wahyu Hermawan, A.Md.Kom', 'SMP', 'sekolahsmp@gmail.com', '089688177247', 'Cikedung', '<p><span style=\"color: rgb(68, 68, 68); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: justify;\"><b>VISI</b></span></p><p><span style=\"color: rgb(68, 68, 68); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: justify;\">Sebagai Lembaga Pendidikan yang dapat mewujudkan peserta didik yang profesional</span></p><p><span style=\"color: rgb(68, 68, 68); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: justify;\"><b>MISI</b></span></p><ul><li>Meningkatkan Kualitas SDM</li><li>Meningkatkan Pelayanan Terhadap Peserta Didik</li><li>Meningkatkan Mutu Lulusan</li></ul>', '<div style=\"text-align: justify;\"><span style=\"font-size: 1rem;\">SMP Negeri 3 Terisi dulu bernama Sekolah Lanjutan Tingkat Pertama (SLTP) Negeri 3 Cikedung yang dibuka pada tahun 1995 sebagai Kelah Jauh SLTP Negeri 1 Cikedung memiliki 2 (dua) rombongan belajar dengan jumlah siswa 96 orang. Sekolah ini bertempat di gedung eks SLTP Trisila di desa Cikedung Lor, dengan Kepala Sekolah Yth. Bp. GANDHI DANAWIDJAJA, S.Ag.</span></div>', 'bukti.pdf', 'logo.png', 'foto.jpg', '-09087787989898', '0909889898980909', '2021-07-05 15:36:58', '2021-07-09 18:34:58'),
+(2, 16, 2, 'SD N 1 LELEA', 'Hyuwan', 'SD', 'sekolahsd@gmail.com', '089688', 'Mundakjaya', '<p><span style=\"color: rgb(68, 68, 68); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: justify;\"><b>VISI</b></span></p><p><span style=\"color: rgb(68, 68, 68); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: justify;\">Sebagai Lembaga Pendidikan yang dapat mewujudkan peserta didik yang profesional</span></p><p><span style=\"color: rgb(68, 68, 68); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: justify;\"><b>MISI</b></span></p><ul><li>Meningkatkan Kualitas SDM</li><li>Meningkatkan Pelayanan Terhadap Peserta Didik</li><li>Meningkatkan Mutu Lulusan</li></ul>', '<div style=\"text-align: justify;\"><div class=\"post_detail\" style=\"width: 750px; color: rgb(51, 51, 51); font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: start;\"><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">Sekolah Menengah Kejuaran Negeri 1 Lelea adalah sekolah yang di dirikan\r\npada 18 November2003 di resmikan oleh. SMK NEGERI 1 LELEA ini adalah sekolah\r\nsatu-satunya di kecamatan lelea dan mempunyai program jurusan yang berbeda\r\ndengan SMK lainya. Program jurusan yang pertama hanya ada dua yaitu:<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">1. TEKNIK PENGELASAN<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">2. TATA BUSANA<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;Pada saat itu di pimpin oleh kepala sekolah Bapak Drs. H. Ridwan\r\nSadeli. Beliau dulunya adalah kepala sekolah SMP Negeri 1 Lelea. Beliau yang\r\nmempunyai ide buat membangun SMK&nbsp; NEGERI 1 LELEA ini<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;Drs.H. RIDWAN SADELI<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mulain akfit pada bulan juli 2004/2005\r\nWaktu itu masih sedikit muridnya hanya ada 2 kelas,dan belum punya gedung\r\nsendiri masih memanfaat kan Gedung bekas SD yang sudah tidak terpakai,\r\nGuru-Gurunya juga sebagian besar dari SMP Negeri 1 Lelea.<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">seiring berkembangnya zaman SMK NEGERI 1 LELEA menambahkan program\r\njurusannya satu lagi yaitu:<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">1.TEKNIK OTOMOTIF<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">karena TEKNIK OTOMOTIF banyak sekali peminatnya,Sebagian besar SMK yang\r\nada di wilayah INDRAMAYU ini mempunyai program jurusan ini.<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;pada masa peneriamaan siswa baru SMK NEGERI 1 LELEA bertambah\r\nsiswanya yang tadinya 2 kelas menjadi 3 kelas, walaupun baru mempunyai bebera\r\nruang kelas. seiring bertambahnya tahun SMK NEGERI 1 LELEA semakin&nbsp; di\r\nminati oleh masyarakat buat menyekolahkan anaknya di SMK NEGERI 1 LELEA ini.<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;pada tahun 2007 SMK NEGERI 1 LELEA bertambah lagi siswanya yang\r\ntadinya 3 kelas menjadi 6 kelas, yang di bagi menjadi 3 program jurusan,setiap\r\nprogram jurusan mempunyai 2 kelas. walaupun umur SMK ini baru 4 tahun berdiri\r\ntapi SMK ini tidak mau kalah sama SMK lainya yang sudah lama berdiri.<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;Pada tahun 2009 Kepala sekolah SMK NEGERI 1 LELEA Bapak Drs. H .\r\nRidwan Sadeli di ganti oleh Drs. Rachmat Heriwan sampai sekarang, Bapak Drs. H.\r\nRidwan Sadeli di pindahkan ke SMK NEGERI 1 INDRAMAYU. Beliau sekarang menjadi\r\nkepala sekolah di SMK NEGERI 1 CIKEDUNG.<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;pada tahun 2010 SMK NEGERI 1 LELEA menambahkan program jurusan dua\r\nprogram yaitu:<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">1.TEKNIK KOMPUTER DAN JARINGAN<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">2. MULTIMEDIA<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">&nbsp;Jadi SMK NEGERI 1 LELEA sekarang mempunyai lima program jurusan\r\ndiantaranya:<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">1.TEKNIK PENGELASAN<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">2.TATA BUSANA<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">3.TEKNIK KENDARAAN RINGAN<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">4.TEKNIK KOMPUTER DAN JARINAGAN<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">5. MULTIMEDIA<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span lang=\"IN\" style=\"font-size:10.5pt;font-family:\r\n&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;\r\nmso-ansi-language:IN;mso-fareast-language:EN-ID\">6. TEKNIK OTOMASI INDUSTRI</span><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:\r\n&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:EN-ID\"><o:p></o:p></span></p><p class=\"MsoNormal\" style=\"margin-bottom: 7.5pt; text-align: justify; line-height: 16.5pt; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><span style=\"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;\r\nmso-fareast-font-family:&quot;Times New Roman&quot;;color:#444444;mso-fareast-language:\r\nEN-ID\">Guru SMK NEGERI 1 LELEA sekarang ada 46 Guru 12 PN (PEGAWAI\r\nNEGERI).&nbsp;Tata Usaha SMK NEGERI 1 LELEA sekarang ada 17 orang dan 7 PN\r\n(PEGAWAI NEGERI).<o:p></o:p></span></p><p class=\"MsoNormal\" style=\"text-align: justify; color: rgb(68, 68, 68); margin-right: 0px; margin-bottom: 10px; margin-left: 0px; line-height: 22px; -webkit-font-smoothing: antialiased;\">\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n</p><p class=\"MsoNormal\"><o:p>&nbsp;</o:p></p></div></div>', 'bukti.pdf', 'Windows_Settings_app_icon.png', 'lelea.jpg', NULL, NULL, '2021-07-06 09:11:59', '2021-07-23 08:19:05'),
+(4, 19, 2, 'SMP N 2 Sindang', NULL, 'SD', 'sekolahsmp2@gmail.com', NULL, NULL, NULL, NULL, 'bukti.pdf', NULL, NULL, NULL, NULL, '2021-07-22 09:09:26', '2021-07-22 09:09:26');
 
 -- --------------------------------------------------------
 
@@ -1621,12 +1650,12 @@ INSERT INTO `sekolah` (`id_sekolah`, `id_user`, `id_kec`, `nama_sekolah`, `nama_
 CREATE TABLE `siswa` (
   `id_siswa` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `id_agama` bigint(11) DEFAULT NULL,
   `nama` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `jk` enum('Laki-laki','Perempuan') DEFAULT NULL,
   `tempat` varchar(100) DEFAULT NULL,
   `tgl_lahir` date DEFAULT NULL,
-  `agama` varchar(30) DEFAULT NULL,
   `asal_sekolah` varchar(100) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
   `nohp` varchar(20) DEFAULT NULL,
@@ -1651,10 +1680,11 @@ CREATE TABLE `siswa` (
 -- Dumping data untuk tabel `siswa`
 --
 
-INSERT INTO `siswa` (`id_siswa`, `id_user`, `nama`, `email`, `jk`, `tempat`, `tgl_lahir`, `agama`, `asal_sekolah`, `alamat`, `nohp`, `tingkat`, `foto`, `akte`, `ijazah`, `skhun`, `kk`, `perpindahan`, `afirmasi`, `sertifikat1`, `sertifikat2`, `sertifikat3`, `longitude`, `latitude`, `created_at`, `updated_at`) VALUES
-(1, 10, 'Hyuwan', 'siswa@gmail.com', 'Laki-laki', 'Indramayu', '1998-05-16', 'Islam', 'SD N Mundak jaya 2', 'Mundakjaya', '089688177247', 'SD', 'wahyu_hermawan.jpg', 'QR Code (1) (1).png', 'bri.png', 'bank-bri-logo-630x380.png', 'ovo.png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'siswa.png', NULL, NULL, NULL, NULL, '2021-07-10 09:00:27', '2021-07-20 22:11:44'),
-(7, 17, 'Hermawan', 'siswa1@gmail.com', 'Laki-laki', 'Indramayu', '1998-05-16', 'Islam', 'SDN Balongan', 'Balongan', '0889688177247', 'SD', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', NULL, NULL, 'QR Code (1) (1).png', NULL, NULL, NULL, NULL, '2021-07-15 06:39:27', '2021-07-18 08:23:24'),
-(8, 18, 'Wahyu hermawan', 'wahyu@gmail.com', 'Laki-laki', 'Indramayu', '1998-05-16', 'Islam', 'SDN Balongan 2', 'Mundakjaya blok badak, Rt/Rw : 15/01 , Kec. Cikedung', '089688', 'TK', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'news.png', 'Logo QRIS.png', 'siswa.png', 'linkaja.jpg', 'ovo.jpg', NULL, NULL, '2021-07-18 08:29:01', '2021-07-18 10:43:12');
+INSERT INTO `siswa` (`id_siswa`, `id_user`, `id_agama`, `nama`, `email`, `jk`, `tempat`, `tgl_lahir`, `asal_sekolah`, `alamat`, `nohp`, `tingkat`, `foto`, `akte`, `ijazah`, `skhun`, `kk`, `perpindahan`, `afirmasi`, `sertifikat1`, `sertifikat2`, `sertifikat3`, `longitude`, `latitude`, `created_at`, `updated_at`) VALUES
+(1, 10, 1, 'Hyuwan', 'siswa@gmail.com', 'Laki-laki', 'Indramayu', '1998-05-16', 'SD N Mundak jaya 2', 'Mundakjaya blok badak', '089688177247', 'Tidak ada', 'wahyu_hermawan.jpg', 'QR Code (1) (1).png', NULL, NULL, 'ovo.png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'siswa.png', NULL, NULL, '108.32656678308041', '-6.31282453843815', '2021-07-10 09:00:27', '2021-07-26 07:59:05'),
+(7, 17, 1, 'Wahyu', 'siswa1@gmail.com', 'Laki-laki', 'Indramayu', '1998-05-16', 'SDN Balongan', 'Balongan', '0889688177247', 'Tidak ada', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', NULL, NULL, 'QR Code (1) (1).png', NULL, NULL, NULL, NULL, '2021-07-15 06:39:27', '2021-07-18 08:23:24'),
+(8, 18, 1, 'Hermawan', 'wahyu@gmail.com', 'Laki-laki', 'Indramayu', '1998-05-16', 'SDN Balongan 2', 'Mundakjaya blok badak, Rt/Rw : 15/01 , Kec. Cikedung', '089688', 'TK', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'QR Code (1) (1).png', 'news.png', 'Logo QRIS.png', 'siswa.png', 'linkaja.jpg', 'ovo.jpg', NULL, NULL, '2021-07-18 08:29:01', '2021-07-18 10:43:12'),
+(9, 20, NULL, 'Galih', 'galih@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'SD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-07-26 05:39:19', '2021-07-26 07:40:52');
 
 -- --------------------------------------------------------
 
@@ -1702,11 +1732,19 @@ INSERT INTO `users` (`id_user`, `email`, `password`, `role`, `status`, `created_
 (10, 'siswa@gmail.com', '$2y$10$RmyjGl7vattI2sZNxjiqleIVgrBb6vGh9UduCy1ZXc5ktcG0/URa6', 'siswa', 'aktif', '2021-07-10 09:00:27', '2021-07-10 09:00:27'),
 (16, 'sekolahsd@gmail.com', '$2y$10$kxfaZhqxlXRl1eRagSDLBu.2DLAT.iRTkoDTDc9gNLVizFQ/in.bK', 'admin', 'aktif', '2021-07-14 13:50:30', '2021-07-14 13:50:30'),
 (17, 'siswa1@gmail.com', '$2y$10$CM0OoKMn1LIzSCl6nJMPVevdGLsNOEAotafLBQ7O9L8swbuQZsL9K', 'siswa', 'aktif', '2021-07-15 06:39:27', '2021-07-15 06:39:27'),
-(18, 'wahyu@gmail.com', '$2y$10$27LQ5ihVluezGo6egV9e5u1Ic2F6Q.jir00MJdLU3AmV2gfwMoUa6', 'siswa', 'aktif', '2021-07-18 08:29:01', '2021-07-18 08:29:01');
+(18, 'wahyu@gmail.com', '$2y$10$27LQ5ihVluezGo6egV9e5u1Ic2F6Q.jir00MJdLU3AmV2gfwMoUa6', 'siswa', 'aktif', '2021-07-18 08:29:01', '2021-07-18 08:29:01'),
+(19, 'sekolahsmp2@gmail.com', '$2y$10$/Qi.jZjGVXo51KyIdJ4TPucW63.wccZYEkzf4MNa2DtNDGvuZkWv.', 'admin', 'aktif', '2021-07-22 09:09:26', '2021-07-22 09:19:49'),
+(20, 'galih@gmail.com', '$2y$10$GAVPHLA3xBgR1VsfE9bIF.7K26y7op08/vquXJ4YPslPVeYkLadY.', 'siswa', 'aktif', '2021-07-26 05:39:19', '2021-07-26 05:39:19');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `agama`
+--
+ALTER TABLE `agama`
+  ADD PRIMARY KEY (`id_agama`);
 
 --
 -- Indeks untuk tabel `datadonatur`
@@ -1732,7 +1770,8 @@ ALTER TABLE `pendaftaran`
 -- Indeks untuk tabel `ppdb`
 --
 ALTER TABLE `ppdb`
-  ADD PRIMARY KEY (`id_ppdb`);
+  ADD PRIMARY KEY (`id_ppdb`),
+  ADD KEY `id_sekolah` (`id_sekolah`);
 
 --
 -- Indeks untuk tabel `prestasi`
@@ -1753,7 +1792,9 @@ ALTER TABLE `sekolah`
 -- Indeks untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  ADD PRIMARY KEY (`id_siswa`);
+  ADD PRIMARY KEY (`id_siswa`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_agama` (`id_agama`);
 
 --
 -- Indeks untuk tabel `tahun_ajaran`
@@ -1772,6 +1813,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `agama`
+--
+ALTER TABLE `agama`
+  MODIFY `id_agama` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT untuk tabel `kecamatan`
 --
 ALTER TABLE `kecamatan`
@@ -1781,13 +1828,13 @@ ALTER TABLE `kecamatan`
 -- AUTO_INCREMENT untuk tabel `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
-  MODIFY `id_pendaftaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_pendaftaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT untuk tabel `ppdb`
 --
 ALTER TABLE `ppdb`
-  MODIFY `id_ppdb` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_ppdb` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `prestasi`
@@ -1799,13 +1846,13 @@ ALTER TABLE `prestasi`
 -- AUTO_INCREMENT untuk tabel `sekolah`
 --
 ALTER TABLE `sekolah`
-  MODIFY `id_sekolah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_sekolah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `tahun_ajaran`
@@ -1817,7 +1864,7 @@ ALTER TABLE `tahun_ajaran`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -1835,6 +1882,12 @@ ALTER TABLE `pendaftaran`
 ALTER TABLE `sekolah`
   ADD CONSTRAINT `kecamatan` FOREIGN KEY (`id_kec`) REFERENCES `kecamatan` (`id_kec`),
   ADD CONSTRAINT `sekolah` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `siswa`
+--
+ALTER TABLE `siswa`
+  ADD CONSTRAINT `users` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -88,12 +88,32 @@
           $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $jud );
           $string = preg_replace(array('/[^a-z0-9]/i', '/[-]+/') , '-', $jud);
           $nama = strtolower(trim($string, '-'));
+
+          $ppdb = \App\Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first();
+          $pendaftaran = \App\Pendaftaran::where('id_siswa', $siswa->id_siswa)->where('id_sekolah', $sekolah->id_sekolah)->where('tahun_ajaran', $ppdb->tahun_ajaran)->first();
         ?>
-    <?php if ($siswa->agama == NULL || $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->ijazah == NULL || $siswa->skhun == NULL || $siswa->kk == NULL ) { ?>
-      <a href="{{url('profile/'.$nama)}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
-    <?php }else{ ?>
-      <a href="{{url('jalur-pendaftaran/'.Crypt::encrypt($sekolah->id_sekolah))}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
-    <?php } ?>
+        <?php if ($pendaftaran == NULL) { ?>
+          <?php if ($siswa->tingkat == "SD") { ?>
+              <?php if ($siswa->id_agama == NULL || $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->ijazah == NULL || $siswa->skhun == NULL || $siswa->kk == NULL ) { ?>
+                <a href="{{url('profile/'.$nama)}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
+              <?php }else{ ?>
+                <a href="{{url('jalur-pendaftaran/'.Crypt::encrypt($sekolah->id_sekolah))}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
+              <?php } ?>
+          <?php }else{ ?>
+              <?php if ($siswa->id_agama == NULL || $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->kk == NULL ) { ?>
+                <a href="{{url('profile/'.$nama)}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
+              <?php }else{ ?>
+                <a href="{{url('jalur-pendaftaran/'.Crypt::encrypt($sekolah->id_sekolah))}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
+              <?php } ?>
+           <?php } ?>
+        <?php }else{ ?>
+          <a href="{{url('hasil-seleksi')}}" class="back-to-daftar d-flex align-items-center justify-content-center" onclick="myFunction()">Daftar Sekarang</a>
+        <?php } ?>
   </div>
 </section>
+<script>
+   function myFunction() {
+         alert("Kamu sudah mendaftar disekolah ini, Tunggu Informasi selanjutnya !");
+   }
+</script>
 @endsection

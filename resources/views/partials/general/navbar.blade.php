@@ -32,18 +32,7 @@
           </ul>
         </li> -->
         <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
-        <?php
-        $id_user = Session::get('id_user');
-        $siswa = \App\Siswa::where('id_user', $id_user)->first();
-        $jud = $siswa['nama'];
-        $string = str_replace(array('[\', \']'), '', $jud);
-        $string = preg_replace('/\[.*\]/U', '', $jud);
-        $string = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $jud);
-        $string = htmlentities($jud, ENT_COMPAT, 'utf-8');
-        $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $jud );
-        $string = preg_replace(array('/[^a-z0-9]/i', '/[-]+/') , '-', $jud);
-        $nama = strtolower(trim($string, '-'));
-        ?>
+        <!--  -->
         @if (!Session::get('loginsiswa')) 
         <li><a class="getstarted scrollto" href="{{url('login')}}">Login</a></li>
         @else
@@ -53,13 +42,13 @@
         $pendaftaran = \App\Pendaftaran::where('id_siswa', $username->id_siswa)->where('status', 0);
 
 
-         ?>
+        ?>
         <?php
-            $n = $username->nama;
-            $na = str_replace(' ', '-', $n);
-            $nama = strtolower($na);
+        $n = $username->nama;
+        $na = str_replace(' ', '-', $n);
+        $nama = strtolower($na);
 
-         ?>
+        ?>
 
         <li><a class="nav-link scrollto {{ request()->is('/') ? 'active' : ''}}" href="{{url('/')}}">Home</a></li>
         <?php if ($pendaftaran->count() != 0) { ?>
@@ -69,18 +58,34 @@
         <?php } ?>
 
         <li style="margin-right: -20px;"><a><img src="{{asset('general/img/siswa.png')}}" width="40" style="display: inline;"></a></li>
-        <?php if ($username->agama == NULL ||$username->tingkat == NULL || $username->jk == NULL || $username->tempat == NULL || $username->tgl_lahir == NULL || $username->asal_sekolah == NULL || $username->alamat == NULL || $username->nohp == NULL || $username->foto == NULL || $username->akte == NULL || $username->ijazah == NULL || $username->skhun == NULL || $username->kk == NULL ) { ?>
-          <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i> <p style="color: red; font-size: 20px;">*</p></a>
-            <ul>
-              <li><a href="{{url('profile/'.$nama)}}"><p style="display: inline;">Lihat Profil</p><p style="color: red;">*</p></a></li>
-              <li><a href="{{url('logout')}}" style="margin-top: -25px;">Logout</a></li>
-            </ul>
+          <?php if ($username->tingkat == "SD") { ?>
+            <?php if ($username->id_agama == NULL ||$username->tingkat == NULL || $username->jk == NULL || $username->tempat == NULL || $username->tgl_lahir == NULL || $username->asal_sekolah == NULL || $username->alamat == NULL || $username->nohp == NULL || $username->foto == NULL || $username->akte == NULL || $username->ijazah == NULL || $username->skhun == NULL || $username->kk == NULL ) { ?>
+              <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i> <p style="color: red; font-size: 20px;">*</p></a>
+                <ul>
+                  <li><a href="{{url('profile/'.$nama)}}"><p style="display: inline;">Lihat Profil</p><p style="color: red;">*</p></a></li>
+                  <li><a href="{{url('logout')}}" style="margin-top: -25px;">Logout</a></li>
+                </ul>
+              <?php }else{ ?> 
+              <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                  <li><a href="{{url('profile/'.$nama)}}"><p style="display: inline;">Lihat Profil</p></a></li>
+                  <li><a href="{{url('logout')}}" style="margin-top: -25px;">Logout</a></li>
+                </ul>
+              <?php }?>
           <?php }else{ ?> 
-            <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i></a>
-              <ul>
-                <li><a href="{{url('profile/'.$nama)}}"><p style="display: inline;">Lihat Profil</p></a></li>
-                <li><a href="{{url('logout')}}" style="margin-top: -25px;">Logout</a></li>
-              </ul>
+            <?php if ($username->id_agama == NULL ||$username->tingkat == NULL || $username->jk == NULL || $username->tempat == NULL || $username->tgl_lahir == NULL || $username->asal_sekolah == NULL || $username->alamat == NULL || $username->nohp == NULL || $username->foto == NULL || $username->akte == NULL ||  $username->kk == NULL ) { ?>
+              <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i> <p style="color: red; font-size: 20px;">*</p></a>
+                <ul>
+                  <li><a href="{{url('profile/'.$nama)}}"><p style="display: inline;">Lihat Profil</p><p style="color: red;">*</p></a></li>
+                  <li><a href="{{url('logout')}}" style="margin-top: -25px;">Logout</a></li>
+                </ul>
+              <?php }else{ ?> 
+              <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                  <li><a href="{{url('profile/'.$nama)}}"><p style="display: inline;">Lihat Profil</p></a></li>
+                  <li><a href="{{url('logout')}}" style="margin-top: -25px;">Logout</a></li>
+                </ul>
+              <?php }?>
             <?php }?>
 
           </li>
