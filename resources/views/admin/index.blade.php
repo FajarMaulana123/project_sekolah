@@ -77,7 +77,7 @@
           </div>
         </div>
       </div>
-      <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
+      <!-- <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
       <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
       <style>
         <style>
@@ -93,18 +93,16 @@
         }
       </style>
       <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
-      <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
+      <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css"> -->
 
       <!-- Promise polyfill script is required -->
       <!-- to use Mapbox GL Geocoder in IE 11. -->
-      <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+      <!-- <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
       <div id="map"></div>
 
       <div id="menu">
         <input id="satellite-v9" type="radio" name="rtoggle" value="satellite" checked="checked">
-        <!-- See a list of Mapbox-hosted public styles at -->
-        <!-- https://docs.mapbox.com/api/maps/styles/#mapbox-styles -->
         <label for="satellite-v9">satellite</label>
         <input id="light-v10" type="radio" name="rtoggle" value="light">
         <label for="light-v10">light</label>
@@ -118,10 +116,10 @@
       <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoiaHl1d2FubmlkYSIsImEiOiJja3Jpb2Q4Y280dXY0MnZwZHVyMmlxOGVlIn0.iVbM3KengzDSkyQwpwawMQ';
         var map = new mapboxgl.Map({
-        container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/satellite-v9', // style URL
-        center: [108.324936, -6.327583], // starting position [lng, lat]
-        zoom: 11 // starting zoom
+        container: 'map', 
+        style: 'mapbox://styles/mapbox/satellite-v9', 
+        center: [108.324936, -6.327583], 
+        zoom: 11 
       });
         map.addControl(
   new MapboxGeocoder({
@@ -142,7 +140,7 @@
           inputs[i].onclick = switchLayer;
         }
 
-      </script>
+      </script> -->
       
 
 
