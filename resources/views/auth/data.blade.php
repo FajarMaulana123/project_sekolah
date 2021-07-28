@@ -2,6 +2,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="{{asset('general/css/style.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="{{asset('general/css/log.css')}}" rel="stylesheet">
 <style type="text/css">
   a {
@@ -44,7 +45,7 @@
                 <hr>
                 <div class="form-group" style="margin-top: -10px">
                   <b><label >Agama</label></b>
-                  <p style="margin-top: -10px">{{$siswa->agama}}</p>
+                  <p style="margin-top: -10px">{{$siswa->nama_agama}}</p>
                 </div>
                 <hr>
                 <div class="form-group" style="margin-top: -10px">
@@ -67,42 +68,44 @@
                   <p style="margin-top: -10px">{{$siswa->tingkat}}</p>
                 </div>
                 <hr>
-                <div class="form-group" style="margin-top: -10px">
-                  <b><label >Ijasah & SKHUN</label></b><br>
-                  <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}" width="80"></a>
-                  <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}" width="80"></a>
-                </div>
+                <?php if ($siswa->tingkat == "SD") { ?>
+                  <div class="form-group" style="margin-top: -10px">
+                    <b><label >Ijasah & SKHUN</label></b><br>
+                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}"><i class="fa fa-eye"></i> Lihat Ijazah</a>
+                    <a style="margin-left: 10px;" target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}"><i class="fa fa-eye"></i> Lihat SKHUN</a>
+                  </div>
+                <?php } ?>
                 <hr>
                 <div class="form-group" style="margin-top: -10px">
                   <b><label >Akte & KK</label></b><br>
-                  <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->akte)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->akte)}}" width="80"></a>
-                  <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->kk)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->kk)}}" width="80"></a>
+                  <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->akte)}}"><i class="fa fa-eye"></i> Lihat Akte</a>
+                  <a style="margin-left: 10px;" target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->kk)}}"><i class="fa fa-eye"></i> Lihat KK</a>
                 </div>
                 <hr>
                 <div class="form-group" style="margin-top: -10px">
                   <b><label >Sertifikat</label></b><br>
                   <?php if ($siswa->sertifikat1 != null) { ?>
-                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat1)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->sertifikat1)}}" width="70"></a>
+                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat1)}}"><i class="fa fa-eye"></i> Lihat Sertifikat1</a><br>
                   <?php } ?>
                   <?php if ($siswa->sertifikat2 != null) { ?>
-                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat2)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->sertifikat2)}}" width="70"></a>
+                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat2)}}"><i class="fa fa-eye"></i> Lihat Sertifikat2</a><br>
                   <?php } ?>
                   <?php if ($siswa->sertifikat3 != null) { ?>
-                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat3)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->sertifikat3)}}" width="70"></a>
+                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat3)}}"><i class="fa fa-eye"></i> Lihat Sertifikat3</a><br>
                     <?php } ?>
                 </div>
                 <?php if ($jalur == "perpindahan-orang-tua") { ?>
                   <hr>
                   <div class="form-group" style="margin-top: -10px">
                     <b><label >Bukti Perpindahan Ortu</label></b><br>
-                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->perpindahan)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->perpindahan)}}" width="80"></a>
+                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->perpindahan)}}"><i class="fa fa-eye"></i> Lihat Surat Perpindahan</a><br>
                   </div>
                 <?php }?>
                 <?php if ($jalur == "afirmasi") { ?>
                   <hr>
                   <div class="form-group" style="margin-top: -10px">
                     <b><label >SKTM</label></b><br>
-                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->afirmasi)}}"><img src="{{asset('imageUpload/dokumen/'.$siswa->afirmasi)}}" width="80"></a>
+                    <a target="_blank" href="{{asset('imageUpload/dokumen/'.$siswa->afirmasi)}}"><i class="fa fa-eye"></i> Lihat SKTM</a><br>
                   </div>
                 <?php }?>
 
@@ -110,7 +113,7 @@
 
               </div>
               <div class="col-md-7">
-                <a target="_blank" href="{{asset('imageUpload/sekolah/'.$sekolah->foto)}}"><img src="{{asset('imageUpload/dokumen/'.$sekolah->foto)}}" style="width: 100%"></a>
+                <a target="_blank" href="{{asset('imageUpload/sekolah/'.$sekolah->foto)}}"><img src="{{asset('imageUpload/sekolah/'.$sekolah->foto)}}" style="width: 100%"></a>
                 <h6 style="width: 100%; margin-top: 20px;"><b>{{$sekolah->nama_sekolah}}</b></h6>
                 <hr>
                 <div style="width: 100%; margin-top: 20px;">{!!$sekolah->visimisi!!}</div>

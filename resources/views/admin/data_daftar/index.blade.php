@@ -93,7 +93,7 @@
                     </td>
                   </tr>
                   <div class="modal fade" id="modal-lg{{$no}}">
-                    <div class="modal-dialog modal-xl">
+                    <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h4 class="modal-title">Large Modal</h4>
@@ -103,100 +103,118 @@
                         </div>
                         <div class="modal-body">
                           <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-12">
                               <div class="card card-primary card-outline">
                                 <div class="card-body box-profile">
-                                  <div>
-                                    <div class="text-center">
-                                      <img class="profile-user-img img-fluid img-circle"
-                                      src="{{asset('imageUpload/logo/'.$sekolah['logo'])}}"
-                                      alt="User profile picture" >
+                                <div class="text-center">
+                                  <img class="profile-user-img img-fluid img-circle"
+                                  src="{{asset('imageUpload/dokumen/'.$sekolah['foto'])}}"
+                                  alt="User profile picture" >
+                                </div>
+                                  <div class="row">
+                                    <div class="col-md-5">
+                                      <div class="form-group mt-4" style="font-size: 14px;">
+                                        <label for="kps" >Nama Lengkap</label>
+                                        <p style="margin-top: -10px;">{{$sekolah['nama']}}</p>
+                                      </div>
+                                      
+                                      
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label for="nohp">Tempat, Tanggal Lahir</label>
+                                        <p style="margin-top: -10px;">{{$sekolah['tempat']}}, {{$sekolah['tgl_lahir']}}</p>
+                                      </div>
                                     </div>
-                                    <div class="form-group mt-4" style="font-size: 14px;">
-                                      <label for="kps" >Nama Kepala Sekolah</label>
-                                      <p style="margin-top: -10px;">{{$sekolah['nama_kps']}}</p>
+                                    <div class="col-md-4">
+                                      <div class="form-group mt-4" style="font-size: 14px; ">
+                                        <label for="email">Email</label>
+                                        <p style="margin-top: -10px;">{{$sekolah['email']}}</p>
+                                      </div>
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label for="nohp">Agama</label>
+                                        <p style="margin-top: -10px;">{{$sekolah['agama']}}</p>
+                                      </div>
+                                      
                                     </div>
-                                    <div class="form-group" style="font-size: 14px; margin-top: -10px;">
-                                      <label for="email">Email</label>
-                                      <p style="margin-top: -10px;">{{$sekolah['email']}}</p>
+
+                                    <div class="col-md-3">
+                                      <div class="form-group mt-4" style="font-size: 14px;">
+                                        <label for="nohp">Jenis Kelamin</label>
+                                        <p style="margin-top: -10px;">{{$sekolah['jk']}}</p>
+                                      </div>
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label for="nohp">No hp</label>
+                                        <p style="margin-top: -10px;">{{$sekolah['nohp']}}</p>
+                                      </div>
                                     </div>
-                                    <div class="form-group" style="font-size: 14px;margin-top: -10px;">
-                                      <label for="nohp">No hp</label>
-                                      <p style="margin-top: -10px;">{{$sekolah['nohp']}}</p>
+                                   
+                                    
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-5">
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label>Asal Sekolah</label>
+                                        <p style="margin-top: -10px;">{{$sekolah['asal_sekolah']}}</p>
+                                      </div>
                                     </div>
-                                    <div class="form-group" style="font-size: 14px;margin-top: -10px;">
-                                      <label>Tingkat</label>
-                                      <p style="margin-top: -10px;">{{$sekolah['tingkat']}}</p>
-                                    </div>
-                                    <div class="form-group" style="font-size: 14px;margin-top: -10px;">
-                                      <label>Alamat</label>
-                                      <p style="margin-top: -10px;">{{$sekolah['alamat']}}</p>
+                                    <div class="col-md-7">
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label>Alamat</label>
+                                        <p style="margin-top: -10px;">{{$sekolah['alamat']}}</p>
+                                      </div>
                                     </div>
                                   </div>
-                                  <h3 class="profile-username text-center"></h3>
+                                  <div class="row">
+                                    <div class="col-md-5">
+                                      <div class="form-group mt-4" style="font-size: 14px;">
+                                        <label>Akte Keluarga</label><br>
+                                        <a href="{{url('imageUpload/dokumen/'.$sekolah['akte'])}}"><i class="fa fa-eye"></i> Akte Keluarga</a>
+                                      </div>
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label>Kartu Keluarga</label><br>
+                                        <a href="{{url('imageUpload/dokumen/'.$sekolah['akte'])}}"><i class="fa fa-eye"></i> Kartu Keluarga</a>
+                                      </div>
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label>Setifikat 3</label><br>
+                                        <a href="{{url('imageUpload/dokumen/'.$sekolah['sertifikat3'])}}"><i class="fa fa-eye"></i> Sertifikat 3</a>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group mt-4" style="font-size: 14px;">
+                                        <label>Ijazah</label><br>
+                                        <a href="{{url('imageUpload/dokumen/'.$sekolah['ijazah'])}}"><i class="fa fa-eye"></i> Ijazah</a>
+                                      </div>
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label>Setifikat 1</label><br>
+                                        <a href="{{url('imageUpload/dokumen/'.$sekolah['sertifikat1'])}}"><i class="fa fa-eye"></i> Sertifikat 1</a>
+                                      </div>
+                                      @if($sekolah['jalur'] == 'afirmasi')
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label>SKTM</label><br>
+                                        <a href="{{url('imageUpload/dokumen/'.$sekolah['afirmasi'])}}"><i class="fa fa-eye"></i> SKTM</a>
+                                      </div>
+                                      @endif
+                                      @if($sekolah['jalur'] == 'perpindahan')
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label>SKTM</label><br>
+                                        <a href="{{url('imageUpload/dokumen/'.$sekolah['perpindahan'])}}"><i class="fa fa-eye"></i> Surat Perpindahan</a>
+                                      </div>
+                                      @endif
+                                    </div>
+                                    <div class="col-md-3">
+                                      <div class="form-group mt-4" style="font-size: 14px;">
+                                        <label>SKHUN</label><br>
+                                        <a href="{{url('imageUpload/dokumen/'.$sekolah['skhun'])}}"><i class="fa fa-eye"></i> SKHUN</a>
+                                      </div>
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                        <label>Setifikat 2</label><br>
+                                        <a href="{{url('imageUpload/dokumen/'.$sekolah['sertifikat2'])}}"><i class="fa fa-eye"></i> Sertifikat 2</a>
+                                      </div>
+                                    </div>
+
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-md-9">
-                              <div class="card">
-                                <div class="card-body">
-                                  <input type="hidden" name="id_sekolah" value="{{$sekolah['id_sekolah']}}">
-                                  <div class="card-body">
-                                    <div class="form-group">
-                                      <label for="sekolah" ><h1>{{$sekolah['nama_sekolah']}}</h1></label>
-                                    </div>
-                                    <hr style="height: 1px;">
-                                    <div class="form-group">
-                                      <label><h4>Visi & Misi Sekolah</h4></label>
-                                      <hr>
-                                      <p>{!!$sekolah['visimisi']!!}</p>
-                                    </div>
-                                    <hr>
-                                    <div class="form-group">
-                                      <label><h4>Deskripsi Sekolah</h4></label>
-                                      <hr>
-                                      <p>{!!$sekolah['deskripsi']!!}</p>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                      <div class="col-md-4">
-                                        <div class="form-group">
-                                          <label for="daya_tampung">Daya Tampung</label>
-                                          <div class="inner">
-                                            <h3>{{$sekolah['daya_tampung']}}</h3>
-                                          </div>
-                                          </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                          <div class="form-group">
-                                            <label for="jml_diterima">Jumlah Diterima</label>
-                                            <div class="inner">
-                                              <h3>{{$sekolah['jml_diterima']}}</h3>
-                                          </div>
-                                          </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                          <div class="form-group">
-                                            <label for="exampleInputFile">Dokumen sekolah</label><br>
-                                            <a target="_blank" href="{{asset('bukti/'.$sekolah['bukti'])}}">{{$sekolah['bukti']}}</a>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <hr>
-                                      <div class="row">
-                                        
-                                        <div class="col-md-12">
-                                          <div class="form-group">
-                                            <label for="exampleInputFile"><h3>Foto sekolah</h3></label><br>
-                                            <a target="_blank" href="{{asset('imageUpload/sekolah/'.$sekolah['foto'])}}"><img src="{{asset('imageUpload/sekolah/'.$sekolah['foto'])}}" alt=""  style="width: 80%"></a>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div><!-- /.card-body -->
-                              </div>
-                              <!-- /.card -->
+                            
                             </div>
                           </div>
                         </div>

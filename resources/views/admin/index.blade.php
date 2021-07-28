@@ -18,130 +18,132 @@
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
-  <style type="text/css">
-    #map {
-      height: 100%;
-      width: 80%;
-    }
-  </style>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-  <!-- /.content-header -->
-  <div id="map"></div>
+  
 
-  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-  </script>
-  <script type="text/javascript">
-    <script>
-    var apiKey='AIzaSyCzYzyGAR3mvDJeIRquMhAJ71AbhfS8_zg';
-    var longitude, latitude, map;
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3>150</h3>
 
-    jQuery(document).ready(function( $ ) {
-      $('#find-address').click(function () {
-        var address = $('#address').val();
-        var postcode = $('#postcode').val();
-        var addressClean = address.replace(/\s+/g, '+');
-        var postcodeClean = postcode.replace(/\s+/g, '+');
-        var apiCall = 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressClean+',+'+postcodeClean+'&key='+apiKey+'';
+              <p>New Orders</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-        $.getJSON(apiCall,function (data, textStatus) {
-          longitude = data.results[0].geometry.location.lng;
-          latitude = data.results[0].geometry.location.lat;
-          document.getElementById("long").value = longitude;
-          document.getElementById("lat").value = latitude;
-        });
+              <p>Bounce Rate</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3>44</h3>
 
-        setTimeout(function(){
-          longitude = $("input#long").val();
-          latitude = $("input#lat").val();
+              <p>User Registrations</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3>65</h3>
 
-          if(longitude && latitude){
-            longitude = parseFloat(longitude);
-            latitude = parseFloat(latitude);
+              <p>Unique Visitors</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <!-- <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
+      <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+      <style>
+        <style>
+        body { margin: 20px; padding: 20px; }
+        #map { position: absolute; top: 40px; bottom: 0; width: 100%; }
+      </style>
+      <style>
+        #menu {
+          position: absolute;
+          background: #efefef;
+          padding: 10px;
+          font-family: 'Open Sans', sans-serif;
+        }
+      </style>
+      <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+      <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css"> -->
 
-            initMap(longitude,latitude);
-          }
-        }, 1000);
+      <!-- Promise polyfill script is required -->
+      <!-- to use Mapbox GL Geocoder in IE 11. -->
+      <!-- <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+      <div id="map"></div>
+
+      <div id="menu">
+        <input id="satellite-v9" type="radio" name="rtoggle" value="satellite" checked="checked">
+        <label for="satellite-v9">satellite</label>
+        <input id="light-v10" type="radio" name="rtoggle" value="light">
+        <label for="light-v10">light</label>
+        <input id="dark-v10" type="radio" name="rtoggle" value="dark">
+        <label for="dark-v10">dark</label>
+        <input id="streets-v11" type="radio" name="rtoggle" value="streets">
+        <label for="streets-v11">streets</label>
+        <input id="outdoors-v11" type="radio" name="rtoggle" value="outdoors">
+        <label for="outdoors-v11">outdoors</label>
+      </div>
+      <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiaHl1d2FubmlkYSIsImEiOiJja3Jpb2Q4Y280dXY0MnZwZHVyMmlxOGVlIn0.iVbM3KengzDSkyQwpwawMQ';
+        var map = new mapboxgl.Map({
+        container: 'map', 
+        style: 'mapbox://styles/mapbox/satellite-v9', 
+        center: [108.324936, -6.327583], 
+        zoom: 11 
       });
-    });
+        map.addControl(
+  new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl
+  })
+  );
 
-    function initMap(longitude,latitude) {
-      var myLatlng = new google.maps.LatLng(latitude,longitude);
+        var layerList = document.getElementById('menu');
+        var inputs = layerList.getElementsByTagName('input');
 
-      var mapOptions = {
-        zoom: 12,
-        center: myLatlng
-      }
+        function switchLayer(layer) {
+          var layerId = layer.target.id;
+          map.setStyle('mapbox://styles/mapbox/' + layerId);
+        }
 
-      var map = new google.maps.Map(document.getElementById("map-embed-div"), mapOptions);
+        for (var i = 0; i < inputs.length; i++) {
+          inputs[i].onclick = switchLayer;
+        }
 
-      var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        draggable: true,
-        title: "Where's your garden?"
-      });
-    };
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzYzyGAR3mvDJeIRquMhAJ71AbhfS8_zg&callback=initMap" async defer></script>
-</script>
+      </script> -->
+      
 
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-3 col-6">
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>150</h3>
 
-            <p>New Orders</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-bag"></i>
-          </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <div class="col-lg-3 col-6">
-        <div class="small-box bg-success">
-          <div class="inner">
-            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-            <p>Bounce Rate</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-stats-bars"></i>
-          </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <div class="col-lg-3 col-6">
-        <div class="small-box bg-warning">
-          <div class="inner">
-            <h3>44</h3>
-
-            <p>User Registrations</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-person-add"></i>
-          </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <div class="col-lg-3 col-6">
-        <div class="small-box bg-danger">
-          <div class="inner">
-            <h3>65</h3>
-
-            <p>Unique Visitors</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-pie-graph"></i>
-          </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-    </div>
         <!-- <div class="row">
           <section class="col-lg-7 connectedSortable">
             <div class="card">

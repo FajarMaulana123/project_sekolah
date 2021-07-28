@@ -7,6 +7,8 @@ use App\Kecamatan;
 use App\Users;
 use App\Siswa;
 use App\Prestasi;
+use App\Agama;
+use App\Ppdb;
 use App\Pendaftaran;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
@@ -33,6 +35,13 @@ class Home extends Controller
 		return view('general.index', compact('list_sekolah','list_kecamatan','sd','smp'));
 	}
 
+    public function maps($jalur, $id){
+        $id_user = session::get('id_user');
+        $siswa = Siswa::where('id_user', $id_user)->first();
+        $id_sekolah = Crypt::decrypt($id);
+        return view('general.maps', compact('jalur','id_sekolah','siswa'));
+    }
+
 	public function daftar(){
 		return view('auth.regist_select');
 	}
@@ -51,6 +60,10 @@ class Home extends Controller
 		$email = null;
 		return view('auth.regist_siswa');
 	}
+
+    public function daftar_sekolah(){
+        return view('auth.regist_sekolah');
+    }
 
 	public function detail_sekolah($nama, $id){
 		$id_sekolah = Crypt::decrypt($id);
@@ -97,7 +110,8 @@ class Home extends Controller
 	public function profile($nama){
 		$id_user = session::get('id_user');
 		$siswa = Siswa::where('id_user', $id_user)->first();
-		return view('general.profile', compact('siswa'));
+        $agama = Agama::all();
+		return view('general.profile', compact('siswa','agama'));
 	}
 
     public function data_diri($jalur, $id){
@@ -105,6 +119,7 @@ class Home extends Controller
         $id_user = session::get('id_user');
         $siswa = Siswa::where('id_user', $id_user)->first();
         $sekolah = Sekolah::where('id_sekolah', $id_sekolah)->first();
+
         return view('auth.data', compact('siswa','jalur','id_sekolah','sekolah'));
     }
 
@@ -282,6 +297,16 @@ class Home extends Controller
         return redirect('data-diri/'.$perpindahan.'/'.$id)->with(['success' => 'Berhasil Update Data diri!']);
     }
 
+    public function addzonasi($zonasi, $id, Request $request){
+        $data['longitude'] = $request->longitude;
+        $data['latitude'] = $request->latitude;
+
+
+        // $data->update();
+        Siswa::where('id_siswa', $request->id_siswa)->update($data);
+        return redirect('data-diri/'.$zonasi.'/'.$id)->with(['success' => 'Berhasil Update Data diri!']);
+    }
+
     public function addafirmasi($afirmasi, $id, Request $request){
         $data = $request->all();
         $data = request()->except(['_token']);
@@ -307,8 +332,11 @@ class Home extends Controller
 
     public function pendaftaran(Request $request){
         $jalur = $request->jalur;
+        $thn_ajar = Ppdb::where('id_sekolah', $request->id_sekolah)->first();
         $data = $request->all();
         $data = request()->except(['_token']);
+        $data['tahun_ajaran'] = $thn_ajar->tahun_ajaran;
+        $data['daya_tampung'] = $thn_ajar->daya_tampung;
         $data['status'] = 0;
         Pendaftaran::insert($data);
         $sekolah = Sekolah::where('id_sekolah', $request->id_sekolah)->first();
@@ -345,11 +373,68 @@ class Home extends Controller
 		}
 	}
 
-	public function kategori(){
-		$list_sekolah = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')->get();
+    public function post_akunsekolah(Request $request){
+        $cpassword = $request->cpassword;
+        $password = $request->password;
+        $nama = $request->nama;
+        $email = $request->email;
+
+        if ($cpassword != $password) {
+            return redirect('/daftar/sekolah')->withInput()->with(['warning' => 'Konfirmasi password tidak sama!']);
+        }else{
+
+            $users = new Users;
+            $users->email =$request->email;
+            $users->password = password_hash($request->password, PASSWORD_DEFAULT);
+            $users->role = 'admin';
+            $users->status = 'nonaktif';
+            $users->save();
+
+            $id_user = $users->id_user;
+            $sekolah = new Sekolah;
+            $sekolah->id_user =$id_user;
+            $sekolah->nama_sekolah =$request->nama_sekolah;
+            $sekolah->email =$request->email;
+            if($request->hasFile('bukti')){
+                // File::delete('imageUpload/sekolah'. $data->foto);
+                $image = $request->file('bukti');
+
+                if($image->isValid()){
+                    $image_name = $image->getClientOriginalName();
+                    $upload_path = 'imageUpload/dokumen';
+                    $image->move($upload_path, $image_name);
+                    // $bank->gambar = $image_name;
+                    $sekolah['bukti'] = $image_name;
+                }
+            }
+            
+            
+            $sekolah->save();
+
+            return redirect('login')->with(['success' => 'Pendaftaran Berhasil!']);
+        }
+    }
+
+	public function kategori($kecamatan, $id){
+        $date = Carbon\Carbon::now();
+        $id_kec = Crypt::decrypt($id); 
+		$list_sekolah_sd = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')
+        ->join('ppdb','sekolah.id_sekolah','=','ppdb.id_sekolah')
+        ->where('ppdb.tgl_mulai','<=', $date->toDateString())
+        ->where('ppdb.tgl_berakhir', '>=', $date->toDateString())
+        ->where('sekolah.id_kec', $id_kec)
+        ->where('sekolah.tingkat', 'SD')
+        ->get();
+        $list_sekolah_smp = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')
+        ->join('ppdb','sekolah.id_sekolah','=','ppdb.id_sekolah')
+        ->where('ppdb.tgl_mulai','<=', $date->toDateString())
+        ->where('ppdb.tgl_berakhir', '>=', $date->toDateString())
+        ->where('sekolah.id_kec', $id_kec)
+        ->where('sekolah.tingkat', 'SMP')
+        ->get();
 		$sd = Sekolah::where('tingkat', 'SD');
 		$smp = Sekolah::where('tingkat', 'SMP');
 		$list_kecamatan = Kecamatan::orderBy('nama_kec', 'ASC')->get();
-		return view('general.kategori_kecamatan', compact('list_sekolah','list_kecamatan','sd','smp'));
+		return view('general.kategori_kecamatan', compact('list_sekolah_sd','list_sekolah_smp','list_kecamatan','sd','smp','kecamatan'));
 	}
 }

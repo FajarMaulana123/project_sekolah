@@ -12,22 +12,29 @@
 */
 
 Route::get('/','Home@index');
-Route::get('kategori_kecamatan','Home@kategori');
+Route::get('kecamatan/{nama}/{id}','Home@kategori');
 Route::get('home','admin\HomeController@index');
 Route::get('hasil-seleksi','Home@hasil_seleksi');
+
+Route::get('maps/{jalur}/{id}','Home@maps');
 
 
 Route::get('login','Auth\LoginController@index');
 Route::get('daftar','Home@daftar');
 Route::get('daftar/siswa','Home@daftar_siswa');
+Route::get('daftar/sekolah','Home@daftar_sekolah');
+
 Route::post('akunsiswa', 'Home@post_akunsiswa');
+Route::post('akunsekolah', 'Home@post_akunsekolah');
 Route::get('detail-sekolah/{nama}/{id}', 'Home@detail_sekolah');
 Route::get('jalur-pendaftaran/{id}', 'Home@jalur_pendaftaran');
 Route::get('profile/{nama}', 'Home@profile');
 Route::post('editsiswa', 'Home@editsiswa');
 Route::post('addsertifikat/{prestasi}/{id}', 'Home@addsertifikat');
 Route::post('addperpindahan/{perpindahan}/{id}', 'Home@addperpindahan');
+Route::post('addzonasi/{zonasi}/{id}', 'Home@addzonasi');
 Route::post('addafirmasi/{afirmasi}/{id}', 'Home@addafirmasi');
+
 Route::get('jalur-pendaftaran/{jalur}/{id}', 'Home@jalur');
 Route::get('jalur-pendaftaran/{jalur}/update/{id}', 'Home@jalur_update');
 Route::get('data-diri/{jalur}/{id}', 'Home@data_diri');
@@ -56,6 +63,9 @@ Route::post('editsekolah', 'SekolahController@update');
 Route::get('sekolah/{sekolah}', 'SekolahController@hapus');
 Route::get('status_sekolah/{sekolah}','SekolahController@acc');
 Route::get('detail_sekolah/{sekolah}','SekolahController@detail');
+
+Route::get('profile-sekolah/{sekolah}','SekolahController@profile_sekolah');
+Route::post('editprofile', 'SekolahController@update_profile');
 
 //prestasi
 Route::get('prestasi','SekolahController@prestasi');

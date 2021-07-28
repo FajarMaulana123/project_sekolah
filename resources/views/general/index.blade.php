@@ -159,7 +159,7 @@
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
           <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
             <div class="icon"><i class="bx bx-world"></i></div>
-            <h4 class="title"><a href="">Sekolah Terbanyak Pendaftar</a></h4>
+            <h4 class="title"><a href="{{url('maps')}}">Sekolah Terbanyak Pendaftar</a></h4>
             <p class="description">Paling banyak pendaftar yang masuk pada sekolah ini, cek sekarang!</p>
           </div>
         </div>
@@ -243,10 +243,11 @@
 
       <div class="row" data-aos="fade-up" data-aos-delay="300">
         @foreach ($list_kecamatan as $kecamatan)
+        <?php $jum_sekolah = \App\Sekolah::where(['id_kec' => $kecamatan->id_kec])->get(); ?>
         <div class="col-lg-3 col-md-3 mt-3 mt-md-2">
           <div class="icon-box">
             <i class="ri-bar-chart-box-line" style="color: #5578ff;"></i>
-            <h3><a href="{{url('kategori_kecamatan')}}">{{$kecamatan->nama_kec}}</a></h3>
+            <h3><a href="{{url('kecamatan/'.strtolower($kecamatan->nama_kec).'/'.Crypt::encrypt($kecamatan->id_kec))}}">{{$kecamatan->nama_kec}} ({{$jum_sekolah->count()}})</a></h3>
           </div>
         </div>
         @endforeach

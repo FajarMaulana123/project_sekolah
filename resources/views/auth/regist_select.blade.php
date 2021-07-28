@@ -10,7 +10,7 @@
     </div>
     <h5 style="font-family: 'Open Sans', sans-serif; text-align: left; margin-left: 50px; margin-top: 20px;"><b>Pilih Tipe Akun</b></h5>
     <p style="font-family: 'Open Sans', sans-serif; text-align: left; margin-left: 50px;margin-right: 50px; font-size: 14px; color: grey;">Silahkan pilih, anda daftar sebagai siswa atau pemilik sekolah</p>
-    <a class="btn btn-primary fadeIn fourth hyuwan-hyu" style="color: black;">
+    <a href="{{url('daftar/sekolah')}}" class="btn btn-primary fadeIn fourth hyuwan-hyu" style="color: black;">
       <div>
         <table>
           <tr>

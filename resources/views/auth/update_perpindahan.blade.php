@@ -1,6 +1,7 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="{{asset('general/css/log.css')}}" rel="stylesheet">
 <style type="text/css">
   a {
@@ -24,7 +25,7 @@
     @endif
     <input type="hidden" name="id_siswa" value="{{$siswa->id_siswa}}">
     <label style="margin-top: 10px; text-align: left;"><h5 style="font-family: 'Open Sans', sans-serif; margin-top: 20px;"><b>Update bukti?</b></h5></label><br>
-    <a href="{{asset('imageUpload/dokumen/'.$siswa->perpindahan)}}" target="_blank"><img src="{{asset('imageUpload/dokumen/'.$siswa->perpindahan)}}" width="200" ></a>
+    <a href="{{asset('imageUpload/dokumen/'.$siswa->perpindahan)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Surat Perpindahan</a><br>
     <a href="{{url('data-diri/'.$jalur.'/'.Crypt::encrypt($id_sekolah))}}" class="fadeIn fourth hyuwan-a" style="color: white" >Tidak, Lanjutkan</a>
     <a href="{{url('jalur-pendaftaran/'.$jalur.'/'.Crypt::encrypt($id_sekolah))}}" class="fadeIn fourth hyuwan-b" value="Update" style=" margin-top: -30px; color: white;">Update</a>
   </div>

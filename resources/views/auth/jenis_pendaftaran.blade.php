@@ -9,8 +9,9 @@
       <a class="underlineHover" style="color: grey">Halo Calon Siswa, Silahkan pilih Jalur Pendaftaran!</a>
     </div>
     <h5 style="font-family: 'Open Sans', sans-serif; text-align: left; margin-left: 50px; margin-top: 20px;"><b>Pilih Jalur Pendaftaran</b></h5>
-    
-    <!-- <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black;">
+    <?php
+      $zonasi = "zonasi"; ?>
+      <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" href="{{url('maps/'.$zonasi.'/'.Crypt::encrypt($id_sekolah))}}" style="color: black;">
       <div>
         <table>
           <tr>
@@ -24,29 +25,30 @@
           </tr>
         </table>
       </div>
-    </a> -->
-    <?php
-      $prestasi = "prestasi";
-      if ($siswa->sertifikat1 == null && $siswa->sertifikat2 == null && $siswa->sertifikat3 == null) { ?>
-      <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; " href="{{url('jalur-pendaftaran/'.$prestasi.'/'.Crypt::encrypt($id_sekolah))}}">
-    <?php }else{ ?>
-      <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; " href="{{url('jalur-pendaftaran/'.$prestasi.'/update/'.Crypt::encrypt($id_sekolah))}}">
-    <?php } ?>
-      <div>
-        <table>
-          <tr>
-            <td>
-              <img src="{{asset('imageUpload/prestasi.png')}}" width="70">
-            </td>
-            <td style="width: 270px;">
-              <p style="font-family: 'Open Sans', sans-serif;font-size: 14px; color: black; margin-top: 10px; margin-left: 10px;"><b>Prestasi</b></p>
-            </td>
-            <td><i class="fa fa-chevron-right" ></i></td>
-          </tr>
-        </table>
-      </div>
     </a>
-
+    <?php if ($siswa->tingkat != "Tidak ada") { ?>
+      <?php
+        $prestasi = "prestasi";
+        if ($siswa->sertifikat1 == null && $siswa->sertifikat2 == null && $siswa->sertifikat3 == null) { ?>
+        <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; margin-top: -10px;" href="{{url('jalur-pendaftaran/'.$prestasi.'/'.Crypt::encrypt($id_sekolah))}}">
+      <?php }else{ ?>
+        <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" style="color: black; margin-top: -10px;" href="{{url('jalur-pendaftaran/'.$prestasi.'/update/'.Crypt::encrypt($id_sekolah))}}">
+      <?php } ?>
+        <div>
+          <table>
+            <tr>
+              <td>
+                <img src="{{asset('imageUpload/prestasi.png')}}" width="70">
+              </td>
+              <td style="width: 270px;">
+                <p style="font-family: 'Open Sans', sans-serif;font-size: 14px; color: black; margin-top: 10px; margin-left: 10px;"><b>Prestasi</b></p>
+              </td>
+              <td><i class="fa fa-chevron-right" ></i></td>
+            </tr>
+          </table>
+        </div>
+      </a>
+    <?php } ?>
     <?php
       $perpindahan = "perpindahan-orang-tua";
       if ($siswa->perpindahan == null) { ?>

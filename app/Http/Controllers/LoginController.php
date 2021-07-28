@@ -52,7 +52,7 @@ class LoginController extends Controller
                         return redirect('/login')->withInput()->with(['danger' => 'Password Salah!']);
                     }
                 } else {
-                    return redirect('/login')->withInput()->with(['danger' => 'Password Salah!']);
+                    return redirect('/login')->withInput()->with(['danger' => 'Akun belum diaktivasi!']);
                 }
             }
 
