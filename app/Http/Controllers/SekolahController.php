@@ -425,4 +425,10 @@ public function status_daftar(Request $request){
     return redirect()->back();
 } 
 
+public function hapus_daftar($id){
+    $data = Pendaftaran::findOrFail($id);
+    $data->delete();
+    return redirect('/data_pendaftaran');
+}
+
 }

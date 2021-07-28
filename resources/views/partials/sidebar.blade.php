@@ -109,6 +109,14 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{url('data_pendaftaran')}}" class="nav-link">
+            <i class="nav-icon fa fa-trophy"></i>
+            <p>
+              Data Pendaftar
+            </p>
+          </a>
+        </li>
         @endif
         <li class="nav-item">
           <a href="{{url('logout')}}" class="nav-link">
