@@ -425,6 +425,11 @@ public function status_daftar(Request $request){
     return redirect()->back();
 } 
 
+public function hapus_daftar($id){
+    $data = Pendaftaran::findOrFail($id);
+    $data->delete();
+    return redirect('/data_pendaftaran');
+}
 public function profile_sekolah($sekolah){
     $id = Session::get('id_user');
     $data = Sekolah::where('id_user', $id)->first();
