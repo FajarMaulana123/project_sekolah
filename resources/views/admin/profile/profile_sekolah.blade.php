@@ -82,6 +82,10 @@
                   <textarea name="alamat" class="form-control" rows="3" placeholder="Masukan Alamat" >{{$data->alamat}}</textarea>
                 </div>
                 <div class="form-group">
+                  <label for="kps">Titik Lokasi</label>
+                  <a href="{{url('maps-sekolah/'.$data->nama_sekolah.'/'.Crypt::encrypt($data->id_sekolah))}}"><input type="text" class="form-control" id="kps" placeholder="Latlang" name="nama_kps" value="{{$data->latitude}} {{$data->longitude}}" disabled ></a>
+                </div>
+                <div class="form-group">
                   <label for="email">Deskripsi Sekolah</label>
                   <div class="card-body">
                     <textarea id="summernote" placeholder="Deskripsi..." name="deskripsi">{{$data->deskripsi}}

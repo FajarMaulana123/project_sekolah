@@ -11,7 +11,7 @@ use App\TahunAjaran;
 use App\Ppdb;
 use App\Agama;
 use App\Pendaftaran;
-
+use Crypt;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 
@@ -68,6 +68,22 @@ public function create(){
         $list_kec = Kecamatan::orderBy('nama_kec', 'ASC')->get();
         return view ('admin.sekolah.create', compact('list_kec'));
     }
+}
+
+public function maps_sekolah($nama, $id){
+    $id_sekolah = Crypt::decrypt($id);
+    return view('general.maps_sekolah', compact('id_sekolah','nama'));
+}
+
+public function update_lokasi($nama, $id, Request $request){
+    $data['longitude'] = $request->longitude;
+    $data['latitude'] = $request->latitude;
+    $nama_sekolah = str_replace(' ', '-', strtolower($nama));
+    $id_sekolah = Crypt::decrypt($id);
+
+        // $data->update();
+    Sekolah::where('id_sekolah', $id_sekolah)->update($data);
+    return redirect('profile-sekolah/'.$nama_sekolah)->with(['success' => 'Berhasil Update Data diri!']);
 }
 
 public function detail($id){
@@ -425,11 +441,6 @@ public function status_daftar(Request $request){
     return redirect()->back();
 } 
 
-public function hapus_daftar($id){
-    $data = Pendaftaran::findOrFail($id);
-    $data->delete();
-    return redirect('/data_pendaftaran');
-}
 public function profile_sekolah($sekolah){
     $id = Session::get('id_user');
     $data = Sekolah::where('id_user', $id)->first();

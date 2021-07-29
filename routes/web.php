@@ -20,6 +20,8 @@ Route::get('maps/{jalur}/{id}','Home@maps');
 Route::get('maps-profile/{nama}','Home@maps_profile');
 Route::post('updatetitik/{nama}', 'Home@updatetitik');
 
+Route::get('maps-sekolah/{nama}/{id}','SekolahController@maps_sekolah');
+Route::post('update-lokasi-sekolah/{nama}/{id}', 'SekolahController@update_lokasi');
 
 Route::get('login','Auth\LoginController@index');
 Route::get('daftar','Home@daftar');
