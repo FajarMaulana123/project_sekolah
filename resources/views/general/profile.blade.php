@@ -79,7 +79,7 @@
                       <select class="form-control" name="id_agama">
                         <option value="" <?php if($siswa->id_agama == null) echo 'selected="selected"'; ?>>-Pilih Agama-</option>
                         @foreach($agama as $ag)
-                          <option value="{{$ag->id_agama}}" <?php if($siswa->id_agama == $ag->id_agama) echo 'selected="selected"'; ?>>{{$ag->nama_agama}}</option>
+                        <option value="{{$ag->id_agama}}" <?php if($siswa->id_agama == $ag->id_agama) echo 'selected="selected"'; ?>>{{$ag->nama_agama}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -176,31 +176,31 @@
 
               </div>
               <?php if ($siswa->tingkat == "SD") { ?>
-              <div class="row" style="margin-top:20px;">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <?php if ($siswa->ijazah == null) { ?>
-                      <label style="color: red">Scan Ijazah*</label>
-                    <?php }else{ ?>
-                      <label >Scan Ijazah</label><br>
-                      <a href="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Ijazah</a>
-                    <?php } ?>
+                <div class="row" style="margin-top:20px;">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <?php if ($siswa->ijazah == null) { ?>
+                        <label style="color: red">Scan Ijazah*</label>
+                      <?php }else{ ?>
+                        <label >Scan Ijazah</label><br>
+                        <a href="{{asset('imageUpload/dokumen/'.$siswa->ijazah)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Ijazah</a>
+                      <?php } ?>
 
-                    <input type="file" name="ijazah" class="form-control mt-2" value="{{$siswa->ijazah}}" accept="application/pdf, application/msword,.doc,.docx">
+                      <input type="file" name="ijazah" class="form-control mt-2" value="{{$siswa->ijazah}}" accept="application/pdf, application/msword,.doc,.docx">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <?php if ($siswa->skhun == null) { ?>
+                        <label style="color: red">Scan SKHUN*</label>
+                      <?php }else{ ?>
+                        <label >Scan SKHUN</label><br>
+                        <a href="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}" target="_blank"><i class="fa fa-eye"></i> Lihat SKHUN</a>
+                      <?php } ?>
+                      <input type="file" name="skhun" class="form-control mt-2" value="{{$siswa->skhun}}" accept="application/pdf, application/msword,.doc,.docx">
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <?php if ($siswa->skhun == null) { ?>
-                      <label style="color: red">Scan SKHUN*</label>
-                    <?php }else{ ?>
-                      <label >Scan SKHUN</label><br>
-                      <a href="{{asset('imageUpload/dokumen/'.$siswa->skhun)}}" target="_blank"><i class="fa fa-eye"></i> Lihat SKHUN</a>
-                    <?php } ?>
-                    <input type="file" name="skhun" class="form-control mt-2" value="{{$siswa->skhun}}" accept="application/pdf, application/msword,.doc,.docx">
-                  </div>
-                </div>
-              </div>
               <?php } ?>
               <div class="row" style="margin-top:20px;">
                 <div class="col-md-6">
@@ -237,6 +237,12 @@
               <div class="form-group">
                 <textarea class="form-control" name="alamat" rows="9" placeholder="Masukan Alamat..." >{{$siswa->alamat}}</textarea>
               </div>
+              <?php if ($siswa->longitude == null && $siswa->latitude == null) { ?>
+                <label style="color: red">Titik Lokasi*</label>
+              <?php }else{ ?>
+                <label >Titik Lokasi</label>
+              <?php } ?>
+              <a href="{{url('maps-profile/'.$siswa->nama)}}"><input type="text" name="latlang" class="form-control" id="latlang" placeholder="Titik lokasi" value="{{$siswa->latitude}},{{$siswa->longitude}}" disabled ></a>
             </div>
             <div class="row" style="margin-top:20px;">
               <div class="col-md-4">

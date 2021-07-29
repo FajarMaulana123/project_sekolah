@@ -41,6 +41,11 @@ class Home extends Controller
         $id_sekolah = Crypt::decrypt($id);
         return view('general.maps', compact('jalur','id_sekolah','siswa'));
     }
+    public function maps_profile($nama){
+        $id_user = session::get('id_user');
+        $siswa = Siswa::where('id_user', $id_user)->first();
+        return view('general.maps_profile', compact('nama','siswa'));
+    }
 
 	public function daftar(){
 		return view('auth.regist_select');
@@ -305,6 +310,16 @@ class Home extends Controller
         // $data->update();
         Siswa::where('id_siswa', $request->id_siswa)->update($data);
         return redirect('data-diri/'.$zonasi.'/'.$id)->with(['success' => 'Berhasil Update Data diri!']);
+    }
+
+    public function updatetitik($nama, Request $request){
+        $data['longitude'] = $request->longitude;
+        $data['latitude'] = $request->latitude;
+
+
+        // $data->update();
+        Siswa::where('id_siswa', $request->id_siswa)->update($data);
+        return redirect('profile/'.$nama)->with(['success' => 'Berhasil Update Data diri!']);
     }
 
     public function addafirmasi($afirmasi, $id, Request $request){

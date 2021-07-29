@@ -119,18 +119,21 @@
         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
       </div>
     </li>
-    <?php $id = Session::get('id_user');
-          $sekolah = \App\Sekolah::where(['id_user' => $id])->first();
-          $nama_sekolah = str_replace(' ', '-', strtolower($sekolah->nama_sekolah));
-    ?>
+    
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-user"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        @if(!Session::get('loginsuper'))
+        <?php $id = Session::get('id_user');
+          $sekolah = \App\Sekolah::where(['id_user' => $id])->first();
+          $nama_sekolah = str_replace(' ', '-', strtolower($sekolah->nama_sekolah));
+        ?>
         <div class="dropdown-divider"></div>
         <a href="{{url('profile-sekolah/'.$nama_sekolah)}}" class="dropdown-item">
-          <i class="fas fa-user mr-2"></i> Lihat Profil
+          <i class="fas fa-user mr-2"></i> Lihat Profil </a>
+        @endif
         <div class="dropdown-divider"></div>
         <a href="{{url('logout')}}" class="dropdown-item">
           <i class="fas fa-sign-out-alt"></i> Logout

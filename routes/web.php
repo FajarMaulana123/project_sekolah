@@ -17,6 +17,8 @@ Route::get('home','admin\HomeController@index');
 Route::get('hasil-seleksi','Home@hasil_seleksi');
 
 Route::get('maps/{jalur}/{id}','Home@maps');
+Route::get('maps-profile/{nama}','Home@maps_profile');
+Route::post('updatetitik/{nama}', 'Home@updatetitik');
 
 
 Route::get('login','Auth\LoginController@index');
