@@ -11,7 +11,8 @@ class HomeController extends Controller
 		if(!Session::get('loginsuper') && !Session::get('loginadmin')){
 			return redirect('/login');
 		} else {
-		return view('admin.index');
-	    }
+			
+			return view('admin.index');
+		}
 	}
 }
