@@ -347,14 +347,27 @@ class Home extends Controller
 
     public function pendaftaran(Request $request){
         $jalur = $request->jalur;
+        $sekolah = Sekolah::where('id_sekolah', $request->id_sekolah)->first();
+        $id_user = session::get('id_user');
+        $siswa = Siswa::where('id_user', $id_user)->first();
+        
         $thn_ajar = Ppdb::where('id_sekolah', $request->id_sekolah)->first();
         $data = $request->all();
         $data = request()->except(['_token']);
+        if ($jalur == "zonasi") {
+            $my_latitude = $siswa['latitude'];
+            $my_longitude = $siswa['longitude'];
+            $her_latitude = $sekolah['latitude'];
+            $her_longitude = $sekolah['longitude'];
+
+            $distance = round((((acos(sin(($my_latitude*pi()/180)) * sin(($her_latitude*pi()/180))+cos(($my_latitude*pi()/180)) * cos(($her_latitude*pi()/180)) * cos((($my_longitude- $her_longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344), 2);
+            $data['jarak'] = $distance;
+        }
         $data['tahun_ajaran'] = $thn_ajar->tahun_ajaran;
         $data['daya_tampung'] = $thn_ajar->daya_tampung;
         $data['status'] = 0;
         Pendaftaran::insert($data);
-        $sekolah = Sekolah::where('id_sekolah', $request->id_sekolah)->first();
+        
         return view('auth.informasi', compact('jalur','sekolah'));
     }
 
