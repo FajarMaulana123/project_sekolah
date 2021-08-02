@@ -25,13 +25,17 @@
                 <p>
                   Kamu melakukan pendaftaran di {{$use->nama_sekolah}} lewat jalur <b>{{ucwords($use->jalur)}}</b> Tahun Ajaran {{$use->tahun_ajaran}}
                 </p>
-                <a href="">
+                <?php $hasil = \App\Hasilseleksi::where('id_sekolah', $use->id_sekolah)->first(); ?>
                 <?php if ($use->status == 0) { ?>
                   <h4 style="float: right; color: white; background-color: grey; padding: 10px; border-radius: 5px;">Menunggu Hasil</h4>
                 <?php }else if($use->status == 1){ ?>
+                <a href="{{asset('imageUpload/dokumen/'.$hasil['hasil_seleksi'])}}" target="_blank">
                   <h4 style="float: right; color: white; background-color: green; padding: 10px; border-radius: 5px;">Diterima</h4>
-                <?php }else{ ?>
+                </a>
+                <?php }else { ?>
+                <a href="{{asset('imageUpload/dokumen/'.$hasil['hasil_seleksi'])}}" target="_blank">
                   <h4 style="float: right; color: white; background-color: red; padding: 10px; border-radius: 5px;">Tidak Diterima</h4>
+                </a>
                 <?php } ?>
                 </a>
               </div>
