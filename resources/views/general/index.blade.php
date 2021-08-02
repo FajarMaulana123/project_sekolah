@@ -103,39 +103,38 @@
         <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-xl-start" data-aos="fade-right" data-aos-delay="150">
           <img src="{{asset('general/img/counts-img.svg')}}" alt="" class="img-fluid">
         </div>
-
         <div class="col-xl-7 d-flex align-items-stretch pt-4 pt-xl-0" data-aos="fade-left" data-aos-delay="300">
           <div class="content d-flex flex-column justify-content-center">
             <div class="row">
               <div class="col-md-6 d-md-flex align-items-md-stretch">
                 <div class="count-box">
                   <i class="bi bi-journal-richtext"></i>
-                  <span data-purecounter-start="0" data-purecounter-end="65" data-purecounter-duration="1" class="purecounter"></span>
-                  <p><strong>Tingkat SD</strong> | Jumlah Pendaftar siswa tingkat SD se-Indramayu</p>
+                  <span data-purecounter-start="0" data-purecounter-end="{{count($result_td) + count($result_tk)}}" data-purecounter-duration="1" class="purecounter"></span>
+                  <p><strong>Tingkat SD</strong> | Jumlah Calon siswa SD se-Indramayu</p>
                 </div>
               </div>
 
               <div class="col-md-6 d-md-flex align-items-md-stretch">
                 <div class="count-box">
                   <i class="bi bi-journal-richtext"></i>
-                  <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1" class="purecounter"></span>
-                  <p><strong>Tingkat SMP</strong> | Jumlah Pendaftar siswa tingkat SMP se-Indramayu</p>
+                  <span data-purecounter-start="0" data-purecounter-end="{{count($result_sd)}}" data-purecounter-duration="1" class="purecounter"></span>
+                  <p><strong>Tingkat SMP</strong> | Jumlah Calon siswa SMP se-Indramayu</p>
                 </div>
               </div>
 
               <div class="col-md-6 d-md-flex align-items-md-stretch">
                 <div class="count-box">
                   <i class="bi bi-award"></i>
-                  <span data-purecounter-start="0" data-purecounter-end="{{$sd->count()}}" data-purecounter-duration="1" class="purecounter"></span>
-                  <p><strong>Sekolah SD</strong> | Jumlah sekolah SD yang telah</p>
+                  <span data-purecounter-start="0" data-purecounter-end="{{$j_sd->count()}}" data-purecounter-duration="1" class="purecounter"></span>
+                  <p><strong>Sekolah SD</strong> | Jumlah sekolah SD yang telah membuka Pendaftaran</p>
                 </div>
               </div>
 
               <div class="col-md-6 d-md-flex align-items-md-stretch">
                 <div class="count-box">
                   <i class="bi bi-award"></i>
-                  <span data-purecounter-start="0" data-purecounter-end="{{$smp->count()}}" data-purecounter-duration="1" class="purecounter"></span>
-                  <p><strong>Sekolah SMP</strong> | Jumlah sekolah SMP yang telah</p>
+                  <span data-purecounter-start="0" data-purecounter-end="{{$j_smp->count()}}" data-purecounter-duration="1" class="purecounter"></span>
+                  <p><strong>Sekolah SMP</strong> | Jumlah sekolah SMP yang telah membuka Pendaftaran</p>
                 </div>
               </div>
             </div>
@@ -159,7 +158,7 @@
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
           <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
             <div class="icon"><i class="bx bx-world"></i></div>
-            <h4 class="title"><a href="{{url('maps')}}">Sekolah Terbanyak Pendaftar</a></h4>
+            <h4 class="title"><a href="{{url('terbanyak-pendaftar')}}">Sekolah Terbanyak Pendaftar</a></h4>
             <p class="description">Paling banyak pendaftar yang masuk pada sekolah ini, cek sekarang!</p>
           </div>
         </div>
@@ -167,7 +166,11 @@
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
           <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
             <div class="icon"><i class="bx bx-tachometer"></i></div>
-            <h4 class="title"><a href="">Sekolah Terdekat</a></h4>
+            @if(!Session::get('loginsiswa'))
+              <h4 class="title"><a href="{{url('login')}}">Sekolah Terdekat</a></h4>
+            @else
+              <h4 class="title"><a href="{{url('terdekat')}}">Sekolah Terdekat</a></h4>
+            @endif
             <p class="description">Mungkin kamu sedang mencari sekolah terdekat, coba cek sekolah incaranmu disini!</p>
           </div>
         </div>
@@ -175,7 +178,7 @@
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
           <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
             <div class="icon"><i class="bx bx-trophy"></i></div>
-            <h4 class="title"><a href="">Sekolah Dengan Prestasi Terbanyak</a></h4>
+            <h4 class="title"><a href="{{url('prestasi-terbanyak')}}">Sekolah Dengan Prestasi Terbanyak</a></h4>
             <p class="description">Sekolah dengan banyak prestasi , cek prestasi nya yuk!</p>
           </div>
         </div>
