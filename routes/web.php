@@ -100,7 +100,11 @@ Route::get('ppdb_sekolah', 'SekolahController@ppdb_sekolah');
 Route::post('ppdb/update', 'SekolahController@update_ppdb');
 
 //data_pendaftaran
+Route::get('data_pendaftaran/cetak_pdf', 'SekolahController@cetak');
 Route::get('data_pendaftaran', 'SekolahController@data_daftar');
 Route::post('data_pendaftaran/status', 'SekolahController@status_daftar');
 Route::get('data_pendaftaran/{id}', 'SekolahController@hapus_daftar');
+Route::post('st_zonasi', 'SekolahController@st_zonasi');
+Route::post('upload_hasil', 'SekolahController@upload_hasil');
+
 

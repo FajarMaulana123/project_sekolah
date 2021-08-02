@@ -37,9 +37,10 @@
                 <div class="col-sm-6">
                   <p>List Data Pendaftar</p>
                 </div>
-                <!-- <div class="col-sm-6 ">
-                  <a type="submit" class="btn btn-info btn-sm float-sm-right" href="{{url('sekolah/create')}}" style="color: white"><i class="fa fa-plus"></i> Tambah Sekolah</a>
-                </div> -->
+                <div class="col-sm-6 ">
+                  <a class="btn btn-primary btn-sm float-sm-right" href="{{url('data_pendaftaran/cetak_pdf')}}" style="color: white; " target="_blank"><i class="fa fa-print"></i> Cetak Hasil</a>
+                  <a class="btn btn-success btn-sm float-sm-right" href="#" data-toggle="modal" data-target="#hsl" style="color: white;margin-right:20px;"><i class="fa fa-upload"></i> Upload Hasil</a>
+                </div>
               </div>
             </div>
             <div class="card-body">
@@ -69,6 +70,7 @@
                       {{$sekolah['jalur']}}
                     </td>
                     <td>
+                    <input type="hidden" id="id_sekolah" value="{{$sekolah->id_sekolah}}">
                     <form action="{{url('data_pendaftaran/status')}}" method="POST">
                     @csrf
                         <input type="hidden" name="id" value="{{$sekolah['id_pendaftaran']}}">
@@ -236,34 +238,66 @@
   </section>
 </div>
 
+<div class="modal fade" id="hsl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Upload Hasil Seleksi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{url('/upload_hasil')}}" method="POST" enctype="multipart/form-data">
+          @csrf
+          <div class="form-group">
+            <label for="exampleInputFile">Upload Hasil Seleksi</label>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="exampleInputFile" name="hasil" required accept="application/pdf, application/msword,.doc,.docx">
+                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+              </div>
+            </div>
+            <p>*pdf</p>
+          </div>
+          <button type="submit" class="btn btn-primary float-right">Save changes</button>
+        </form>
+      </div>
+     
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('js')
 <script type="text/javascript">
-  // $('document').ready(function (){
-  //     var data = ;
-  //     var isi = '';
-  //     for(var i = 0; i < data.length; i++){
-  //     // console.log(data[i]['nama_sekolah']);
-  //     isi += `<p>`+data[i]['nama_sekolah']+`</p>`;
-  //     $('#o'+i).html(isi);
-  //     }
-  //     // console.log(data);
-
-  // });
-  // function reply_click(element)
-  // {
-  //   $('#sekolah').html(element.getAttribute('data-sekolah-name'));
-  //   var h = element.getAttribute('data-sekolah-logo');
-
-  //   var elem = document.createElement("img");
-  //   elem.setAttribute("height", "200");
-  //   elem.setAttribute("width", "200");
-  //   elem.setAttribute("src", "imageUpload/logo/" + h);
-  //   document.getElementById("logo").appendChild(elem);
-
-
-  // }
+  $(function js(){
+    // var tgl_br = new Date("<?php echo $ppdb->tgl_berakhir ?>");
+    // var now = new Date();
+    // if(now === tgl_br){
+    //   $('#status').removeAttr("disabled");
+    // } else {
+    //   $('#status').attr("disabled", true);
+    // }
+    // console.log(tgl_br);
+    var id = $('#id_sekolah').val();
+    $.ajax({
+      type: "POST",
+      url: "/st_zonasi",
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        id_sekolah : id,
+      },
+      success:function(response){
+        console.log('success');
+      }
+    }).then(function(){
+    setTimeout(js, 1000)
+	
+    });
+  });
   
 </script>
 @endsection
