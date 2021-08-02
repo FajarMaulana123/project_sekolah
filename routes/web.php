@@ -16,6 +16,10 @@ Route::get('kecamatan/{nama}/{id}','Home@kategori');
 Route::get('home','admin\HomeController@index');
 Route::get('hasil-seleksi','Home@hasil_seleksi');
 
+Route::get('terbanyak-pendaftar','Home@terbanyak_pendaftar');
+Route::get('prestasi-terbanyak','Home@terbanyak_prestasi');
+Route::get('terdekat','Home@terdekat');
+
 Route::get('maps/{jalur}/{id}','Home@maps');
 Route::get('maps-profile/{nama}','Home@maps_profile');
 Route::post('updatetitik/{nama}', 'Home@updatetitik');
