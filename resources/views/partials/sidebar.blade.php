@@ -103,7 +103,7 @@
         </li>
         <li class="nav-item">
           <a href="{{url('ppdb_sekolah')}}" class="nav-link">
-            <i class="nav-icon fa fa-trophy"></i>
+            <i class="nav-icon fa fa-file-alt"></i>
             <p>
               PPDB
             </p>
@@ -111,7 +111,7 @@
         </li>
         <li class="nav-item">
           <a href="{{url('data_pendaftaran')}}" class="nav-link">
-            <i class="nav-icon fa fa-trophy"></i>
+            <i class="nav-icon fa fa-users"></i>
             <p>
               Data Pendaftar
             </p>

@@ -20,6 +20,7 @@
     <div class="container-fluid">
       <div class="row">
         <!-- left column -->
+       
         <div class="col-md-8">
           <!-- general form elements -->
           <div class="card card-light">
@@ -28,7 +29,15 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="post" action="{{ url('/ppdb/update') }}">
+            @if($id->nama_kps == null || $id->nohp == null || $id->alamat == null || $id->visimisi == null || $id->deskripsi == null || $id->radius == null || $id->logo == null || $id->foto == null || $id->longitude == null || $id->latitude == null)
+            <div class="col-md-12" style="margin-top:10px;">
+              <div class="alert alert-danger alert-block" data-aos="fade-up" data-aos-delay="300">
+                <button type="button" class="close" data-dismiss="alert">×</button> 
+                <strong>Segera Lengkapi data diri kamu!</strong>
+              </div>
+            </div>
+            @endif
+            <form method="post" action="{{ url('/ppdb/update') }}" style="margin-top:-20px;">
               @csrf
               <input type="hidden" value="{{$id->id_sekolah}}" name="id_sekolah">
               <div class="card-body">
@@ -79,8 +88,7 @@
               <!-- /.card-body -->
 
               <div class="card-footer">
-                <button type="submit" class="btn btn-secondary"><i class="fa fa-window-close"></i> Batal</button>
-                <button type="submit" class="btn btn-success  "><i class="fa fa-save"></i> Simpan</button>
+                <button type="submit" id="sub" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
               </div>
             </form>
           </div>
@@ -89,4 +97,16 @@
     </div>
   </section>
 </div>
+@endsection
+@section('js')
+<script>
+  $(function(){
+    <?php if($id->nama_kps == null || $id->nohp == null || $id->alamat == null || $id->visimisi == null || $id->deskripsi == null || $id->radius == null || $id->logo == null || $id->foto == null || $id->longitude == null || $id->latitude == null) {?>
+    $("#sub").attr("disabled", true);
+    <?php } else { ?>
+    $("#sub").removeAttr("disabled");
+    <?php } ?>
+  });
+</script>
+
 @endsection

@@ -11,7 +11,9 @@ use App\TahunAjaran;
 use App\Ppdb;
 use App\Agama;
 use App\Pendaftaran;
+use App\Hasilseleksi;
 use Crypt;
+use PDF;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 
@@ -431,7 +433,8 @@ public function data_daftar(){
     ->where('id_sekolah', $sekolah->id_sekolah)
     ->select('pendaftaran.*', 'siswa.*')
     ->get();
-    return view('admin.data_daftar.index', compact('data'));
+    $ppdb = Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first();
+    return view('admin.data_daftar.index', compact('data', 'ppdb'));
 }
 
 public function status_daftar(Request $request){
@@ -439,7 +442,13 @@ public function status_daftar(Request $request){
         'status' => $request->status,
     ]);
     return redirect()->back();
-} 
+}
+
+public function hapus_daftar($id){
+    $data = Pendaftaran::findOrFail($id);
+    $data->delete();
+    return redirect('/data_pendaftaran')->with(['success' => 'Berhasil Hapus Data!']);
+}
 
 public function profile_sekolah($sekolah){
     $id = Session::get('id_user');
@@ -500,6 +509,62 @@ public function update_profile(Request $request){
 
     $data->update();
     return redirect('profile-sekolah/'.str_replace(' ','-', strtolower($request->nama_sekolah)))->with(['success' => 'Berhasil diedit']);
+}
+
+public function st_zonasi(Request $request){
+    $id = Session::get('id_user');
+    // $id_sekolah  = $request->id_sekolah;
+    $sekolah = Sekolah::where('id_user', $id)->first();
+    $ppdb = Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first();
+    $tot_zonasi = $ppdb->daya_tampung / 2;
+    // $data = Pendaftaran::where('jalur', 'zonasi')->get();
+    // foreach($data as $key => $val){
+    //     for($i=0; $i < $tot_zonasi ; $i++){
+    //         $datas = Pendaftaran::where('id_pendaftaran', $val->id_pendaftaran)->where('jarak', '<=' , $sekolah->radius)->update([
+    //                 'status' => 1
+    //             ]);
+    //     }
+    // }
+
+    // return $tot_zonasi;
+    
+    $data = Pendaftaran::where('jalur', 'zonasi')->where('jarak', '<=' , $sekolah->radius)->limit($tot_zonasi)->update([
+        'status' => 1
+    ]);
+
+    return $data;
+}
+
+public function cetak()
+{
+    $lo = Sekolah::where('id_user',Session::get('id_user'))->first();
+    $data = Pendaftaran::join('siswa', 'pendaftaran.id_siswa', '=', 'siswa.id_siswa')
+    ->where('id_sekolah', $lo->id_sekolah)
+    ->select('pendaftaran.*', 'siswa.*')
+    ->get();
+
+
+    $pdf = PDF::loadview('admin.data_daftar.daftar_pdf',['data'=>$data, 'lo' => $lo]);
+    return $pdf->stream();
+}
+
+public function upload_hasil(Request $request){
+    $lo = Sekolah::where('id_user',Session::get('id_user'))->first();
+    $data = new Hasilseleksi;
+    if($request->hasFile('hasil')){
+        $image = $request->file('hasil');
+
+        if($image->isValid()){
+            $image_name = $image->getClientOriginalName();
+            $upload_path = 'imageUpload/dokumen';
+            $image->move($upload_path, $image_name);
+                // $bank->gambar = $image_name;
+            $data['hasil_seleksi'] = $image_name;
+        }
+    }
+    $data->id_sekolah = $lo->id_sekolah;
+    $data->save();
+    return redirect('/data_pendaftaran')->with(['success' => 'Berhasil Upload Data']);
 }
 
 }
