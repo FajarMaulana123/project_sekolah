@@ -5,7 +5,7 @@
   <div class="container">
 
     <div class="section-title" data-aos="fade-up">
-      <h2>Sekolah SD Terdekat Radius 3 KM</h2>
+      <h2>Rekomendasi Sekolah SD</h2>
       <p>Segera Daftarkan Diri Kamu Sebelum Pendaftaran Ditutup!</p>
     </div>
 
@@ -28,12 +28,12 @@
     <div class="row">
       <div data-aos="fade-up">
       </div>
-      <?php if (count($jum_terdekat_sd) == 0) { ?>
+      <?php if (count($jum_banyak_sd) == 0) { ?>
         <div class="col-lg-12 d-flex justify-content-center">
           Tidak ada sekolah SD
         </div>
       <?php }else{ ?>
-      @foreach ($jum_terdekat_sd as $sekolah)
+      @foreach ($jum_banyak_sd as $sekolah)
       @if($sekolah['nama_sekolah'] == null)
         <!-- <div class="col-lg-12 d-flex justify-content-center">
           Tidak ada sekolah SD
@@ -63,7 +63,7 @@
                 @endif
               </div>
               <div class="col-md-6">
-                <h5 class="card-title" style="float: right;"><i class="bi bi-location"></i> {{ $sekolah['jarak']." Km"}}</h5>
+                <h5 class="card-title" style="float: right; font-size: 14px;"><i class="bi bi-person"></i> {{$sekolah['pendaftar']}} &nbsp;&nbsp;&nbsp; <i class="bi bi-trophy"></i> {{$sekolah['prestasi']}} &nbsp;&nbsp;&nbsp; {{$sekolah['jarak']." Km"}}</h5>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@
   <div class="container">
 
     <div class="section-title" data-aos="fade-up">
-      <h2>Sekolah SMP Terdekat Radius 3 KM</h2>
+      <h2>Rekomendasi Sekolah SMP</h2>
       <p>Segera Daftarkan Diri Kamu Sebelum Pendaftaran Ditutup!</p>
     </div>
 
@@ -102,12 +102,12 @@
     <div class="row">
       <div data-aos="fade-up">
       </div>
-      <?php if (count($jum_terdekat_smp) == 0) { ?>
+      <?php if (count($jum_banyak_smp) == 0) { ?>
         <div class="col-lg-12 d-flex justify-content-center">
           Tidak ada sekolah SMP
         </div>
       <?php }else{ ?>
-      @foreach ($jum_terdekat_smp as $smp)
+      @foreach ($jum_banyak_smp as $smp)
       @if($smp['nama_sekolah'] == null)
         <!-- <div class="col-lg-12 d-flex justify-content-center">
           Tidak ada sekolah SMP
@@ -137,7 +137,7 @@
                 @endif
               </div>
               <div class="col-md-6">
-                <h5 class="card-title" style="float: right;"><i class="bi bi-location"></i> {{$smp['jarak']." Km"}}</h5>
+                <h5 class="card-title" style="float: right; font-size: 14px;"><i class="bi bi-person"></i> {{$smp['pendaftar']}} &nbsp;&nbsp;&nbsp; <i class="bi bi-trophy"></i> {{$smp['prestasi']}} &nbsp;&nbsp;&nbsp; {{$smp['jarak']." Km"}}</h5>
               </div>
             </div>
             

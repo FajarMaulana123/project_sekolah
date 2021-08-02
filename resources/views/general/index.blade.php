@@ -186,7 +186,11 @@
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
           <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
             <div class="icon"><i class="bx bx-world"></i></div>
-            <h4 class="title"><a href="">Rekomendasi Sekolah</a></h4>
+            @if(!Session::get('loginsiswa'))
+            <h4 class="title"><a href="{{url('login')}}">Rekomendasi Sekolah</a></h4>
+            @else
+            <h4 class="title"><a href="{{url('rekomendasi-sekolah')}}">Rekomendasi Sekolah</a></h4>
+            @endif
             <p class="description">Kami merekomendasikan sekolah untuk kamu, lihat sekarang!</p>
           </div>
         </div>
@@ -250,7 +254,7 @@
         <div class="col-lg-3 col-md-3 mt-3 mt-md-2">
           <div class="icon-box">
             <i class="ri-bar-chart-box-line" style="color: #5578ff;"></i>
-            <h3><a href="{{url('kecamatan/'.strtolower($kecamatan->nama_kec).'/'.Crypt::encrypt($kecamatan->id_kec))}}">{{$kecamatan->nama_kec}} ({{$jum_sekolah->count()}})</a></h3>
+            <h3><a href="{{url('kecamatan/'.strtolower($kecamatan->nama_kec).'/'.Crypt::encrypt($kecamatan->id_kec))}}">{{$kecamatan->nama_kec}}</a></h3>
           </div>
         </div>
         @endforeach

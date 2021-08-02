@@ -65,10 +65,81 @@ class Home extends Controller
             foreach ($siswa_sd as $sd) {
                 $result_sd[] = [];
             }
-        }  
+        } 
+
         		
 		return view('general.index', compact('list_sekolah','list_kecamatan','j_sd','j_smp', 'result_tk','result_td','result_sd'));
 	}
+
+    public function rekomendasi(){
+        $terbanyak = Pendaftaran::select('id_sekolah', DB::raw('COUNT(id_sekolah) AS total'))->groupBy('id_sekolah')->orderByDesc('total')->get();
+        $banyak_sd = array();
+        $banyak_smp = array();
+        $date = Carbon\Carbon::now();
+        $id_user = session::get('id_user');
+        $siswa = Siswa::where('id_user', $id_user)->first();
+        foreach ($terbanyak as $b) {
+            $prestasi = Prestasi::select('id_sekolah', DB::raw('COUNT(id_sekolah) AS total'))->where('id_sekolah', $b->id_sekolah)->groupBy('id_sekolah')->orderByDesc('total')->get();
+            foreach ($prestasi as $t) {
+
+                /*$sekolah_sd = Sekolah::where('id_sekolah', $b->id_sekolah)->where('tingkat','SD')->get();
+                $sekolah_smp = Sekolah::where('id_sekolah', $b->id_sekolah)->where('tingkat','SMP')->get();*/
+                $sekolah_sd = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')
+                ->join('ppdb','sekolah.id_sekolah','=','ppdb.id_sekolah')
+                ->select('ppdb.*', 'sekolah.*')
+                ->where('sekolah.id_sekolah', $t->id_sekolah)
+                ->where('sekolah.tingkat','SD')
+                ->where('ppdb.tgl_mulai','<=', $date->toDateString())
+                ->where('ppdb.tgl_berakhir', '>=', $date->toDateString())
+                ->get();
+                $sekolah_smp = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')
+                ->join('ppdb','sekolah.id_sekolah','=','ppdb.id_sekolah')
+                ->select('ppdb.*', 'sekolah.*')
+                ->where('sekolah.id_sekolah', $t->id_sekolah)
+                ->where('sekolah.tingkat','SMP')
+                ->where('ppdb.tgl_mulai','<=', $date->toDateString())
+                ->where('ppdb.tgl_berakhir', '>=', $date->toDateString())
+                ->get();
+                foreach ($sekolah_sd as $sd) {
+                    $my_latitude = $siswa['latitude'];
+                    $my_longitude = $siswa['longitude'];
+                    $her_latitude = $sd['latitude'];
+                    $her_longitude = $sd['longitude'];
+
+                    $distances = round((((acos(sin(($my_latitude*pi()/180)) * sin(($her_latitude*pi()/180))+cos(($my_latitude*pi()/180)) * cos(($her_latitude*pi()/180)) * cos((($my_longitude- $her_longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344), 2);
+                    $banyak_sd[] = [ 
+                        'id_sekolah' => $sd['id_sekolah'],
+                        'pendaftar' => $b['total'],
+                        'prestasi' => $t['total'],
+                        'jarak' => $distances,
+                        'nama_sekolah' => $sd['nama_sekolah'],
+                        'foto' => $sd['foto']
+                    ];
+                }
+                foreach ($sekolah_smp as $smp) {
+                    $my_latitude = $siswa['latitude'];
+                    $my_longitude = $siswa['longitude'];
+                    $her_latitude = $smp['latitude'];
+                    $her_longitude = $smp['longitude'];
+
+                    $distances = round((((acos(sin(($my_latitude*pi()/180)) * sin(($her_latitude*pi()/180))+cos(($my_latitude*pi()/180)) * cos(($her_latitude*pi()/180)) * cos((($my_longitude- $her_longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344), 2);
+                    $banyak_smp[] = [ 
+                        'id_sekolah' => $smp['id_sekolah'],
+                        'pendaftar' => $b['total'],
+                        'prestasi' => $t['total'],
+                        'jarak' => $distances,
+                        'nama_sekolah' => $smp['nama_sekolah'],
+                        'foto' => $smp['foto']
+                    ];
+                }
+            }  
+        }
+
+        /*dd($banyak_smp, $banyak_sd);*/
+        $jum_banyak_smp = array_slice($banyak_smp, 0, 2);
+        $jum_banyak_sd = array_slice($banyak_sd, 0, 2);
+        return view('general.rekomendasi', compact('jum_banyak_smp','jum_banyak_sd'));
+    }
 
     public function terbanyak_pendaftar(){
         $terbanyak = Pendaftaran::select('id_sekolah', DB::raw('COUNT(id_sekolah) AS total'))->groupBy('id_sekolah')->orderByDesc('total')->get();
@@ -189,7 +260,7 @@ class Home extends Controller
             $her_longitude = $list['longitude'];
 
             $distance = round((((acos(sin(($my_latitude*pi()/180)) * sin(($her_latitude*pi()/180))+cos(($my_latitude*pi()/180)) * cos(($her_latitude*pi()/180)) * cos((($my_longitude- $her_longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344), 2);
-            if ($distance > 0.20) {
+            if ($distance > 3.0) {
                 $ter[] = [ 
                     'id_sekolah' => null,
                     'nama_sekolah' => null,
@@ -214,7 +285,7 @@ class Home extends Controller
             $her_longitude = $lists['longitude'];
 
             $distances = round((((acos(sin(($my_latitude*pi()/180)) * sin(($her_latitude*pi()/180))+cos(($my_latitude*pi()/180)) * cos(($her_latitude*pi()/180)) * cos((($my_longitude- $her_longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344), 2);
-            if ($distances > 0.20) {
+            if ($distances > 3.0) {
                 $ters[] = [ 
                     'id_sekolah' => null,
                     'nama_sekolah' => null,

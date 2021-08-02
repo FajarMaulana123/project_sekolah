@@ -19,6 +19,7 @@ Route::get('hasil-seleksi','Home@hasil_seleksi');
 Route::get('terbanyak-pendaftar','Home@terbanyak_pendaftar');
 Route::get('prestasi-terbanyak','Home@terbanyak_prestasi');
 Route::get('terdekat','Home@terdekat');
+Route::get('rekomendasi-sekolah','Home@rekomendasi');
 
 Route::get('maps/{jalur}/{id}','Home@maps');
 Route::get('maps-profile/{nama}','Home@maps_profile');
