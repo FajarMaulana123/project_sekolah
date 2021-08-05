@@ -562,6 +562,9 @@ public function upload_hasil(Request $request){
             $data['hasil_seleksi'] = $image_name;
         }
     }
+    $thn = date('Y');
+    $thn_ajar = $thn ." / ". date('Y', strtotime('+1 year'));
+    $data['tahun_ajar'] = $thn_ajar;
     $data->id_sekolah = $lo->id_sekolah;
     $data->save();
     return redirect('/data_pendaftaran')->with(['success' => 'Berhasil Upload Data']);

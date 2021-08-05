@@ -39,7 +39,7 @@
         <?php $id = Session::get('id_user');
         $username = \App\Siswa::where(['id_user' => $id])->first();
 
-        $pendaftaran = \App\Pendaftaran::where('id_siswa', $username->id_siswa)->where('status', 0);
+        $pendaftaran = \App\Pendaftaran::where('id_siswa', $username->id_siswa)->where('baca', 0);
 
 
         ?>

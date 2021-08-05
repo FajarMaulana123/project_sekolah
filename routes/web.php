@@ -21,6 +21,8 @@ Route::get('prestasi-terbanyak','Home@terbanyak_prestasi');
 Route::get('terdekat','Home@terdekat');
 Route::get('rekomendasi-sekolah','Home@rekomendasi');
 
+Route::post('update-baca','Home@update_baca');
+
 Route::get('maps/{jalur}/{id}','Home@maps');
 Route::get('maps-profile/{nama}','Home@maps_profile');
 Route::post('updatetitik/{nama}', 'Home@updatetitik');

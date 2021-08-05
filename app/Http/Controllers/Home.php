@@ -10,6 +10,7 @@ use App\Prestasi;
 use App\Agama;
 use App\Ppdb;
 use App\Pendaftaran;
+use App\Hasilseleksi;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
@@ -739,4 +740,11 @@ class Home extends Controller
 		$list_kecamatan = Kecamatan::orderBy('nama_kec', 'ASC')->get();
 		return view('general.kategori_kecamatan', compact('list_sekolah_sd','list_sekolah_smp','list_kecamatan','sd','smp','kecamatan'));
 	}
+    public function update_baca(Request $request){
+        $id_sekolah = $request['id_sekolah'];
+        $thn_ajar = date('Y') . " / ".date('Y', strtotime('+1 year'));
+        $data['baca'] = 1;
+        Pendaftaran::where('id_sekolah', $id_sekolah)->where('tahun_ajaran', $thn_ajar)->update($data);
+        return redirect('hasil-seleksi');
+    }
 }
