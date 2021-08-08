@@ -8,12 +8,39 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
 <style type="text/css">
   .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
   }
+  body { margin: 0; padding: 0; }
+  #map { position: absolute; top: 0; bottom: 0; width: 95%; margin-top: 75px;}
+    #menu {
+      top: 10px; 
+      left: 10px;
+      position: absolute;
+      background: #efefef;
+      padding: 10px;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .mapboxgl-popup {
+      max-width: 400px;
+      font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+    .geocoder {
+      position: absolute;
+      z-index: 1;
+      width: 50%;
+      left: 70%;
+      margin-left: -25%;
+      top: 10px;
+    }
+    .mapboxgl-ctrl-geocoder {
+      min-width: 100%;
+    }
 </style>
 <section id="contact" class="contact" style="margin-top: 60px;">
   <div class="container">
@@ -28,14 +55,14 @@
     </div>
     @endif
     <?php if ($siswa->tingkat == "SD") { ?>
-      <?php if ( $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->ijazah == NULL || $siswa->skhun == NULL || $siswa->kk == NULL || $siswa->id_agama == NULL) { ?>
+      <?php if ( $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->ijazah == NULL || $siswa->skhun == NULL || $siswa->kk == NULL || $siswa->id_agama == NULL || $siswa->longitude == NULL || $siswa->latitude == NULL) { ?>
         <div class="alert alert-danger alert-block" data-aos="fade-up" data-aos-delay="300">
           <button type="button" class="close" data-dismiss="alert">×</button> 
           <strong>Segera Lengkapi data diri kamu!</strong>
         </div>
       <?php } ?>
     <?php }else{ ?>
-      <?php if ( $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->kk == NULL || $siswa->id_agama == NULL) { ?>
+      <?php if ( $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->kk == NULL || $siswa->id_agama == NULL || $siswa->longitude == NULL || $siswa->latitude == NULL) { ?>
         <div class="alert alert-danger alert-block" data-aos="fade-up" data-aos-delay="300">
           <button type="button" class="close" data-dismiss="alert">×</button> 
           <strong>Segera Lengkapi data diri kamu!</strong>
@@ -175,9 +202,59 @@
                 </div>
 
               </div>
-              <?php if ($siswa->tingkat == "SD") { ?>
-                <div class="row" style="margin-top:20px;">
-                  <div class="col-md-6">
+              <div class="row">
+                <div col-md-12>
+                  <?php if ($siswa->alamat == null) { ?>
+                    <label style="color: red">Alamat*</label>
+                  <?php }else{ ?>
+                    <label >Alamat</label>
+                  <?php } ?>
+                  <div class="form-group">
+                    <textarea class="form-control" name="alamat" rows="9" placeholder="Masukan Alamat..." >{{$siswa->alamat}}</textarea>
+                  </div>
+                </div>
+              </div>
+              
+
+            </div>
+            <div class="col-md-6">
+              
+              <?php if ($siswa->longitude == null && $siswa->latitude == null) { ?>
+                <label style="color: red">Titik Lokasi*</label>
+              <?php }else{ ?>
+                <label >Titik Lokasi</label>
+              <?php } ?>
+              <input type="text" class="form-control" value="{{$siswa->longitude}},{{$siswa->latitude}} " disabled="">
+              <a href="{{url('maps-profile/'.$siswa->nama)}}"><div id="map"></div></a>
+              <input type="hidden" name='latitude' id='lat' value="{{$siswa->latitude}}">
+              <input type="hidden" name='longitude' id='lng' value="{{$siswa->longitude}}">
+            </div>
+
+              <div class="row" style="margin-top:20px;">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <?php if ($siswa->akte == null) { ?>
+                      <label style="color: red">Scan Akte*</label>
+                    <?php }else{ ?>
+                      <label >Scan Akte</label><br>
+                      <a href="{{asset('imageUpload/dokumen/'.$siswa->akte)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Akte</a>
+                    <?php } ?>
+                    <input type="file" name="akte" class="form-control" value="{{$siswa->akte}}" accept="application/pdf, application/msword,.doc,.docx">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <?php if ($siswa->kk == null) { ?>
+                      <label style="color: red">Scan Kartu Keluarga*</label>
+                    <?php }else{ ?>
+                      <label >Scan Kartu Keluarga</label><br>
+                      <a href="{{asset('imageUpload/dokumen/'.$siswa->kk)}}" target="_blank"><i class="fa fa-eye"></i> Lihat KK</a>
+                    <?php } ?>
+                    <input type="file" name="kk" class="form-control" value="{{$siswa->kk}}" accept="application/pdf, application/msword,.doc,.docx">
+                  </div>
+                </div>
+                <?php if ($siswa->tingkat == "SD") { ?>
+                  <div class="col-md-3">
                     <div class="form-group">
                       <?php if ($siswa->ijazah == null) { ?>
                         <label style="color: red">Scan Ijazah*</label>
@@ -189,7 +266,7 @@
                       <input type="file" name="ijazah" class="form-control mt-2" value="{{$siswa->ijazah}}" accept="application/pdf, application/msword,.doc,.docx">
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <div class="form-group">
                       <?php if ($siswa->skhun == null) { ?>
                         <label style="color: red">Scan SKHUN*</label>
@@ -200,50 +277,8 @@
                       <input type="file" name="skhun" class="form-control mt-2" value="{{$siswa->skhun}}" accept="application/pdf, application/msword,.doc,.docx">
                     </div>
                   </div>
-                </div>
-              <?php } ?>
-              <div class="row" style="margin-top:20px;">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <?php if ($siswa->akte == null) { ?>
-                      <label style="color: red">Scan Akte*</label>
-                    <?php }else{ ?>
-                      <label >Scan Akte</label><br>
-                      <a href="{{asset('imageUpload/dokumen/'.$siswa->akte)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Akte</a>
-                    <?php } ?>
-                    <input type="file" name="akte" class="form-control" value="{{$siswa->akte}}" accept="application/pdf, application/msword,.doc,.docx">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <?php if ($siswa->kk == null) { ?>
-                      <label style="color: red">Scan Kartu Keluarga*</label>
-                    <?php }else{ ?>
-                      <label >Scan Kartu Keluarga</label><br>
-                      <a href="{{asset('imageUpload/dokumen/'.$siswa->kk)}}" target="_blank"><i class="fa fa-eye"></i> Lihat KK</a>
-                    <?php } ?>
-                    <input type="file" name="kk" class="form-control" value="{{$siswa->kk}}" accept="application/pdf, application/msword,.doc,.docx">
-                  </div>
-                </div>
+                <?php } ?>
               </div>
-
-            </div>
-            <div class="col-md-6">
-              <?php if ($siswa->alamat == null) { ?>
-                <label style="color: red">Alamat*</label>
-              <?php }else{ ?>
-                <label >Alamat</label>
-              <?php } ?>
-              <div class="form-group">
-                <textarea class="form-control" name="alamat" rows="9" placeholder="Masukan Alamat..." >{{$siswa->alamat}}</textarea>
-              </div>
-              <?php if ($siswa->longitude == null && $siswa->latitude == null) { ?>
-                <label style="color: red">Titik Lokasi*</label>
-              <?php }else{ ?>
-                <label >Titik Lokasi</label>
-              <?php } ?>
-              <a href="{{url('maps-profile/'.$siswa->nama)}}"><input type="text" name="latlang" class="form-control" id="latlang" placeholder="Titik lokasi" value="{{$siswa->latitude}},{{$siswa->longitude}}" disabled ></a>
-            </div>
             <div class="row" style="margin-top:20px;">
               <div class="col-md-4">
                 <div class="form-group">
@@ -292,5 +327,52 @@
     </form>
   </div>
 </section>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=false"
+type="text/javascript"></script>
+<script>
+   function myFunction() {
+      var latlang = document.getElementById('latlang').value;
+      if (latlang == null || latlang == "") {
+         alert("Pilih Lokasi terlebih dahulu !!!");
+      }
+   }
+</script>
+<script>
+  var a = document.getElementById('lng').value;
+    var b = document.getElementById('lat').value;
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaHl1d2FubmlkYSIsImEiOiJja3Jpb2Q4Y280dXY0MnZwZHVyMmlxOGVlIn0.iVbM3KengzDSkyQwpwawMQ';
+    if (a == 0 | b == 0) {
+      lng = 108.324936;
+      lat = -6.327583;
+    }else{
+      lng = a;
+      lat = b;
+    }
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [lng, lat],
+        zoom: 16
+      });
+    var marker = new mapboxgl.Marker()
+      .setLngLat([lng, lat])
+    .addTo(map);
+    
+
+    
+    var geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl
+    });
+
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+  </script>
 @endsection
 @include('partials.js')

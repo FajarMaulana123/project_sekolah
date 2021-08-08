@@ -99,13 +99,13 @@
           ?>
           <?php if ($pendaftaran == NULL) { ?>
             <?php if ($siswa->tingkat == "SD") { ?>
-                <?php if ($siswa->id_agama == NULL || $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->ijazah == NULL || $siswa->skhun == NULL || $siswa->kk == NULL ) { ?>
+                <?php if ($siswa->id_agama == NULL || $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->ijazah == NULL || $siswa->skhun == NULL || $siswa->kk == NULL || $siswa->longitude == NULL || $siswa->latitude == NULL) { ?>
                   <a href="{{url('profile/'.$nama)}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
                 <?php }else{ ?>
                   <a href="{{url('jalur-pendaftaran/'.Crypt::encrypt($sekolah->id_sekolah))}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
                 <?php } ?>
             <?php }else{ ?>
-                <?php if ($siswa->id_agama == NULL || $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->kk == NULL ) { ?>
+                <?php if ($siswa->id_agama == NULL || $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->kk == NULL || $siswa->longitude == NULL || $siswa->latitude == NULL) { ?>
                   <a href="{{url('profile/'.$nama)}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>
                 <?php }else{ ?>
                   <a href="{{url('jalur-pendaftaran/'.Crypt::encrypt($sekolah->id_sekolah))}}" class="back-to-daftar d-flex align-items-center justify-content-center">Daftar Sekarang</a>

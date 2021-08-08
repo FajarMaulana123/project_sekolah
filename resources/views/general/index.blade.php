@@ -169,7 +169,11 @@
             @if(!Session::get('loginsiswa'))
               <h4 class="title"><a href="{{url('login')}}">Sekolah Terdekat</a></h4>
             @else
-              <h4 class="title"><a href="{{url('terdekat')}}">Sekolah Terdekat</a></h4>
+              @if($siswa->longitude == null | $siswa->latitude == null )
+                <h4 class="title"><a href="{{url('profile/'.$siswa->nama)}}">Sekolah Terdekat</a></h4>
+              @else
+                <h4 class="title"><a href="{{url('terdekat')}}">Sekolah Terdekat</a></h4>
+              @endif
             @endif
             <p class="description">Mungkin kamu sedang mencari sekolah terdekat, coba cek sekolah incaranmu disini!</p>
           </div>

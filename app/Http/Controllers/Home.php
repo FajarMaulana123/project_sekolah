@@ -68,8 +68,10 @@ class Home extends Controller
             }
         } 
 
-        		
-		return view('general.index', compact('list_sekolah','list_kecamatan','j_sd','j_smp', 'result_tk','result_td','result_sd'));
+        $id = Session::get('id_user');
+        $siswa = Siswa::where('id_user', $id)->first();
+	
+		return view('general.index', compact('list_sekolah','list_kecamatan','j_sd','j_smp', 'result_tk','result_td','result_sd','siswa'));
 	}
 
     public function rekomendasi(){
@@ -369,6 +371,8 @@ class Home extends Controller
             return view('auth.form_sertifikat', compact('id_sekolah', 'jalur','siswa'));
         }else if($jalur == "afirmasi"){
             return view('auth.form_afirmasi', compact('id_sekolah', 'jalur','siswa'));
+        }else if($jalur == "zonasi"){
+            return view('general.maps', compact('id_sekolah', 'jalur','siswa'));
         }else{
             return view('auth.form_perpindahan', compact('id_sekolah', 'jalur','siswa'));
         }
@@ -382,6 +386,8 @@ class Home extends Controller
             return view('auth.update_prestasi', compact('id_sekolah', 'jalur','siswa'));
         }else if($jalur == "afirmasi"){
             return view('auth.update_afirmasi', compact('id_sekolah', 'jalur','siswa'));
+        }else if($jalur == "zonasi"){
+            return view('auth.update_zonasi', compact('id_sekolah', 'jalur','siswa'));
         }else{
             return view('auth.update_perpindahan', compact('id_sekolah', 'jalur','siswa'));
         }

@@ -74,7 +74,8 @@ public function create(){
 
 public function maps_sekolah($nama, $id){
     $id_sekolah = Crypt::decrypt($id);
-    return view('general.maps_sekolah', compact('id_sekolah','nama'));
+    $sekolah = Sekolah::where('id_sekolah', $id_sekolah)->first();
+    return view('general.maps_sekolah', compact('id_sekolah','nama','sekolah'));
 }
 
 public function update_lokasi($nama, $id, Request $request){
