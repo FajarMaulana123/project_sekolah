@@ -30,6 +30,9 @@
       <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email" value="{{ old('email') }}" required>
       <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password" required>
       <input type="password" id="cpassword" class="fadeIn third" name="cpassword" placeholder="Konfirmasi Password" required>
+      <div style="padding: 10px; background-color: #fefefe; border-style: solid;border-radius:5px; border-width: 1px; margin-right: 40px; margin-left: 40px; border-color: #c4c4c4; margin-top: 20px;"><p style="font-size: 12px;">Question dan Answer akan digunakan sebagai verifikasi ketika kamu Lupa Password*</p></div>
+      <input type="text" id="question" class="fadeIn second" name="question" placeholder="Question" value="{{ old('question') }}" required>
+      <input type="text" id="answer" class="fadeIn second" name="answer" placeholder="Answer" value="{{ old('answer') }}" required>
       <input type="submit" class="fadeIn fourth" value="Daftar">
     </form>
     <div id="formFooter">

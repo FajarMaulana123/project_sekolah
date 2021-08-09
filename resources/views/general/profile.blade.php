@@ -314,6 +314,17 @@
                 </div>
               </div>
             </div>
+            <p style="font-size: 12px;margin-top: 20px;">Question dan Answer akan digunakan sebagai verifikasi ketika kamu Lupa Password*</p>
+            <div class="row">
+              <div class="col-md-6">
+                <label >Question</label><br>
+                <input type="text" name="sertifikat3" class="form-control" value="{{$user->question}}" disabled>
+              </div>
+              <div class="col-md-6">
+                <label >Answer</label><br>
+                <input type="text" name="sertifikat3" class="form-control" value="{{$user->answer}}" disabled>
+              </div>
+            </div>
           </div>
           
           

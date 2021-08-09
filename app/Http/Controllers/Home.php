@@ -395,9 +395,10 @@ class Home extends Controller
 
 	public function profile($nama){
 		$id_user = session::get('id_user');
+        $user = Users::where('id_user', $id_user)->first();
 		$siswa = Siswa::where('id_user', $id_user)->first();
         $agama = Agama::all();
-		return view('general.profile', compact('siswa','agama'));
+		return view('general.profile', compact('siswa','agama','user'));
 	}
 
     public function data_diri($jalur, $id){
@@ -658,13 +659,19 @@ class Home extends Controller
 		$nama = $request->nama;
 		$email = $request->email;
 
-		if ($cpassword != $password) {
+        $user = Users::where('email', $email)->get();
+        /*dd($siswa->count());*/
+        if ($user->count() > 0) {
+            return redirect('/daftar/siswa')->withInput()->with(['warning' => 'Email sudah dipakai, silahkan gunakan email lain yang aktif!']);
+        }else if ($cpassword != $password) {
 			return redirect('/daftar/siswa')->withInput()->with(['warning' => 'Konfirmasi password tidak sama!']);
 		}else{
 
 			$users = new Users;
 			$users->email =$request->email;
 			$users->password = password_hash($request->password, PASSWORD_DEFAULT);
+            $users->question = strtolower($request->question);
+            $users->answer = strtolower($request->answer);
 			$users->role = 'siswa';
 			$users->status = 'aktif';
 			$users->save();
@@ -688,13 +695,19 @@ class Home extends Controller
         $nama = $request->nama;
         $email = $request->email;
 
-        if ($cpassword != $password) {
+        $user = Users::where('email', $email)->get();
+        /*dd($siswa->count());*/
+        if ($user->count() > 0) {
+            return redirect('/daftar/sekolah')->withInput()->with(['warning' => 'Email sudah dipakai, silahkan gunakan email lain yang aktif!']);
+        }else if ($cpassword != $password) {
             return redirect('/daftar/sekolah')->withInput()->with(['warning' => 'Konfirmasi password tidak sama!']);
         }else{
 
             $users = new Users;
             $users->email =$request->email;
             $users->password = password_hash($request->password, PASSWORD_DEFAULT);
+            $users->question = strtolower($request->question);
+            $users->answer = strtolower($request->answer);
             $users->role = 'admin';
             $users->status = 'nonaktif';
             $users->save();
