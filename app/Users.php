@@ -9,7 +9,7 @@ class Users extends Model
     protected $table ="users";
 
     protected $fillable = [
-     'email','password','role','status'
+     'email','password','question','answer','role','status'
  ];
  protected $primaryKey = 'id_user';
 }

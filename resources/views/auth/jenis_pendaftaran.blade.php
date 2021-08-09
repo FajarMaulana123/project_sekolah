@@ -11,7 +11,9 @@
     <h5 style="font-family: 'Open Sans', sans-serif; text-align: left; margin-left: 50px; margin-top: 20px;"><b>Pilih Jalur Pendaftaran</b></h5>
     <?php
       $zonasi = "zonasi"; ?>
-      <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" href="{{url('maps/'.$zonasi.'/'.Crypt::encrypt($id_sekolah))}}" style="color: black;">
+      
+        <a class="btn btn-primary fadeIn fourth hyuwan-hyu-re" href="{{url('jalur-pendaftaran/'.$zonasi.'/update/'.Crypt::encrypt($id_sekolah))}}" style="color: black;">
+      
       <div>
         <table>
           <tr>

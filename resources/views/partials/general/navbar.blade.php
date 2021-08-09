@@ -39,7 +39,7 @@
         <?php $id = Session::get('id_user');
         $username = \App\Siswa::where(['id_user' => $id])->first();
 
-        $pendaftaran = \App\Pendaftaran::where('id_siswa', $username->id_siswa)->where('status', 0);
+        $pendaftaran = \App\Pendaftaran::where('id_siswa', $username->id_siswa)->where('baca', 0);
 
 
         ?>
@@ -59,7 +59,7 @@
 
         <li style="margin-right: -20px;"><a><img src="{{asset('general/img/siswa.png')}}" width="40" style="display: inline;"></a></li>
           <?php if ($username->tingkat == "SD") { ?>
-            <?php if ($username->id_agama == NULL ||$username->tingkat == NULL || $username->jk == NULL || $username->tempat == NULL || $username->tgl_lahir == NULL || $username->asal_sekolah == NULL || $username->alamat == NULL || $username->nohp == NULL || $username->foto == NULL || $username->akte == NULL || $username->ijazah == NULL || $username->skhun == NULL || $username->kk == NULL ) { ?>
+            <?php if ($username->id_agama == NULL ||$username->tingkat == NULL || $username->jk == NULL || $username->tempat == NULL || $username->tgl_lahir == NULL || $username->asal_sekolah == NULL || $username->alamat == NULL || $username->nohp == NULL || $username->foto == NULL || $username->akte == NULL || $username->ijazah == NULL || $username->skhun == NULL || $username->kk == NULL || $username->longitude == NULL || $username->latitude == NULL ) { ?>
               <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i> <p style="color: red; font-size: 20px;">*</p></a>
                 <ul>
                   <li><a href="{{url('profile/'.$nama)}}"><p style="display: inline;">Lihat Profil</p><p style="color: red;">*</p></a></li>
@@ -73,7 +73,7 @@
                 </ul>
               <?php }?>
           <?php }else{ ?> 
-            <?php if ($username->id_agama == NULL ||$username->tingkat == NULL || $username->jk == NULL || $username->tempat == NULL || $username->tgl_lahir == NULL || $username->asal_sekolah == NULL || $username->alamat == NULL || $username->nohp == NULL || $username->foto == NULL || $username->akte == NULL ||  $username->kk == NULL ) { ?>
+            <?php if ($username->id_agama == NULL ||$username->tingkat == NULL || $username->jk == NULL || $username->tempat == NULL || $username->tgl_lahir == NULL || $username->asal_sekolah == NULL || $username->alamat == NULL || $username->nohp == NULL || $username->foto == NULL || $username->akte == NULL ||  $username->kk == NULL || $username->longitude == NULL || $username->latitude == NULL) { ?>
               <li class="dropdown"><a href="#"><span>{{$username->nama}}</span> <i class="bi bi-chevron-down"></i> <p style="color: red; font-size: 20px;">*</p></a>
                 <ul>
                   <li><a href="{{url('profile/'.$nama)}}"><p style="display: inline;">Lihat Profil</p><p style="color: red;">*</p></a></li>

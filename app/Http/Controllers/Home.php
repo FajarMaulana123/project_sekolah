@@ -10,6 +10,7 @@ use App\Prestasi;
 use App\Agama;
 use App\Ppdb;
 use App\Pendaftaran;
+use App\Hasilseleksi;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
@@ -65,10 +66,83 @@ class Home extends Controller
             foreach ($siswa_sd as $sd) {
                 $result_sd[] = [];
             }
-        }  
-        		
-		return view('general.index', compact('list_sekolah','list_kecamatan','j_sd','j_smp', 'result_tk','result_td','result_sd'));
+        } 
+
+        $id = Session::get('id_user');
+        $siswa = Siswa::where('id_user', $id)->first();
+	
+		return view('general.index', compact('list_sekolah','list_kecamatan','j_sd','j_smp', 'result_tk','result_td','result_sd','siswa'));
 	}
+
+    public function rekomendasi(){
+        $terbanyak = Pendaftaran::select('id_sekolah', DB::raw('COUNT(id_sekolah) AS total'))->groupBy('id_sekolah')->orderByDesc('total')->get();
+        $banyak_sd = array();
+        $banyak_smp = array();
+        $date = Carbon\Carbon::now();
+        $id_user = session::get('id_user');
+        $siswa = Siswa::where('id_user', $id_user)->first();
+        foreach ($terbanyak as $b) {
+            $prestasi = Prestasi::select('id_sekolah', DB::raw('COUNT(id_sekolah) AS total'))->where('id_sekolah', $b->id_sekolah)->groupBy('id_sekolah')->orderByDesc('total')->get();
+            foreach ($prestasi as $t) {
+
+                /*$sekolah_sd = Sekolah::where('id_sekolah', $b->id_sekolah)->where('tingkat','SD')->get();
+                $sekolah_smp = Sekolah::where('id_sekolah', $b->id_sekolah)->where('tingkat','SMP')->get();*/
+                $sekolah_sd = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')
+                ->join('ppdb','sekolah.id_sekolah','=','ppdb.id_sekolah')
+                ->select('ppdb.*', 'sekolah.*')
+                ->where('sekolah.id_sekolah', $t->id_sekolah)
+                ->where('sekolah.tingkat','SD')
+                ->where('ppdb.tgl_mulai','<=', $date->toDateString())
+                ->where('ppdb.tgl_berakhir', '>=', $date->toDateString())
+                ->get();
+                $sekolah_smp = Sekolah::join('users', 'sekolah.id_user', '=', 'users.id_user')
+                ->join('ppdb','sekolah.id_sekolah','=','ppdb.id_sekolah')
+                ->select('ppdb.*', 'sekolah.*')
+                ->where('sekolah.id_sekolah', $t->id_sekolah)
+                ->where('sekolah.tingkat','SMP')
+                ->where('ppdb.tgl_mulai','<=', $date->toDateString())
+                ->where('ppdb.tgl_berakhir', '>=', $date->toDateString())
+                ->get();
+                foreach ($sekolah_sd as $sd) {
+                    $my_latitude = $siswa['latitude'];
+                    $my_longitude = $siswa['longitude'];
+                    $her_latitude = $sd['latitude'];
+                    $her_longitude = $sd['longitude'];
+
+                    $distances = round((((acos(sin(($my_latitude*pi()/180)) * sin(($her_latitude*pi()/180))+cos(($my_latitude*pi()/180)) * cos(($her_latitude*pi()/180)) * cos((($my_longitude- $her_longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344), 2);
+                    $banyak_sd[] = [ 
+                        'id_sekolah' => $sd['id_sekolah'],
+                        'pendaftar' => $b['total'],
+                        'prestasi' => $t['total'],
+                        'jarak' => $distances,
+                        'nama_sekolah' => $sd['nama_sekolah'],
+                        'foto' => $sd['foto']
+                    ];
+                }
+                foreach ($sekolah_smp as $smp) {
+                    $my_latitude = $siswa['latitude'];
+                    $my_longitude = $siswa['longitude'];
+                    $her_latitude = $smp['latitude'];
+                    $her_longitude = $smp['longitude'];
+
+                    $distances = round((((acos(sin(($my_latitude*pi()/180)) * sin(($her_latitude*pi()/180))+cos(($my_latitude*pi()/180)) * cos(($her_latitude*pi()/180)) * cos((($my_longitude- $her_longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344), 2);
+                    $banyak_smp[] = [ 
+                        'id_sekolah' => $smp['id_sekolah'],
+                        'pendaftar' => $b['total'],
+                        'prestasi' => $t['total'],
+                        'jarak' => $distances,
+                        'nama_sekolah' => $smp['nama_sekolah'],
+                        'foto' => $smp['foto']
+                    ];
+                }
+            }  
+        }
+
+        /*dd($banyak_smp, $banyak_sd);*/
+        $jum_banyak_smp = array_slice($banyak_smp, 0, 2);
+        $jum_banyak_sd = array_slice($banyak_sd, 0, 2);
+        return view('general.rekomendasi', compact('jum_banyak_smp','jum_banyak_sd'));
+    }
 
     public function terbanyak_pendaftar(){
         $terbanyak = Pendaftaran::select('id_sekolah', DB::raw('COUNT(id_sekolah) AS total'))->groupBy('id_sekolah')->orderByDesc('total')->get();
@@ -189,7 +263,7 @@ class Home extends Controller
             $her_longitude = $list['longitude'];
 
             $distance = round((((acos(sin(($my_latitude*pi()/180)) * sin(($her_latitude*pi()/180))+cos(($my_latitude*pi()/180)) * cos(($her_latitude*pi()/180)) * cos((($my_longitude- $her_longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344), 2);
-            if ($distance > 0.20) {
+            if ($distance > 3.0) {
                 $ter[] = [ 
                     'id_sekolah' => null,
                     'nama_sekolah' => null,
@@ -214,7 +288,7 @@ class Home extends Controller
             $her_longitude = $lists['longitude'];
 
             $distances = round((((acos(sin(($my_latitude*pi()/180)) * sin(($her_latitude*pi()/180))+cos(($my_latitude*pi()/180)) * cos(($her_latitude*pi()/180)) * cos((($my_longitude- $her_longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344), 2);
-            if ($distances > 0.20) {
+            if ($distances > 3.0) {
                 $ters[] = [ 
                     'id_sekolah' => null,
                     'nama_sekolah' => null,
@@ -297,6 +371,8 @@ class Home extends Controller
             return view('auth.form_sertifikat', compact('id_sekolah', 'jalur','siswa'));
         }else if($jalur == "afirmasi"){
             return view('auth.form_afirmasi', compact('id_sekolah', 'jalur','siswa'));
+        }else if($jalur == "zonasi"){
+            return view('general.maps', compact('id_sekolah', 'jalur','siswa'));
         }else{
             return view('auth.form_perpindahan', compact('id_sekolah', 'jalur','siswa'));
         }
@@ -310,6 +386,8 @@ class Home extends Controller
             return view('auth.update_prestasi', compact('id_sekolah', 'jalur','siswa'));
         }else if($jalur == "afirmasi"){
             return view('auth.update_afirmasi', compact('id_sekolah', 'jalur','siswa'));
+        }else if($jalur == "zonasi"){
+            return view('auth.update_zonasi', compact('id_sekolah', 'jalur','siswa'));
         }else{
             return view('auth.update_perpindahan', compact('id_sekolah', 'jalur','siswa'));
         }
@@ -317,9 +395,10 @@ class Home extends Controller
 
 	public function profile($nama){
 		$id_user = session::get('id_user');
+        $user = Users::where('id_user', $id_user)->first();
 		$siswa = Siswa::where('id_user', $id_user)->first();
         $agama = Agama::all();
-		return view('general.profile', compact('siswa','agama'));
+		return view('general.profile', compact('siswa','agama','user'));
 	}
 
     public function data_diri($jalur, $id){
@@ -580,13 +659,19 @@ class Home extends Controller
 		$nama = $request->nama;
 		$email = $request->email;
 
-		if ($cpassword != $password) {
+        $user = Users::where('email', $email)->get();
+        /*dd($siswa->count());*/
+        if ($user->count() > 0) {
+            return redirect('/daftar/siswa')->withInput()->with(['warning' => 'Email sudah dipakai, silahkan gunakan email lain yang aktif!']);
+        }else if ($cpassword != $password) {
 			return redirect('/daftar/siswa')->withInput()->with(['warning' => 'Konfirmasi password tidak sama!']);
 		}else{
 
 			$users = new Users;
 			$users->email =$request->email;
 			$users->password = password_hash($request->password, PASSWORD_DEFAULT);
+            $users->question = strtolower($request->question);
+            $users->answer = strtolower($request->answer);
 			$users->role = 'siswa';
 			$users->status = 'aktif';
 			$users->save();
@@ -610,13 +695,19 @@ class Home extends Controller
         $nama = $request->nama;
         $email = $request->email;
 
-        if ($cpassword != $password) {
+        $user = Users::where('email', $email)->get();
+        /*dd($siswa->count());*/
+        if ($user->count() > 0) {
+            return redirect('/daftar/sekolah')->withInput()->with(['warning' => 'Email sudah dipakai, silahkan gunakan email lain yang aktif!']);
+        }else if ($cpassword != $password) {
             return redirect('/daftar/sekolah')->withInput()->with(['warning' => 'Konfirmasi password tidak sama!']);
         }else{
 
             $users = new Users;
             $users->email =$request->email;
             $users->password = password_hash($request->password, PASSWORD_DEFAULT);
+            $users->question = strtolower($request->question);
+            $users->answer = strtolower($request->answer);
             $users->role = 'admin';
             $users->status = 'nonaktif';
             $users->save();
@@ -668,4 +759,11 @@ class Home extends Controller
 		$list_kecamatan = Kecamatan::orderBy('nama_kec', 'ASC')->get();
 		return view('general.kategori_kecamatan', compact('list_sekolah_sd','list_sekolah_smp','list_kecamatan','sd','smp','kecamatan'));
 	}
+    public function update_baca(Request $request){
+        $id_sekolah = $request['id_sekolah'];
+        $thn_ajar = date('Y') . " / ".date('Y', strtotime('+1 year'));
+        $data['baca'] = 1;
+        Pendaftaran::where('id_sekolah', $id_sekolah)->where('tahun_ajaran', $thn_ajar)->update($data);
+        return redirect('hasil-seleksi');
+    }
 }

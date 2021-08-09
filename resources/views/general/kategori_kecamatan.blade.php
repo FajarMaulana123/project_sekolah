@@ -138,7 +138,7 @@
       <div class="col-lg-3 col-md-3 mt-3 mt-md-2">
         <div class="icon-box">
           <i class="ri-bar-chart-box-line" style="color: #5578ff;"></i>
-          <h3><a href="{{url('kecamatan/'.strtolower($kecamatan->nama_kec).'/'.Crypt::encrypt($kecamatan->id_kec))}}">{{$kecamatan->nama_kec}} ({{$jum_sekolah->count()}})</a></h3>
+          <h3><a href="{{url('kecamatan/'.strtolower($kecamatan->nama_kec).'/'.Crypt::encrypt($kecamatan->id_kec))}}">{{$kecamatan->nama_kec}}</a></h3>
         </div>
       </div>
       @endforeach

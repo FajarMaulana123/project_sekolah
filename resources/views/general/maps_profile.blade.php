@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Place the geocoder input outside the map</title>
+	<title>Pilih lokasi</title>
 	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 	<link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
@@ -61,10 +61,12 @@
 				@csrf
 				<table>
 			  		<tr><td>Latlang</td> 
-			   		<td> <input type="text" name='latlang' id='latlang' disabled></td></tr>
+			   		<td> <input type="text" name='latlang' id='latlang' disabled value="{{$siswa->latitude}} {{$siswa->longitude}}"></td></tr>
 			  	</table>
-			  	<input type="hidden" name='latitude' id='latitude'>
-			  	<input type="hidden" name='longitude' id='longitude'>
+			  	<input type="hidden" name='latitude' id='latitude' >
+			  	<input type="hidden" name='longitude' id='longitude' >
+			  	<input type="hidden" name='lat' id='lat' value="{{$siswa->latitude}}">
+			  	<input type="hidden" name='lng' id='lng' value="{{$siswa->longitude}}">
 			  	<input type="hidden" name="id_siswa" value="{{$siswa->id_siswa}}">
 			  	<input type="submit" class="btn btn-primary" value="Simpan" style="margin-left: 175px;" onclick="myFunction()">
 		  	</form>
@@ -91,13 +93,24 @@ type="text/javascript"></script>
    }
 </script>
 <script>
+	var a = document.getElementById('lng').value;
+  	var b = document.getElementById('lat').value;
   	mapboxgl.accessToken = 'pk.eyJ1IjoiaHl1d2FubmlkYSIsImEiOiJja3Jpb2Q4Y280dXY0MnZwZHVyMmlxOGVlIn0.iVbM3KengzDSkyQwpwawMQ';
+  	if (a == 0 | b == 0) {
+  		lng = 108.324936;
+  		lat = -6.327583;
+  	}else{
+  		lng = a;
+  		lat = b;
+  	}
   	var map = new mapboxgl.Map({
-  		container: 'map',
-  		style: 'mapbox://styles/mapbox/streets-v11',
-  		center: [108.324936, -6.327583],
-  		zoom: 13
-  	});
+	  		container: 'map',
+	  		style: 'mapbox://styles/mapbox/streets-v11',
+	  		center: [lng, lat],
+	  		zoom: 16
+  		});
+ 
+  	
 
   	var layerList = document.getElementById('menu');
   	var inputs = layerList.getElementsByTagName('input');
@@ -114,7 +127,12 @@ type="text/javascript"></script>
   		accessToken: mapboxgl.accessToken,
   		mapboxgl: mapboxgl
   	});
-  	var marker = new mapboxgl.Marker();
+
+  	var marker = new mapboxgl.Marker()
+	  	.setLngLat([lng, lat])
+		.addTo(map);
+  	
+  	
 
   	function add_marker (event) {
   		var coordinates = event.lngLat;
