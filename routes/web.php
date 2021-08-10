@@ -88,6 +88,7 @@ Route::get('detail_sekolah/{sekolah}','SekolahController@detail');
 
 Route::get('profile-sekolah/{sekolah}','SekolahController@profile_sekolah');
 Route::post('editprofile', 'SekolahController@update_profile');
+Route::post('gantipass', 'SekolahController@gantipass');
 
 //prestasi
 Route::get('prestasi','SekolahController@prestasi');

@@ -24,58 +24,93 @@
   <section class="content">
     <div class="container-fluid">
       <div class="row">
+        @if(Session::has('loginsuper'))
         <div class="col-lg-3 col-6">
-          <div class="small-box bg-info">
+          <div class="small-box bg-success">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{$tot_sekolah}}</h3>
 
-              <p>New Orders</p>
+              <p>Total Sekolah</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>{{$tot_kecamatan}}</h3>
 
-              <p>Bounce Rate</p>
+              <p>Total Kecamatan</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        @else
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3>{{$tot_pres}}</h3>
+
+              <p>Total Prestasi</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
           </div>
         </div>
         <div class="col-lg-3 col-6">
-          <div class="small-box bg-warning">
+          <div class="small-box bg-success">
             <div class="inner">
-              <h3>44</h3>
+              <h3>{{$tot_zonasi}}</h3>
 
-              <p>User Registrations</p>
+              <p>Total Pendaftaran Zonasi</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <div class="col-lg-3 col-6">
-          <div class="small-box bg-danger">
+          <div class="small-box bg-success">
             <div class="inner">
-              <h3>65</h3>
+              <h3>{{$tot_afirmasi}}</h3>
 
-              <p>Unique Visitors</p>
+              <p>Total Pendaftaran Afirmasi</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3>{{$tot_prestasi}}</h3>
+
+              <p>Total Pendaftaran Prestasi</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3>{{$tot_perpindahan}}</h3>
+
+              <p>Total Pendaftaran Perpindahan</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+          </div>
+        </div>
+        @endif
       </div>
       <!-- <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
       <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>

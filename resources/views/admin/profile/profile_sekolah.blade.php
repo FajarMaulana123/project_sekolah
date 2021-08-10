@@ -194,6 +194,18 @@
                     </div>
                   </div>
                 </div>
+                <p style="font-size: 12px;margin-top: 20px;">Question dan Answer akan digunakan sebagai verifikasi ketika kamu Lupa Password*</p>
+                <?php $user = \App\Users::where('id_user', $data->id_user)->first(); ?>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="quest">Question</label>
+                    <input type="text" class="form-control" name="question" value="{{$user->question}}">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="answer">Answer</label>
+                    <input type="text" class="form-control" name="answer" value="{{$user->answer}}">
+                  </div>
+                </div>
               </div>
               <!-- /.card-body -->
 

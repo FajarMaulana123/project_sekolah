@@ -12,6 +12,7 @@ use App\Ppdb;
 use App\Agama;
 use App\Pendaftaran;
 use App\Hasilseleksi;
+use App\User;
 use Crypt;
 use PDF;
 use Illuminate\Support\Facades\File;
@@ -471,6 +472,7 @@ public function update_profile(Request $request){
     $data->alamat =$request->alamat;
     $data->visimisi =$request->visimisi;
     $data->deskripsi =$request->deskripsi;
+    
     if($request->hasFile('bukti')){
             // File::delete('bukti'. $data->bukti);
         $image = $request->file('bukti');
@@ -509,6 +511,13 @@ public function update_profile(Request $request){
     }
 
     $data->update();
+
+    $sekolah = Sekolah::where('id_sekolah', $id_sekolah)->first();
+    User::where('id_user', $sekolah->id_user)->update([
+        'question' => $request->question,
+        'answer' => $request->answer,
+    ]);
+
     return redirect('profile-sekolah/'.str_replace(' ','-', strtolower($request->nama_sekolah)))->with(['success' => 'Berhasil diedit']);
 }
 
@@ -579,6 +588,32 @@ public function upload_hasil(Request $request){
     $data->id_sekolah = $lo->id_sekolah;
     $data->save();
     return redirect('/data_pendaftaran')->with(['success' => 'Berhasil Upload Data']);
+}
+
+public function gantipass(Request $request){
+    $id = $request->id_user;
+    $user = User::where('id_user',$id)->first();
+    $pass = $user->password;
+
+    
+
+    if(\Hash::check($request->curpass, $pass))
+    {
+        // dd('j');
+        // $data = User::find($id);
+        
+        // $data->password = \Hash::make($request->input('newpass'));
+        // $data->save();
+        User::where('id_user', $id)->update([
+            'password' => \Hash::make($request->input('newpass')),
+        ]);
+        Session::flush();
+        return redirect('/login')->with('success', 'Password berhasil diganti');
+    } else {
+        // dd('k');
+        return back()->with('warning','Password lama anda salah');
+    }
+    
 }
 
 }

@@ -39,7 +39,7 @@
                   <p>List Prestasi</p>
                 </div>
                 <div class="col-sm-6 ">
-                  <a type="submit" class="btn btn-info btn-sm float-sm-right" href="{{url('prestasi/create')}}" style="color: white"><i class="fa fa-plus"></i> Tambah Kecamatan</a>
+                  <a type="submit" class="btn btn-info btn-sm float-sm-right" href="{{url('prestasi/create')}}" style="color: white"><i class="fa fa-plus"></i> Tambah Prestasi</a>
                 </div>
               </div>
             </div>

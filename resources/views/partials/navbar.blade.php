@@ -20,7 +20,7 @@
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Navbar Search -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link" data-widget="navbar-search" href="#" role="button">
         <i class="fas fa-search"></i>
       </a>
@@ -39,7 +39,7 @@
           </div>
         </form>
       </div>
-    </li>
+    </li> -->
 
     <!-- Messages Dropdown Menu -->
     <!-- <li class="nav-item dropdown">
@@ -93,7 +93,7 @@
         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
       </div>
     </li> -->
-    <li class="nav-item dropdown">
+    <!-- <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-bell"></i>
         <span class="badge badge-warning navbar-badge">15</span>
@@ -118,7 +118,7 @@
         <div class="dropdown-divider"></div>
         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
       </div>
-    </li>
+    </li> -->
     
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
@@ -133,6 +133,9 @@
         <div class="dropdown-divider"></div>
         <a href="{{url('profile-sekolah/'.$nama_sekolah)}}" class="dropdown-item">
           <i class="fas fa-user mr-2"></i> Lihat Profil </a>
+          <a href="#" class="dropdown-item" data-toggle="modal" data-target="#Formpass">
+              <i class="fas fa-key mr-2"></i> Ganti Password
+          </a>
         @endif
         <div class="dropdown-divider"></div>
         <a href="{{url('logout')}}" class="dropdown-item">
@@ -158,3 +161,38 @@
     </li> -->
   </ul>
 </nav>
+
+<div class="modal fade" id="Formpass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title w-100 font-weight-bold">Ganti Password</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body mx-3">
+                  <form action="{{url('/gantipass')}}"
+                      method="POST">
+                      @csrf
+                      <input type="hidden" name="id_user" class="form-control"
+                              value="{{Session::get('id_user')}}">
+                      <div class="form-group">
+                          <label for="pass_lama">Password Lama</label>
+                          <input type="password" name="curpass" class="form-control" id="pass_lama"
+                              placeholder="Password Lama">
+                      </div>
+                      <div class="form-group">
+                          <label for="pass_baru">Password Baru</label>
+                          <input type="password" name="newpass" class="form-control" id="pass_baru"
+                              placeholder="Passsword Baru">
+                      </div>
+              </div>
+              <div class="modal-footer d-flex">
+                  <button class="btn btn-primary" name="submit" type="submit">Simpan</button>
+              </div>
+          </div>
+          </form>
+      </div>
+  </div>
