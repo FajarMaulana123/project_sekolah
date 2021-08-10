@@ -20,8 +20,19 @@ Route::get('terbanyak-pendaftar','Home@terbanyak_pendaftar');
 Route::get('prestasi-terbanyak','Home@terbanyak_prestasi');
 Route::get('terdekat','Home@terdekat');
 Route::get('rekomendasi-sekolah','Home@rekomendasi');
+Route::post('proses-forgot', 'Home@updatepass');
+
 
 Route::post('update-baca','Home@update_baca');
+Route::get('forgot','Home@forgot');
+Route::post('forgot-password','Home@forgot_qa');
+Route::post('update-emailpass','Home@update_emailpass');
+Route::post('update-qa','Home@update_qa');
+
+Route::get('edit/email-pass/{nama}/{email}','Home@edit_emailpass');
+Route::get('edit/quest-ans/{nama}/{question}/{answer}','Home@edit_questans');
+
+
 
 Route::get('maps/{jalur}/{id}','Home@maps');
 Route::get('maps-profile/{nama}','Home@maps_profile');

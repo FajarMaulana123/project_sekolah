@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Kecamatan;
+use App\Siswa;
 
 class KecamatanController extends Controller
 {

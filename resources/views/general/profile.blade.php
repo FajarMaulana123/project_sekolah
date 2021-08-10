@@ -122,7 +122,7 @@
                 <label >Email</label>
               <?php } ?>
               <div class="form-group">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Masukan Email" value="{{$siswa->email}}" disabled>
+                <a href="{{url('edit/email-pass/'.$siswa->nama.'/'.Crypt::encrypt($siswa->email))}}" onclick="myEmail()"><input type="email" class="form-control" name="email" id="email" placeholder="Masukan Email" value="{{$siswa->email}}" disabled></a>
               </div>
             </div>
           </div>
@@ -315,14 +315,16 @@
               </div>
             </div>
             <p style="font-size: 12px;margin-top: 20px;">Question dan Answer akan digunakan sebagai verifikasi ketika kamu Lupa Password*</p>
+
+            <?php $user = \App\Users::where('id_user', $siswa->id_user)->first(); ?>
             <div class="row">
               <div class="col-md-6">
                 <label >Question</label><br>
-                <input type="text" name="sertifikat3" class="form-control" value="{{$user->question}}" disabled>
+                <a href="{{url('edit/quest-ans/'.$siswa->nama.'/'.Crypt::encrypt($user->question).'/'.Crypt::encrypt($user->answer))}}" onclick="myQa()"><input type="text" name="sertifikat3" class="form-control" value="{{$user->question}}" disabled></a>
               </div>
               <div class="col-md-6">
                 <label >Answer</label><br>
-                <input type="text" name="sertifikat3" class="form-control" value="{{$user->answer}}" disabled>
+                <a href="{{url('edit/quest-ans/'.$siswa->nama.'/'.Crypt::encrypt($user->question).'/'.Crypt::encrypt($user->answer))}}" onclick="myQa()"><input type="text" name="sertifikat3" class="form-control" value="{{$user->answer}}" disabled></a>
               </div>
             </div>
           </div>
@@ -353,6 +355,14 @@ type="text/javascript"></script>
       if (latlang == null || latlang == "") {
          alert("Pilih Lokasi terlebih dahulu !!!");
       }
+   }
+   function myQa() {
+        alert("Apakah anda ingin mengganti question & answer?");
+      
+   }
+   function myEmail() {
+        alert("Apakah anda ingin mengganti email & password?");
+      
    }
 </script>
 <script>

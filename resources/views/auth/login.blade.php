@@ -31,10 +31,10 @@
     <form action="{{url('postlogin')}}" method="post">
       @csrf
       <input type="email" id="login" class="fadeIn second" name="email" placeholder="Email" value="{{ Input::old('email') }}" required>
-      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password" value="{{ Input::old('password') }}" required>
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password"  required>
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
-    <a style="margin-top: -50px; margin-bottom: 20px;" class="underlineHover" href="{{url('home')}}">Lupa Password?</a>
+    <a style="margin-top: -50px; margin-bottom: 20px;" class="underlineHover" href="{{url('forgot')}}">Lupa Password?</a>
     <div id="formFooter">
       Belum punya akun? <a class="underlineHover" href="{{url('daftar')}}">Daftar Sekarang</a>
     </div>

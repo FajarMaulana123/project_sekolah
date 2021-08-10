@@ -87,8 +87,8 @@ type="text/javascript"></script>
 <script>
    function myFunction() {
    	  var latlang = document.getElementById('latlang').value;
-      if (latlang == null || latlang == "") {
-         alert("Pilih Lokasi terlebih dahulu !!!");
+      if (latlang == 0 ) {
+         confirm("Pilih Lokasi terlebih dahulu !!!");
       }
    }
 </script>

@@ -343,6 +343,7 @@ class Home extends Controller
 		return view('auth.regist_siswa');
 	}
 
+
     public function daftar_sekolah(){
         return view('auth.regist_sekolah');
     }
@@ -595,13 +596,92 @@ class Home extends Controller
     }
 
     public function updatetitik($nama, Request $request){
-        $data['longitude'] = $request->longitude;
-        $data['latitude'] = $request->latitude;
+        if ($request->longitude == null) {
+            return redirect('maps-profile/'.$nama);
+        }else{
+            $data['longitude'] = $request->longitude;
+            $data['latitude'] = $request->latitude;
 
 
-        // $data->update();
-        Siswa::where('id_siswa', $request->id_siswa)->update($data);
-        return redirect('profile/'.$nama)->with(['success' => 'Berhasil Update Data diri!']);
+            // $data->update();
+            Siswa::where('id_siswa', $request->id_siswa)->update($data);
+            return redirect('profile/'.$nama)->with(['success' => 'Berhasil Update Data diri!']);
+        }
+    }
+
+    public function forgot(){
+        return view('auth.forgot_pass');
+    }
+
+    public function edit_emailpass($nama, $email){
+        $mail = Crypt::decrypt($email);
+        return view('auth.email_pass', compact('mail','nama'));
+    }
+    public function edit_questans($nama, $question, $answer){
+        $quest = Crypt::decrypt($question);
+        $ans = Crypt::decrypt($answer);
+        return view('auth.qa_update', compact('quest','ans', 'nama'));
+    }
+
+    public function forgot_qa(Request $request){
+        $email = $request->email;
+        $question = strtolower($request->question);
+        $answer = strtolower($request->answer);
+        $user = Users::where('email', $email)->where('question', $question)->where('answer', $answer)->first();
+        
+        return view('auth.data_forgot', compact('user'));
+    }
+
+    public function updatepass(Request $request){
+        $id = $request->id_user;
+        $password = $request->password;
+        $cpassword = $request->cpassword;
+        if ($password != $cpassword) {
+            return redirect('forgot')->withInput()->with(['warning' => 'Konfirmasi Password tidak sama, silahkan ulangi langkah anda!']);
+        }else{
+            $data['password'] = password_hash($password, PASSWORD_DEFAULT);
+            Users::where('id_user', $id)->update($data);
+            return redirect('login')->withInput()->with(['success' => 'Password berhasil di ubah!']);
+        }
+        
+    }
+
+    public function update_qa(Request $request){
+        $id_user = session::get('id_user');
+        $nama = $request->nama;
+        $question = strtolower($request->question);
+        $answer = strtolower($request->answer);
+        
+        $data['question'] = $question;
+        $data['answer'] = $answer;
+        Users::where('id_user', $id_user)->update($data);
+        return redirect('profile/'.$nama)->withInput()->with(['success' => 'Question & Answer berhasil diubah!']);
+        
+    }
+
+    public function update_emailpass(Request $request){
+        $id_user = session::get('id_user');
+        $nama = $request->nama;
+        $email = $request->email;
+        $password = $request->password;
+        $cpassword = $request->cpassword;
+        if ($password == null && $cpassword == null) {
+            $data['email'] = $email;
+            Users::where('id_user', $id_user)->update($data);
+            Siswa::where('id_user', $id_user)->update($data);
+            return redirect('profile/'.$nama)->withInput()->with(['success' => 'Email berhasil diubah!']);
+        }else{
+            if ($password != $cpassword) {
+                return redirect()->back()->withInput()->with(['warning' => 'Konfirmasi Password tidak sama, silahkan ulangi langkah anda!']);
+            }else{
+                $data['email'] = $email;
+                Siswa::where('id_user', $id_user)->update($data);
+                $data['password'] = password_hash($password, PASSWORD_DEFAULT);
+                Users::where('id_user', $id_user)->update($data);
+                return redirect('profile/'.$nama)->withInput()->with(['success' => 'Email & Password berhasil diubah!']);
+            }
+        }
+        
     }
 
     public function addafirmasi($afirmasi, $id, Request $request){
