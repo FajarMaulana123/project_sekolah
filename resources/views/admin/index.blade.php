@@ -33,19 +33,19 @@
               <p>Total Sekolah</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="fas fa-school"></i>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-6">
-          <div class="small-box bg-success">
+          <div class="small-box bg-info">
             <div class="inner">
               <h3>{{$tot_kecamatan}}</h3>
 
               <p>Total Kecamatan</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="fas fa-building"></i>
             </div>
           </div>
         </div>
@@ -55,10 +55,10 @@
             <div class="inner">
               <h3>{{$tot_pres}}</h3>
 
-              <p>Total Prestasi</p>
+              <p>Total Prestasi Sekolah</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="fas fa-medal"></i>
             </div>
           </div>
         </div>
@@ -70,43 +70,43 @@
               <p>Total Pendaftaran Zonasi</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="fas fa-map-marked"></i>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-6">
-          <div class="small-box bg-success">
+          <div class="small-box bg-warning">
             <div class="inner">
               <h3>{{$tot_afirmasi}}</h3>
 
               <p>Total Pendaftaran Afirmasi</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="fas fa-hands"></i>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-6">
-          <div class="small-box bg-success">
+          <div class="small-box bg-primary">
             <div class="inner">
               <h3>{{$tot_prestasi}}</h3>
 
               <p>Total Pendaftaran Prestasi</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="fas fa-award"></i>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-6">
-          <div class="small-box bg-success">
+          <div class="small-box bg-secondary">
             <div class="inner">
               <h3>{{$tot_perpindahan}}</h3>
 
               <p>Total Pendaftaran Perpindahan</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="fas fa-handshake"></i>
             </div>
           </div>
         </div>
