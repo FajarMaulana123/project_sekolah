@@ -528,21 +528,31 @@ public function st_zonasi(Request $request){
     // }
 
     // return $tot_zonasi;
-    
-    $data = Pendaftaran::where('jalur', 'zonasi')->where('jarak', '<=' , $sekolah->radius)->limit($tot_zonasi)->update([
-        'status' => 1
-    ]);
-
+    $pendaftaran = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->get();
+    foreach($pendaftaran as $key => $val){
+        if($val->jarak <= $sekolah->radius){
+            $data = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->where('jarak', '<=' , $sekolah->radius)->limit($tot_zonasi)->update([
+                'status' => 1
+            ]);
+        }else{
+            $data = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->where('jarak', '>' , $sekolah->radius)->update([
+                'status' => 2
+            ]);
+        }
+    }
     return $data;
 }
 
 public function cetak()
 {
     $lo = Sekolah::where('id_user',Session::get('id_user'))->first();
+    $thn = date('Y') .' / '. date('Y', strtotime('+1 year'));
+
     $data = Pendaftaran::join('siswa', 'pendaftaran.id_siswa', '=', 'siswa.id_siswa')
-    ->where('id_sekolah', $lo->id_sekolah)
+    ->where('pendaftaran.id_sekolah', $lo->id_sekolah)->where('pendaftaran.tahun_ajaran', $thn)
     ->select('pendaftaran.*', 'siswa.*')
     ->get();
+    // dd($thn);
 
 
     $pdf = PDF::loadview('admin.data_daftar.daftar_pdf',['data'=>$data, 'lo' => $lo]);

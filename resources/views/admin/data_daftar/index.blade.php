@@ -91,7 +91,6 @@
                     <td>
                     
                       <a href="#" data-toggle="modal" data-target="#modal-lg{{$no}}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> Detail</a>
-                      <a type="submit" class="btn btn-danger btn-sm " href="{{ url('/data_pendaftaran/'.$sekolah['id_pendaftaran']) }}" onclick="return confirm('Yakin data akan dihapus?')"><i class="fa fa-trash"></i> Hapus</a>
                     </td>
                   </tr>
                   <div class="modal fade" id="modal-lg{{$no}}">
@@ -282,7 +281,7 @@
     // console.log(tgl_br);
     var id = $('#id_sekolah').val();
     $.ajax({
-      type: "POST",
+      type: "GET",
       url: "/st_zonasi",
       headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
