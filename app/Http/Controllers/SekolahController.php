@@ -431,19 +431,37 @@ public function hapus_agama($id){
 
 public function data_daftar(){
     $sekolah = Sekolah::where('id_user',Session::get('id_user'))->first();
+    $ppdb = Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first();
     $data = Pendaftaran::join('siswa', 'pendaftaran.id_siswa', '=', 'siswa.id_siswa')
-    ->where('id_sekolah', $sekolah->id_sekolah)
+    ->where('pendaftaran.id_sekolah', $sekolah->id_sekolah)
+    ->where('pendaftaran.tahun_ajaran', $ppdb->tahun_ajaran)
     ->select('pendaftaran.*', 'siswa.*')
     ->get();
-    $ppdb = Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first();
+    
     return view('admin.data_daftar.index', compact('data', 'ppdb'));
 }
 
 public function status_daftar(Request $request){
-    Pendaftaran::where('id_pendaftaran', $request->id)->update([
-        'status' => $request->status,
-    ]);
-    return redirect()->back();
+    $sekolah = Sekolah::where('id_user',Session::get('id_user'))->first();
+    $ppdb = Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first();
+    $tot = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('tahun_ajaran', $ppdb->tahun_ajaran)->where('status', 1)->count();
+    // dd($tot);
+    if($request->status == 1){
+        if($tot < $ppdb->jml_diterima){
+            Pendaftaran::where('id_pendaftaran', $request->id)->update([
+                'status' => $request->status,
+            ]);
+            return redirect()->back();
+        }else{
+            // dd('k');
+            return redirect()->back()->with(['warning' => 'Sudah melebihi Batas Jumlah diterima']);
+        }
+    }else{
+        Pendaftaran::where('id_pendaftaran', $request->id)->update([
+            'status' => $request->status,
+        ]);
+        return redirect()->back();
+    }
 }
 
 public function hapus_daftar($id){

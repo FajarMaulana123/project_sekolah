@@ -146,6 +146,7 @@
                                         <label for="nohp">No hp</label>
                                         <p style="margin-top: -10px;">{{$sekolah['nohp']}}</p>
                                       </div>
+                                      
                                     </div>
                                    
                                     
@@ -157,12 +158,21 @@
                                         <p style="margin-top: -10px;">{{$sekolah['asal_sekolah']}}</p>
                                       </div>
                                     </div>
-                                    <div class="col-md-7">
+                                    <div class="col-md-4">
                                       <div class="form-group" style="font-size: 14px;margin-top: -10px;">
                                         <label>Alamat</label>
                                         <p style="margin-top: -10px;">{{$sekolah['alamat']}}</p>
                                       </div>
                                     </div>
+                                    @if($sekolah['jalur'] == 'zonasi')
+                                    <div class="col-md-3">
+                                      <div class="form-group" style="font-size: 14px;margin-top: -10px;">
+                                          <label for="nohp">Jarak Kesekolah</label>
+                                          <p style="margin-top: -10px;">{{$sekolah['jarak']}}  km</p>
+                                        </div>
+                                    </div>
+                                    @else
+                                    @endif
                                   </div>
                                   <div class="row">
                                     <div class="col-md-5">
