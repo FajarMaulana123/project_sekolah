@@ -430,15 +430,19 @@ public function hapus_agama($id){
 }
 
 public function data_daftar(){
-    $sekolah = Sekolah::where('id_user',Session::get('id_user'))->first();
-    $ppdb = Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first();
-    $data = Pendaftaran::join('siswa', 'pendaftaran.id_siswa', '=', 'siswa.id_siswa')
-    ->where('pendaftaran.id_sekolah', $sekolah->id_sekolah)
-    ->where('pendaftaran.tahun_ajaran', $ppdb->tahun_ajaran)
-    ->select('pendaftaran.*', 'siswa.*')
-    ->get();
-    
-    return view('admin.data_daftar.index', compact('data', 'ppdb'));
+    if (!session::get('loginadmin')) {
+        return redirect('login');
+    }else{
+        $sekolah = Sekolah::where('id_user',Session::get('id_user'))->first();
+        $ppdb = Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first();
+        $data = Pendaftaran::join('siswa', 'pendaftaran.id_siswa', '=', 'siswa.id_siswa')
+        ->where('pendaftaran.id_sekolah', $sekolah->id_sekolah)
+        ->where('pendaftaran.tahun_ajaran', $ppdb->tahun_ajaran)
+        ->select('pendaftaran.*', 'siswa.*')
+        ->get();
+        
+        return view('admin.data_daftar.index', compact('data', 'ppdb'));
+    }
 }
 
 public function status_daftar(Request $request){
@@ -471,10 +475,14 @@ public function hapus_daftar($id){
 }
 
 public function profile_sekolah($sekolah){
-    $id = Session::get('id_user');
-    $data = Sekolah::where('id_user', $id)->first();
-    $list_kec = Kecamatan::orderBy('nama_kec', 'ASC')->get();
-    return view('admin.profile.profile_sekolah', compact('data','list_kec'));
+    if (!session::get('loginadmin')) {
+        return redirect('login');
+    }else{
+        $id = Session::get('id_user');
+        $data = Sekolah::where('id_user', $id)->first();
+        $list_kec = Kecamatan::orderBy('nama_kec', 'ASC')->get();
+        return view('admin.profile.profile_sekolah', compact('data','list_kec'));
+    }
 } 
 
 public function update_profile(Request $request){
