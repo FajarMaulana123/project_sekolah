@@ -123,6 +123,15 @@
                       <input type="hidden" name='longitude' id='lng' value="{{$data->longitude}}">
                     </div>
                   </div> 
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="email">Radius Sekolah</label>
+                      <input type="text" name="radius" class="form-control" value="{{$data->radius}} ">
+                    </div>
+                  </div>
+                  <div class="col-md-6" style="margin-top:40px">
+                      <p>/Km</p>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="email">Deskripsi Sekolah</label>
