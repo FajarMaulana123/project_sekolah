@@ -96,7 +96,11 @@
 
             $ppdb = \App\Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first();
             $pendaftaran = \App\Pendaftaran::where('id_siswa', $siswa->id_siswa)->where('id_sekolah', $sekolah->id_sekolah)->where('tahun_ajaran', $ppdb->tahun_ajaran)->first();
+            $count = \App\Pendaftaran::where('id_siswa', $siswa->id_siswa)->where('tahun_ajaran', $ppdb->tahun_ajaran)->count();
           ?>
+          @if($count >= 2)
+          <a href="{{url('/')}}" class="back-to-daftar d-flex align-items-center justify-content-center" onclick="gagal()">Daftar Sekarang</a>
+          @else
           <?php if ($pendaftaran == NULL) { ?>
             <?php if ($siswa->tingkat == "SD") { ?>
                 <?php if ($siswa->id_agama == NULL || $siswa->tingkat == NULL || $siswa->jk == NULL || $siswa->tempat == NULL || $siswa->tgl_lahir == NULL || $siswa->asal_sekolah == NULL || $siswa->alamat == NULL || $siswa->nohp == NULL || $siswa->foto == NULL || $siswa->akte == NULL || $siswa->ijazah == NULL || $siswa->skhun == NULL || $siswa->kk == NULL || $siswa->longitude == NULL || $siswa->latitude == NULL) { ?>
@@ -114,7 +118,9 @@
           <?php }else{ ?>
             <a href="{{url('hasil-seleksi')}}" class="back-to-daftar d-flex align-items-center justify-content-center" onclick="myFunction()">Daftar Sekarang</a>
           <?php } ?>
+          @endif
       <?php } ?>  
+
     </div>
 </section>
 <script>
@@ -126,6 +132,9 @@
    }
    function sd() {
          alert("Kamu tidak bisa daftar ke jenjang SD !");
+   }
+   function gagal(){
+          alert("Kamu tidak bisa daftar lebih dari 2 Sekolah");
    }
 </script>
 @endsection

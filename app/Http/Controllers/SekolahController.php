@@ -434,6 +434,8 @@ public function data_daftar(){
         return redirect('login');
     }else{
         $sekolah = Sekolah::where('id_user',Session::get('id_user'))->first();
+        // $thn = date('Y');
+        // $thn_ajar = $thn ." / ". date('Y', strtotime('+1 year'));
         $ppdb = Ppdb::where('id_sekolah', $sekolah->id_sekolah)->first();
         $data = Pendaftaran::join('siswa', 'pendaftaran.id_siswa', '=', 'siswa.id_siswa')
         ->where('pendaftaran.id_sekolah', $sekolah->id_sekolah)
@@ -494,6 +496,7 @@ public function update_profile(Request $request){
     $data->nama_kps =$request->nama_kps;
     $data->tingkat =$request->tingkat;
     $data->email =$request->email;
+    $data->radius = $request->radius;
     $data->nohp =$request->nohp;
     $data->alamat =$request->alamat;
     $data->visimisi =$request->visimisi;

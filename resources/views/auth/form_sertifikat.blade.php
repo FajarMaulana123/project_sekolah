@@ -31,21 +31,21 @@
         <br>
         <a href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat1)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Sertifikat1</a><br>
       <?php } ?>
-      <input type="file" id="sertifikat1" class="fadeIn second form-control mt-2" name="sertifikat1" placeholder="Sertifikat1" required accept="application/pdf, application/msword,.doc,.docx">
+      <input type="file" id="sertifikat1" class="fadeIn second form-control mt-2" name="sertifikat1" placeholder="Sertifikat1"  accept="application/pdf, application/msword,.doc,.docx">
 
       <label style="margin-top: 10px;">Sertifikat 2</label>
       <?php if ($siswa->sertifikat2 != null) { ?>
         <br>
         <a href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat2)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Sertifikat1</a><br>
       <?php } ?>
-      <input type="file" id="sertifikat2" class="fadeIn second form-control mt-2" name="sertifikat2" placeholder="Sertifikat2" required accept="application/pdf, application/msword,.doc,.docx">
+      <input type="file" id="sertifikat2" class="fadeIn second form-control mt-2" name="sertifikat2" placeholder="Sertifikat2"  accept="application/pdf, application/msword,.doc,.docx">
 
       <label style="margin-top: 10px;">Sertifikat 3</label>
       <?php if ($siswa->sertifikat3 != null) { ?>
         <br>
         <a href="{{asset('imageUpload/dokumen/'.$siswa->sertifikat3)}}" target="_blank"><i class="fa fa-eye"></i> Lihat Sertifikat1</a><br>
       <?php } ?>
-      <input type="file" id="sertifikat3" class="fadeIn second form-control mt-2" name="sertifikat3" placeholder="Sertifikat3" required accept="application/pdf, application/msword,.doc,.docx">
+      <input type="file" id="sertifikat3" class="fadeIn second form-control mt-2" name="sertifikat3" placeholder="Sertifikat3"  accept="application/pdf, application/msword,.doc,.docx">
       
       <input type="submit" class="fadeIn fourth" value="Upload" style="margin-left: 25%;">
     </form>

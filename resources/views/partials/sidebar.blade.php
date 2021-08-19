@@ -109,6 +109,11 @@
             </p>
           </a>
         </li>
+        <?php 
+          $skl = \App\Sekolah::where('id_user', Session::get('id_user'))->first();
+          $pp = \App\Ppdb::where('id_sekolah', $skl->id_sekolah)->count();
+          if($pp > 0){
+        ?>
         <li class="nav-item">
           <a href="{{url('data_pendaftaran')}}" class="nav-link">
             <i class="nav-icon fa fa-users"></i>
@@ -117,6 +122,9 @@
             </p>
           </a>
         </li>
+        <?php 
+          }
+        ?>
         @endif
         <li class="nav-item">
           <a href="{{url('logout')}}" class="nav-link">
