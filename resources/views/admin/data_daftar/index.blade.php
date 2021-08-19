@@ -278,35 +278,3 @@
 </div>
 @endsection
 
-@section('js')
-<script type="text/javascript">
-  $(function js(){
-    // var tgl_br = new Date("<?php echo $ppdb->tgl_berakhir ?>");
-    // var now = new Date();
-    // if(now === tgl_br){
-    //   $('#status').removeAttr("disabled");
-    // } else {
-    //   $('#status').attr("disabled", true);
-    // }
-    // console.log(tgl_br);
-    var id = $('#id_sekolah').val();
-    $.ajax({
-      type: "GET",
-      url: "/st_zonasi",
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      data: {
-        id_sekolah : id,
-      },
-      success:function(response){
-        console.log('success');
-      }
-    }).then(function(){
-    setTimeout(js, 1000)
-	
-    });
-  });
-  
-</script>
-@endsection

@@ -566,17 +566,22 @@ public function st_zonasi(Request $request){
     // }
 
     // return $tot_zonasi;
-    $pendaftaran = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->get();
-    foreach($pendaftaran as $key => $val){
-        if($val->jarak <= $sekolah->radius){
-            $data = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->where('jarak', '<=' , $sekolah->radius)->limit($tot_zonasi)->update([
-                'status' => 1
-            ]);
-        }else{
-            $data = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->where('jarak', '>' , $sekolah->radius)->update([
-                'status' => 2
-            ]);
+    // dd(date('Y-m-d'));
+    if($ppdb->tgl_berakhir == date('Y-m-d')){
+        $pendaftaran = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->get();
+        foreach($pendaftaran as $key => $val){
+            if($val->jarak <= $sekolah->radius){
+                $data = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->where('jarak', '<=' , $sekolah->radius)->limit($tot_zonasi)->update([
+                    'status' => 1
+                ]);
+            }else{
+                $data = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->where('jarak', '>' , $sekolah->radius)->update([
+                    'status' => 2
+                ]);
+            }
         }
+    }else{
+        $data = '';
     }
     return $data;
 }

@@ -18,5 +18,6 @@
   </div>
    @include('partials.js')
    @yield('js')
+   @yield('js1')
 </body>
 </html>

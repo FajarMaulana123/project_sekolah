@@ -114,8 +114,9 @@
           $pp = \App\Ppdb::where('id_sekolah', $skl->id_sekolah)->count();
           if($pp > 0){
         ?>
+        <input type="hidden" id="id_sekolah" value="{{$skl->id_sekolah}}">
         <li class="nav-item">
-          <a href="{{url('data_pendaftaran')}}" class="nav-link">
+          <a href="#" id="btn" class="nav-link">
             <i class="nav-icon fa fa-users"></i>
             <p>
               Data Pendaftar
@@ -141,3 +142,25 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+  @section('js')
+<script type="text/javascript">
+  $('#btn').on('click', function(){
+   
+    var id = $('#id_sekolah').val();
+    $.ajax({
+      type: "GET",
+      url: "/st_zonasi",
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        id_sekolah : id,
+      },
+      success:function(response){
+        window.location.href = "{{url('data_pendaftaran')}}";
+      }
+    });
+  });
+  
+</script>
+@endsection

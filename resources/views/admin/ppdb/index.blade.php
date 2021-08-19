@@ -98,7 +98,7 @@
   </section>
 </div>
 @endsection
-@section('js')
+@section('js1')
 <script>
   $(function(){
     <?php if($id->nama_kps == null || $id->nohp == null || $id->alamat == null || $id->visimisi == null || $id->deskripsi == null || $id->radius == null || $id->logo == null || $id->foto == null || $id->longitude == null || $id->latitude == null) {?>
