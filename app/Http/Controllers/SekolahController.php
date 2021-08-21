@@ -567,11 +567,12 @@ public function st_zonasi(Request $request){
 
     // return $tot_zonasi;
     // dd(date('Y-m-d'));
-    if($ppdb->tgl_berakhir == date('Y-m-d')){
+    // if($ppdb->tgl_berakhir <= date('Y-m-d')){
         $pendaftaran = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->get();
+        // dd($pendaftaran);
         foreach($pendaftaran as $key => $val){
             if($val->jarak <= $sekolah->radius){
-                $data = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->where('jarak', '<=' , $sekolah->radius)->limit($tot_zonasi)->update([
+                $data = Pendaftaran::where('id_sekolah', $sekolah->id_sekolah)->where('jalur', 'zonasi')->where('jarak', '<=' , $sekolah->radius)->limit($tot_zonasi)->orderBy('jarak', 'ASC')->update([
                     'status' => 1
                 ]);
             }else{
@@ -580,9 +581,9 @@ public function st_zonasi(Request $request){
                 ]);
             }
         }
-    }else{
-        $data = '';
-    }
+    // }else{
+    //     $data = '';
+    // }
     return $data;
 }
 

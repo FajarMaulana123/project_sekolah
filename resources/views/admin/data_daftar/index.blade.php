@@ -40,6 +40,7 @@
                 <div class="col-sm-6 ">
                   <a class="btn btn-primary btn-sm float-sm-right" href="{{url('data_pendaftaran/cetak_pdf')}}" style="color: white; " target="_blank"><i class="fa fa-print"></i> Cetak Hasil</a>
                   <a class="btn btn-success btn-sm float-sm-right" href="#" data-toggle="modal" data-target="#hsl" style="color: white;margin-right:20px;"><i class="fa fa-upload"></i> Upload Hasil</a>
+                  <button id="tes" class="btn btn-primary btn-sm float-sm-right" href="#" style="color: white; " ><i class="fa fa-print"></i> Otomatis zonasi</button>
                 </div>
               </div>
             </div>
@@ -276,5 +277,27 @@
     </div>
   </div>
 </div>
+@endsection
+@section('js')
+<script type="text/javascript">
+  $('#tes').on('click', function(){
+   
+    var id = $('#id_sekolah').val();
+    $.ajax({
+      type: "GET",
+      url: "/st_zonasi",
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        id_sekolah : id,
+      },
+      success:function(response){
+        window.location.href = "{{url('data_pendaftaran')}}";
+      }
+    });
+  });
+  
+</script>
 @endsection
 
